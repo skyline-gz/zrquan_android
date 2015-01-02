@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="app_name">mobile</string>
-    <string name="hello_world">Hello world!</string>
-    <string name="action_settings">Settings</string>
+    <string name="app_name">职人圈</string>
+    <string name="hello_world">欢迎</string>
+    <string name="action_settings">设置</string>
+    <string name="action_card">卡片</string>
 
 </resources>

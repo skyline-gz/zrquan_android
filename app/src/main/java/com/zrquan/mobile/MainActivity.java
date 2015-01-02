@@ -8,12 +8,18 @@ import android.widget.Toast;
 
 import com.google.common.base.Optional;
 
+import it.gmariotti.cardslib.library.internal.Card;
+import it.gmariotti.cardslib.library.internal.CardHeader;
+import it.gmariotti.cardslib.library.view.CardViewNative;
+
 public class MainActivity extends ActionBarActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        addCard ();
     }
 
     @Override
@@ -34,6 +40,8 @@ public class MainActivity extends ActionBarActivity {
         if (id == R.id.action_settings) {
             showToast();
             return true;
+        } else if (id == R.id.action_card) {
+            return true;
         }
 
         return super.onOptionsItemSelected(item);
@@ -47,5 +55,22 @@ public class MainActivity extends ActionBarActivity {
 
         CharSequence cs = "possible value " + id;
         Toast.makeText(this, cs, Toast.LENGTH_LONG).show();
+    }
+
+    private void addCard() {
+        //Create a Card
+        Card card = new Card(this);
+
+        //Create a CardHeader
+        CardHeader header = new CardHeader(this);
+
+        //Add Header to card
+        card.addCardHeader(header);
+
+        //Set the card inner text
+        card.setTitle("My Title");
+        
+        CardViewNative cardView = (CardViewNative) findViewById(R.id.carddemo);
+        cardView.setCard(card);
     }
 }
