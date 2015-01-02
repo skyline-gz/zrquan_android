@@ -4,7 +4,9 @@ import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Toast;
 
+import com.google.common.base.Optional;
 
 public class MainActivity extends ActionBarActivity {
 
@@ -13,7 +15,6 @@ public class MainActivity extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
     }
-
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -31,9 +32,20 @@ public class MainActivity extends ActionBarActivity {
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
+            showToast();
             return true;
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    private void showToast() {
+        //Guava test
+        Optional<Integer> possible = Optional.of(5);
+        possible.isPresent(); // returns true
+        int id = possible.get(); // returns 5
+
+        CharSequence cs = "possible value " + id;
+        Toast.makeText(this, cs, Toast.LENGTH_LONG).show();
     }
 }
