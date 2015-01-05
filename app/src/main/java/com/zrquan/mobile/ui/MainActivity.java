@@ -15,7 +15,16 @@ import com.zrquan.mobile.R;
 
 public class MainActivity extends ActionBarActivity {
     private LayoutInflater inflater;
-    private FragmentTabHost mTabHost;
+
+    //定义数组来存放Fragment界面
+    private Class fragmentArray[] = {FeedFragment.class,MessageFragment.class,FeedFragment.class,MessageFragment.class};
+
+    //定义数组来存放按钮图片
+    private int mImageViewArray[] = {R.drawable.tab_home_btn,
+            R.drawable.tab_message_btn, R.drawable.tab_find_btn, R.drawable.tab_myself_btn};
+
+    //Tab选项卡的文字
+    private String mTextViewArray[] = {"首页", "消息", "发现", "我"};
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,29 +34,23 @@ public class MainActivity extends ActionBarActivity {
 //        addCard ();
 
         inflater = LayoutInflater.from(this);
-
-        mTabHost = (FragmentTabHost) findViewById(android.R.id.tabhost);
+        FragmentTabHost mTabHost = (FragmentTabHost) findViewById(android.R.id.tabhost);
         mTabHost.setup(getApplicationContext(), getSupportFragmentManager(), R.id.real_tab_content);
 
-        // 添加tab名称和图标
-        View indicator = getIndicatorView("首页", R.drawable.tab_home_btn);
-        TabHost.TabSpec firstSpec = mTabHost.newTabSpec("tab_home").setIndicator(indicator);
-        mTabHost.addTab(firstSpec, FeedFragment.class, null);
+        //得到fragment的个数
+        int count = fragmentArray.length;
 
-        // 添加tab名称和图标
-        View indicator2 = getIndicatorView("消息", R.drawable.tab_message_btn);
-        TabHost.TabSpec secondSpec = mTabHost.newTabSpec("tab_message").setIndicator(indicator2);
-        mTabHost.addTab(secondSpec, MessageFragment.class, null);
+        for(int i = 0; i < count; i++){
+            View indicator = getIndicatorView(mTextViewArray[i], mImageViewArray[i]);
+            //为每一个Tab按钮设置图标、文字和内容
+            TabHost.TabSpec tabSpec = mTabHost.newTabSpec(mTextViewArray[i]).setIndicator(indicator);
+            //将Tab按钮添加进Tab选项卡中
+            mTabHost.addTab(tabSpec, fragmentArray[i], null);
+            //设置Tab按钮的背景
+            mTabHost.getTabWidget().getChildAt(i).setBackgroundResource(R.drawable.bg_border_top);
+        }
 
-        // 添加tab名称和图标
-        View indicator3 = getIndicatorView("发现", R.drawable.tab_find_btn);
-        TabHost.TabSpec thirdSpec = mTabHost.newTabSpec("tab_find").setIndicator(indicator3);
-        mTabHost.addTab(thirdSpec, FeedFragment.class, null);
-
-        // 添加tab名称和图标
-        View indicator4 = getIndicatorView("我", R.drawable.tab_myself_btn);
-        TabHost.TabSpec forthSpec = mTabHost.newTabSpec("tab_myself").setIndicator(indicator4);
-        mTabHost.addTab(forthSpec, MessageFragment.class, null);
+        mTabHost.setCurrentTab(0);
     }
 
 //    @Override
