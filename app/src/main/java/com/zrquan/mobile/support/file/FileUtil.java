@@ -1,4 +1,4 @@
-package com.zrquan.mobile.ui.utils;
+package com.zrquan.mobile.support.file;
 
 import android.content.Context;
 import android.os.Parcel;
