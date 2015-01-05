@@ -1,4 +1,4 @@
-package com.zrquan.mobile;
+package com.zrquan.mobile.ui;
 
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
@@ -7,6 +7,7 @@ import android.view.MenuItem;
 import android.widget.Toast;
 
 import com.google.common.base.Optional;
+import com.zrquan.mobile.R;
 
 import it.gmariotti.cardslib.library.internal.Card;
 import it.gmariotti.cardslib.library.internal.CardHeader;
@@ -69,7 +70,7 @@ public class MainActivity extends ActionBarActivity {
 
         //Set the card inner text
         card.setTitle("My Title");
-        
+
         CardViewNative cardView = (CardViewNative) findViewById(R.id.carddemo);
         cardView.setCard(card);
     }
