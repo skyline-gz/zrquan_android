@@ -1,11 +1,10 @@
 package com.zrquan.mobile.ui;
 
+import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentTabHost;
-import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.Window;
 import android.widget.ImageView;
 import android.widget.TabHost;
 import android.widget.TextView;
@@ -14,7 +13,7 @@ import android.widget.Toast;
 import com.google.common.base.Optional;
 import com.zrquan.mobile.R;
 
-public class MainActivity extends ActionBarActivity {
+public class MainActivity extends FragmentActivity {
     private LayoutInflater inflater;
 
     //定义数组来存放Fragment界面
