@@ -50,7 +50,12 @@ public class MainActivity extends ActionBarActivity {
             mTabHost.getTabWidget().getChildAt(i).setBackgroundResource(R.drawable.bg_border_top);
         }
 
+        //默认选取显示首页
         mTabHost.setCurrentTab(0);
+        //去掉tab icon下面横线
+        mTabHost.getTabWidget().setStripEnabled(false);
+        //去掉tab icon之间的间隔线
+        mTabHost.getTabWidget().setDividerDrawable(null);
     }
 
 //    @Override
