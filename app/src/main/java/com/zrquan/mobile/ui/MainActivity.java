@@ -12,6 +12,7 @@ import android.widget.Toast;
 
 import com.google.common.base.Optional;
 import com.zrquan.mobile.R;
+import com.zrquan.mobile.ui.feed.FeedFragment;
 
 public class MainActivity extends FragmentActivity {
     private LayoutInflater inflater;

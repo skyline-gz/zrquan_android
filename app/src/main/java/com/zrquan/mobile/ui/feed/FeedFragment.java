@@ -1,4 +1,4 @@
-package com.zrquan.mobile.ui;
+package com.zrquan.mobile.ui.feed;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
