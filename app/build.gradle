@@ -28,6 +28,12 @@ android {
     }
 }
 
+repositories {
+    flatDir {
+        dirs 'libs'
+    }
+}
+
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
     compile 'com.android.support:support-v4:21.0.+'
@@ -40,5 +46,6 @@ dependencies {
     compile 'com.github.gabrielemariotti.cards:cardslib-cards:2.0.1'
     //Optional for RecyclerView
     compile 'com.github.gabrielemariotti.cards:cardslib-recyclerview:2.0.1'
+    compile(name:'library-2.4.1', ext:'aar')
 }
 

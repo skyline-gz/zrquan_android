@@ -11,6 +11,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.zrquan.mobile.R;
+import com.viewpagerindicator.CirclePageIndicator;
 
 import java.util.ArrayList;
 
