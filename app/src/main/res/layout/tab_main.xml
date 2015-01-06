@@ -20,6 +20,6 @@
         android:paddingBottom="8dp"
         android:text="社区"
         android:textSize="12sp"
-        android:textColor="#333"/>
+        android:textColor="@color/tab_text"/>
 
 </LinearLayout>
