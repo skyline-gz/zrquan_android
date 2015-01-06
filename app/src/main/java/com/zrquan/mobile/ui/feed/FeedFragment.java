@@ -4,6 +4,8 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBarActivity;
+import android.util.DisplayMetrics;
+import android.view.Display;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -21,7 +23,7 @@ import java.util.ArrayList;
 public class FeedFragment extends Fragment {
     private ViewPager mPager;
     private ArrayList<Fragment> fragmentList;
-    private TextView barText;
+    private TextView tvCursor;
     private TextView tvDiscussion, tvQuestion;
     private int currIndex;//当前页卡编号
 
@@ -37,6 +39,7 @@ public class FeedFragment extends Fragment {
 
         View view = inflater.inflate(R.layout.fragment_feed, container, false);
         initViewPager(view);
+        initTVCursor(view);
         initNavBar(view);
         return view;
     }
@@ -90,6 +93,23 @@ public class FeedFragment extends Fragment {
     }
 
     /*
+	     * 初始化图片的位移像素
+	     */
+    public void initTVCursor(View view){
+        tvCursor = (TextView) view.findViewById(R.id.cursor);
+//        Display display = getActivity().getWindow().getWindowManager().getDefaultDisplay();
+//        // 得到显示屏宽度
+//        DisplayMetrics metrics = new DisplayMetrics();
+//        display.getMetrics(metrics);
+//        // 1/3屏幕宽度
+//        int  tabLineLength = metrics.widthPixels / 4;
+//        LinearLayout.LayoutParams lp = (LinearLayout.LayoutParams) tvCursor.getLayoutParams();
+//        lp.width = tabLineLength;
+//        tvCursor.setLayoutParams(lp);
+
+    }
+
+    /*
      * 初始化ViewPager
      */
     private void initViewPager(View view){
@@ -109,16 +129,16 @@ public class FeedFragment extends Fragment {
         @Override
         public void onPageScrolled(int arg0, float arg1, int arg2) {
             // 取得该控件的实例
-            LinearLayout.LayoutParams ll = (android.widget.LinearLayout.LayoutParams) barText
+            LinearLayout.LayoutParams ll = (android.widget.LinearLayout.LayoutParams) tvCursor
                     .getLayoutParams();
 
             if(currIndex == arg0){
-                ll.leftMargin = (int) (currIndex * barText.getWidth() + arg1
-                        * barText.getWidth());
+                ll.leftMargin = (int) (currIndex * tvCursor.getWidth() + arg1
+                        * tvCursor.getWidth());
             }else if(currIndex > arg0){
-                ll.leftMargin = (int) (currIndex * barText.getWidth() - (1 - arg1)* barText.getWidth());
+                ll.leftMargin = (int) (currIndex * tvCursor.getWidth() - (1 - arg1)* tvCursor.getWidth());
             }
-            barText.setLayoutParams(ll);
+            tvCursor.setLayoutParams(ll);
         }
 
         @Override
