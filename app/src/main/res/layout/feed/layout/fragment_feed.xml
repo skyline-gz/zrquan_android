@@ -4,8 +4,8 @@
     android:layout_height="match_parent"
     android:orientation="vertical" >
 
-    <LinearLayout
-        android:paddingTop="18dp"
+    <RelativeLayout
+        android:paddingTop="16dp"
         android:paddingLeft="16dp"
         android:paddingRight="16dp"
         android:background="#ffffff"
@@ -15,42 +15,54 @@
 
         <ImageView
             android:contentDescription="搜索"
+            android:layout_alignParentLeft="true"
             android:src="@drawable/btn_add_group"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
 
-        <TextView
-            android:paddingRight="30dp"
-            android:id="@+id/tv_discussion"
+        <LinearLayout
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1.0"
-            android:gravity="right"
-            android:text="职场讨论"
-            android:textSize="18sp"/>
-        <TextView
-            android:paddingLeft="30dp"
-            android:id="@+id/tv_question"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1.0"
-            android:gravity="left"
-            android:text="职人问答"
-            android:textSize="18sp"/>
+            android:layout_centerInParent="true"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/tv_discussion"
+                android:background="@drawable/bg_feed_tab_border_bottom"
+                android:layout_width="wrap_content"
+                android:layout_height="35dp"
+                android:layout_weight="1.0"
+                android:gravity="center"
+                android:textColor="@color/tab_text"
+                android:text="职场讨论"
+                android:textSize="20sp" />
+
+            <TextView
+                android:id="@+id/tv_question"
+                android:paddingBottom="5dp"
+                android:layout_width="wrap_content"
+                android:layout_height="35dp"
+                android:layout_weight="1.0"
+                android:gravity="center"
+                android:textColor="@color/tab_text"
+                android:layout_marginLeft="50dp"
+                android:text="职人问答"
+                android:textSize="20sp" />
+            </LinearLayout>
 
         <ImageView
             android:contentDescription="添加"
+            android:layout_alignParentRight="true"
             android:src="@drawable/btn_del_group"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
-    </LinearLayout>
+    </RelativeLayout>
 
-    <TextView
-        android:id="@+id/cursor"
-        android:layout_marginTop="-12dp"
-        android:layout_width="60dp"
-        android:layout_height="3dp"
-        android:background="#ff126499" />
+    <!--<TextView-->
+        <!--android:id="@+id/cursor"-->
+        <!--android:layout_alignLeft= "@id/tv_question"-->
+        <!--android:layout_width="60dp"-->
+        <!--android:layout_height="3dp"-->
+        <!--android:background="#ff126499" />-->
 
     <android.support.v4.view.ViewPager
         android:id="@+id/viewpager"
