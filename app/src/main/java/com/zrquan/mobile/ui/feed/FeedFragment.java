@@ -2,6 +2,7 @@ package com.zrquan.mobile.ui.feed;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBarActivity;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -9,10 +10,18 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.zrquan.mobile.R;
 
+import java.util.ArrayList;
+
 public class FeedFragment extends Fragment {
+    private ViewPager mPager;
+    private ArrayList<Fragment> fragmentList;
+    private TextView barText;
+    private TextView tvDiscussion, tvQuestion;
+    private int currIndex;//当前页卡编号
 
 //    @Override
 //    protected void onCreate(Bundle savedInstanceState) {
