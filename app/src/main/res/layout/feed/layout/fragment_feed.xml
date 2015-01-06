@@ -21,7 +21,7 @@
 
         <TextView
             android:paddingRight="30dp"
-            android:id="@+id/tv_guid1"
+            android:id="@+id/tv_discussion"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1.0"
@@ -30,7 +30,7 @@
             android:textSize="18sp"/>
         <TextView
             android:paddingLeft="30dp"
-            android:id="@+id/tv_guid2"
+            android:id="@+id/tv_question"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1.0"
@@ -47,10 +47,10 @@
 
     <TextView
         android:id="@+id/cursor"
+        android:layout_marginTop="-12dp"
         android:layout_width="60dp"
         android:layout_height="3dp"
-        android:background="#ff991400"
-        />
+        android:background="#ff126499" />
 
     <android.support.v4.view.ViewPager
         android:id="@+id/viewpager"

@@ -17,6 +17,15 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+    sourceSets {
+        main {
+            res.srcDirs =
+                [
+                    'src/main/res/layout/feed',
+                    'src/main/res'
+                ]
+        }
+    }
 }
 
 dependencies {
@@ -32,3 +41,4 @@ dependencies {
     //Optional for RecyclerView
     compile 'com.github.gabrielemariotti.cards:cardslib-recyclerview:2.0.1'
 }
+
