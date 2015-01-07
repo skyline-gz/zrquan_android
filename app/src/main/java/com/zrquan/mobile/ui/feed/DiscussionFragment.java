@@ -7,6 +7,8 @@ import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -52,7 +54,30 @@ public class DiscussionFragment extends Fragment {
         ivCancelBanner.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                rlBanner.setVisibility(View.GONE);
+
+                Animation slideUpAndFadeOut = AnimationUtils.loadAnimation(context, R.anim.anim_slide_up);
+
+                slideUpAndFadeOut.setAnimationListener(new Animation.AnimationListener() {
+                    @Override
+                    public void onAnimationStart(Animation animation) {
+                        // Called when the Animation starts
+                    }
+
+                    @Override
+                    public void onAnimationEnd(Animation animation) {
+                        // Called when the Animation ended
+                        // Since we are fading a View out we set the visibility
+                        // to GONE once the Animation is finished
+                        rlBanner.setVisibility(View.GONE);
+                    }
+
+                    @Override
+                    public void onAnimationRepeat(Animation animation) {
+                        // This is called each time the Animation repeats
+                    }
+                });
+
+                rlBanner.startAnimation(slideUpAndFadeOut);
             }
         });
 
