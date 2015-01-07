@@ -2,9 +2,6 @@
 <selector xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item android:drawable="@drawable/tab_talk_select" android:state_selected="true"/>
-    <!-- 触摸模式下单击时的背景图片 -->
-    <item android:state_focused="false" android:state_pressed="true"
-        android:drawable="@drawable/tab_talk_select" />
     <item android:drawable="@drawable/tab_talk_normal"/>
 
 </selector>
