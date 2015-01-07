@@ -42,7 +42,7 @@ public class DiscussionFragment extends Fragment {
         indicator.setViewPager(viewPager);
 
         viewPager.setInterval(2000);
-        viewPager.setSlideBorderMode(AutoScrollViewPager.SLIDE_BORDER_MODE_TO_PARENT);
+//        viewPager.setSlideBorderMode(AutoScrollViewPager.SLIDE_BORDER_MODE_TO_PARENT);
 
         Bundle bundle = getArguments();
 //        if (bundle != null) {

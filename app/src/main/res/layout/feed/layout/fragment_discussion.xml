@@ -3,15 +3,18 @@
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
+    <RelativeLayout
+        android:layout_marginTop="6dp"
+        android:layout_marginLeft="6dp"
+        android:layout_marginRight="6dp"
         android:layout_width="match_parent"
         android:layout_height="match_parent" >
 
         <com.zrquan.mobile.ui.viewpager.AutoScrollViewPager
             android:id="@+id/view_pager"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/view_pager_height"
-            android:layout_marginTop="@dimen/dp_40" />
+            android:layout_height="150dp" />
 
         <com.viewpagerindicator.CirclePageIndicator
             android:id="@+id/indicator"
