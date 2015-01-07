@@ -57,13 +57,6 @@
             android:layout_height="wrap_content" />
     </RelativeLayout>
 
-    <!--<TextView-->
-        <!--android:id="@+id/cursor"-->
-        <!--android:layout_alignLeft= "@id/tv_question"-->
-        <!--android:layout_width="60dp"-->
-        <!--android:layout_height="3dp"-->
-        <!--android:background="#ff126499" />-->
-
     <android.support.v4.view.ViewPager
         android:id="@+id/viewpager"
         android:layout_width="fill_parent"
