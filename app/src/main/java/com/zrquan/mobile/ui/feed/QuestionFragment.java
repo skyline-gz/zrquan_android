@@ -11,7 +11,6 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.zrquan.mobile.R;
-import com.zrquan.mobile.ui.dialog.BottomMenuFragment;
 
 //问答 动态
 public class QuestionFragment extends Fragment {
@@ -33,10 +32,10 @@ public class QuestionFragment extends Fragment {
     }
 
     public void createDialog() {
-        BottomMenuFragment df = new BottomMenuFragment();
-        FragmentTransaction ft = getChildFragmentManager().beginTransaction();
-        ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
-        df.show(ft, "df");
+//        BottomMenuFragment df = new BottomMenuFragment();
+//        FragmentTransaction ft = getChildFragmentManager().beginTransaction();
+//        ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
+//        df.show(ft, "df");
 
 //        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
 //        builder.setMessage("Are you sure you want to exit?")
