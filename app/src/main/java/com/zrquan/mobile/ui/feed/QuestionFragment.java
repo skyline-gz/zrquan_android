@@ -12,6 +12,7 @@ import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -48,7 +49,7 @@ public class QuestionFragment extends Fragment {
 //        df.show(ft, "df");
 
         final Dialog infoDialog = new Dialog(getActivity(), R.style.BottomMenuDialogTheme2);
-        infoDialog.setContentView(R.layout.select_pic_dialog);
+        infoDialog.setContentView(R.layout.select_pic_dialog2);
 //        infoDialog.show();
 
 //        AlertDialog infoDialog = new AlertDialog.Builder(getActivity(), R.style.BottomMenuDialogTheme2)
@@ -59,19 +60,20 @@ public class QuestionFragment extends Fragment {
         infoDialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
         infoDialog.getWindow().getAttributes().windowAnimations = R.style.AnimBottom;
         infoDialog.getWindow().setGravity(Gravity.BOTTOM);
+        infoDialog.getWindow().setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.WRAP_CONTENT);
         infoDialog.show();
 
-        RelativeLayout layout=(RelativeLayout) infoDialog.findViewById(R.id.pop_layout);
+//        RelativeLayout layout=(RelativeLayout) infoDialog.findViewById(R.id.pop_layout);
 
 //        添加选择窗口范围监听可以优先获取触点，即不再执行onTouchEvent()函数，点击其他地方时执行onTouchEvent()函数销毁Activity
-        layout.setOnClickListener(new View.OnClickListener() {
-
-            public void onClick(View v) {
-                infoDialog.dismiss();
-                Toast.makeText(getActivity().getApplicationContext(), "提示：点击窗口外部关闭窗口！",
-                        Toast.LENGTH_SHORT).show();
-            }
-        });
+//        layout.setOnClickListener(new View.OnClickListener() {
+//
+//            public void onClick(View v) {
+//                infoDialog.dismiss();
+//                Toast.makeText(getActivity().getApplicationContext(), "提示：点击窗口外部关闭窗口！",
+//                        Toast.LENGTH_SHORT).show();
+//            }
+//        });
 
 //        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
 //        builder.setMessage("Are you sure you want to exit?")
