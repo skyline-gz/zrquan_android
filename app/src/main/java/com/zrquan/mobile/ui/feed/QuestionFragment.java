@@ -1,16 +1,15 @@
 package com.zrquan.mobile.ui.feed;
 
-import android.app.AlertDialog;
-import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.zrquan.mobile.R;
+import com.zrquan.mobile.ui.demo.SelectPicPopupWindow;
 
 //问答 动态
 public class QuestionFragment extends Fragment {
@@ -32,6 +31,7 @@ public class QuestionFragment extends Fragment {
     }
 
     public void createDialog() {
+        startActivity(new Intent(getActivity(), SelectPicPopupWindow.class));
 //        BottomMenuFragment df = new BottomMenuFragment();
 //        FragmentTransaction ft = getChildFragmentManager().beginTransaction();
 //        ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
