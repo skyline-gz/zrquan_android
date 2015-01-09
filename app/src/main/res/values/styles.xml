@@ -10,6 +10,12 @@
         <item name="android:windowExitAnimation">@anim/anim_menu_slide_down</item>
     </style>
 
+    <style name="BottomMenuDialogTheme2" parent="android:Theme.Dialog">
+        <item name="android:windowFrame">@null</item>
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowBackground">@null</item>
+    </style>
+
     <style name="BottomMenuDialogTheme" parent="android:Theme.Dialog">
         <item name="android:windowAnimationStyle">@style/AnimBottom</item>
         <item name="android:windowFrame">@null</item>
