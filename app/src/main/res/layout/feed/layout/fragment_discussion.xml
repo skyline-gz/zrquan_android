@@ -28,14 +28,12 @@
 
         <ImageView
             android:id="@+id/image_view_cancel_banner"
-            android:contentDescription="删除banner显示"
+            android:contentDescription="删除banner"
             android:layout_alignTop="@+id/view_pager_banner"
             android:layout_alignRight="@+id/view_pager_banner"
-            android:src="@drawable/btn_del_group"
-            android:layout_margin="6dp"
-            android:scaleType="fitXY"
-            android:layout_width="12dp"
-            android:layout_height="12dp" />
+            android:src="@drawable/ad_close_icon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
 
     </RelativeLayout>
 

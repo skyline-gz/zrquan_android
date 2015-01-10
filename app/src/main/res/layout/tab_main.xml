@@ -9,17 +9,18 @@
         android:contentDescription="@string/abc_action_bar_home_description"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:paddingTop="8dp"
+        android:paddingTop="3dp"
         android:focusable="false"
         android:src="@drawable/tab_feeds_normal"/>
 
     <TextView
         android:id="@+id/tvTitle"
+        android:layout_marginTop="-3dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:paddingBottom="8dp"
+        android:paddingBottom="3dp"
         android:text="社区"
-        android:textSize="12sp"
+        android:textSize="10sp"
         android:textColor="@color/tab_text"/>
 
 </LinearLayout>

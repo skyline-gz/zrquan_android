@@ -18,14 +18,15 @@ public class MainActivity extends FragmentActivity {
     private LayoutInflater inflater;
 
     //定义数组来存放Fragment界面
-    private Class fragmentArray[] = {FeedFragment.class,MessageFragment.class,FeedFragment.class,MessageFragment.class};
+    private Class fragmentArray[] = {FeedFragment.class, MessageFragment.class,
+            FeedFragment.class,MessageFragment.class};
 
     //定义数组来存放按钮图片
-    private int mImageViewArray[] = {R.drawable.tab_home_btn,
-            R.drawable.tab_message_btn, R.drawable.tab_find_btn, R.drawable.tab_myself_btn};
+    private int mImageViewArray[] = {R.drawable.tab_home_btn, R.drawable.tab_find_btn,
+            R.drawable.tab_message_btn, R.drawable.tab_myself_btn};
 
     //Tab选项卡的文字
-    private String mTextViewArray[] = {"首页", "消息", "发现", "我"};
+    private String mTextViewArray[] = {"首页", "关注的", "消息", "我"};
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

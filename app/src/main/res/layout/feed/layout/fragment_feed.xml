@@ -5,18 +5,18 @@
     android:orientation="vertical" >
 
     <RelativeLayout
-        android:paddingTop="16dp"
+        android:paddingTop="8dp"
         android:paddingLeft="16dp"
         android:paddingRight="16dp"
-        android:background="#ffffff"
+        android:background="@drawable/navigationbar_background"
         android:layout_width="match_parent"
-        android:layout_height="54dp"
+        android:layout_height="45dp"
         android:orientation="horizontal">
 
         <ImageView
             android:contentDescription="搜索"
             android:layout_alignParentLeft="true"
-            android:src="@drawable/btn_add_group"
+            android:src="@drawable/btn_navigation_search"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
 
@@ -29,30 +29,30 @@
                 android:id="@+id/tv_discussion"
                 android:background="@drawable/bg_feed_tab_border_bottom"
                 android:layout_width="wrap_content"
-                android:layout_height="35dp"
+                android:layout_height="30dp"
                 android:layout_weight="1.0"
                 android:gravity="center"
                 android:textColor="@color/tab_text"
                 android:text="职场讨论"
-                android:textSize="20sp" />
+                android:textSize="18sp" />
 
             <TextView
                 android:id="@+id/tv_question"
                 android:paddingBottom="5dp"
                 android:layout_width="wrap_content"
-                android:layout_height="35dp"
+                android:layout_height="30dp"
                 android:layout_weight="1.0"
                 android:gravity="center"
                 android:textColor="@color/tab_text"
                 android:layout_marginLeft="50dp"
                 android:text="职人问答"
-                android:textSize="20sp" />
+                android:textSize="18sp" />
             </LinearLayout>
 
         <ImageView
             android:contentDescription="添加"
             android:layout_alignParentRight="true"
-            android:src="@drawable/btn_del_group"
+            android:src="@drawable/btn_navigation_compose"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
     </RelativeLayout>

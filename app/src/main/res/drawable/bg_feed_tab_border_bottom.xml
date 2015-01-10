@@ -4,7 +4,7 @@
         <shape android:shape="rectangle" >
             <stroke
                 android:width="2dp"
-                android:color="#FF007FFF" />
+                android:color="@color/navigationbar_text_color" />
         </shape>
     </item>
 
