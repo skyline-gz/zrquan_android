@@ -105,7 +105,7 @@ public class FeedFragment extends Fragment {
 
     private void selectTabDiscussion() {
         tvDiscussion.setSelected(true);
-        tvDiscussion.setBackgroundResource(R.drawable.bg_feed_tab_border_bottom);
+        tvDiscussion.setBackgroundResource(R.drawable.bg_navigation_text_selected);
         tvQuestion.setSelected(false);
         tvQuestion.setBackgroundResource(Color.TRANSPARENT);
     }
@@ -114,6 +114,6 @@ public class FeedFragment extends Fragment {
         tvDiscussion.setSelected(false);
         tvDiscussion.setBackgroundResource(Color.TRANSPARENT);
         tvQuestion.setSelected(true);
-        tvQuestion.setBackgroundResource(R.drawable.bg_feed_tab_border_bottom);
+        tvQuestion.setBackgroundResource(R.drawable.bg_navigation_text_selected);
     }
 }

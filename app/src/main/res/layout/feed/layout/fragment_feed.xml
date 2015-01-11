@@ -27,7 +27,7 @@
 
             <TextView
                 android:id="@+id/tv_discussion"
-                android:background="@drawable/bg_feed_tab_border_bottom"
+                android:background="@drawable/bg_navigation_text_selected"
                 android:layout_width="wrap_content"
                 android:layout_height="30dp"
                 android:layout_weight="1.0"
@@ -60,7 +60,7 @@
     <View
         android:layout_width="fill_parent"
         android:layout_height="1dp"
-        android:background="#ffc0c0c0"/>
+        android:background="@color/border_main_frame_color"/>
 
     <android.support.v4.view.ViewPager
         android:id="@+id/viewpager"

@@ -21,7 +21,7 @@
     <View
         android:layout_width="fill_parent"
         android:layout_height="1dp"
-        android:background="#ffc0c0c0"/>
+        android:background="@color/border_main_frame_color"/>
 
     <android.support.v4.app.FragmentTabHost
         android:id="@android:id/tabhost"

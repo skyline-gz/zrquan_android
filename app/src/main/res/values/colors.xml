@@ -169,14 +169,6 @@
     <color name="main_button_shadow_text_color_for_deep_color_button">#59000000</color>
     <color name="main_button_shadow_disabled_text_color_for_deep_color_button">#26000000</color>
     <color name="main_avatar_stroke_color">#26000000</color>
-    <color name="navigationbar_title_color">#ff525252</color>
-    <color name="navigationbar_button_text_color">#ff525252</color>
-    <color name="navigationbar_button_disabled_text_color">#88525252</color>
-    <color name="navigationbar_subtitle_color">#ff7d8897</color>
-    <color name="tabbar_title_color">#ff5d5d5d</color>
-    <color name="tabbar_selected_title_color">#ffff8200</color>
-    <color name="tabbar_badge_text_color">#ffffffff</color>
-    <color name="toolbar_button_text_color">#ffdbdbdb</color>
     <color name="group_name_text_color">#ffffffff</color>
     <color name="group_section_header_text_color">#ff333333</color>
     <color name="group_name_selected_text_color">#ffffa500</color>
@@ -198,7 +190,6 @@
     <color name="message_record_button_text_shadow_color">#7fffffff</color>
     <color name="message_record_button_highlighted_text_color">#ffdbdbdb</color>
     <color name="message_record_button_highlighted_text_shadow_color">#59000000</color>
-    <color name="navigationbar_text_color">#ffff8200</color>
     <color name="rating_bar_bottom_color">#ffe0e0e0</color>
     <color name="timeline_clickable_text_highlighted_background">#ffbedfff</color>
     <color name="detail_portrait_border_color">#0d000000</color>
@@ -465,7 +456,22 @@
     <color name="vpi__background_holo_light">#fff3f3f3</color>
     <color name="vpi__bright_foreground_holo_dark">@color/vpi__background_holo_light</color>
     <color name="vpi__bright_foreground_holo_light">@color/vpi__background_holo_dark</color>
+
+    <!--换页指示器-->
     <!--<color name="default_circle_indicator_fill_color">#ff000000</color>-->
     <!--<color name="default_circle_indicator_page_color">#00000000</color>-->
     <!--<color name="default_circle_indicator_stroke_color">#ffdddddd</color>-->
+
+    <!--导航栏主色-->
+    <color name="navigationbar_text_color">#ffff8200</color>
+    <color name="border_main_frame_color">#ffd0d0d0</color>
+
+    <color name="navigationbar_title_color">#ff525252</color>
+    <color name="navigationbar_button_text_color">#ff525252</color>
+    <color name="navigationbar_button_disabled_text_color">#88525252</color>
+    <color name="navigationbar_subtitle_color">#ff7d8897</color>
+    <color name="tabbar_title_color">#ff5d5d5d</color>
+    <color name="tabbar_selected_title_color">#ffff8200</color>
+    <color name="tabbar_badge_text_color">#ffffffff</color>
+    <color name="toolbar_button_text_color">#ffdbdbdb</color>
 </resources>
