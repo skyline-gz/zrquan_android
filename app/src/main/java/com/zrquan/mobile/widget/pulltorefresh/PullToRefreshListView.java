@@ -84,10 +84,6 @@ public class PullToRefreshListView extends PullToRefreshBase<ListView> implement
         }
     }
 
-    public void addHeaderView(View v) {
-        mListView.addHeaderView(v);
-    }
-
     /**
      * 设置滑动的监听器
      * 

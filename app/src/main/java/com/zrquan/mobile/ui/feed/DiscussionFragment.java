@@ -1,6 +1,7 @@
 package com.zrquan.mobile.ui.feed;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -57,15 +58,31 @@ public class DiscussionFragment extends Fragment {
                              Bundle savedInstanceState) {
         context = getActivity().getApplicationContext();
 
+        View bannerView = initBanner(inflater, container);
+        // http://stackoverflow.com/questions/4393775/android-classcastexception-when-adding-a-header-view-to-expandablelistview
+        // ERROR/AndroidRuntime(421): Caused by:java.lang.ClassCastException: android.widget.LinearLayout$LayoutParams
+        // 修复因HeadView不是ListView导致的运行时异常
+        // So basically, if you are adding a view to another,
+        // you MUST set the LayoutParams of the view to the LayoutParams type that the parent uses,
+        // or you will get a runtime error.
+        bannerView.setLayoutParams(new ListView.LayoutParams(ListView.LayoutParams.MATCH_PARENT,
+                ListView.LayoutParams.WRAP_CONTENT));
+
         mPullListView = new PullToRefreshListView(context);
         mPullListView.setPullLoadEnabled(false);
         mPullListView.setScrollLoadEnabled(true);
+        mPullListView.setBackgroundColor(Color.BLACK);
         mCurIndex = mLoadDataCount;
         mListItems = new LinkedList<String>();
         mListItems.addAll(Arrays.asList(mStrings).subList(0, mCurIndex));
         mAdapter = new ArrayAdapter<String>(context, android.R.layout.simple_list_item_1, mListItems);
         mListView = mPullListView.getRefreshableView();
+
+        // Note: When first introduced, this method could only be called before
+        // setting the adapter with {@link #setAdapter(ListAdapter)}. Starting with
+        mListView.addHeaderView(bannerView);
         mListView.setAdapter(mAdapter);
+
         mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> arg0, View view, int position, long id) {
@@ -87,18 +104,6 @@ public class DiscussionFragment extends Fragment {
             }
         });
         setLastUpdateTime();
-
-        View bannerView = initBanner(inflater, container);
-        mPullListView.addHeaderView(bannerView);
-
-        //http://stackoverflow.com/questions/4393775/android-classcastexception-when-adding-a-header-view-to-expandablelistview
-        //ERROR/AndroidRuntime(421): Caused by:java.lang.ClassCastException: android.widget.LinearLayout$LayoutParams
-        //修复因HeadView不是ListView导致的运行时异常
-        //So basically, if you are adding a view to another,
-        // you MUST set the LayoutParams of the view to the LayoutParams type that the parent uses,
-        // or you will get a runtime error.
-        bannerView.setLayoutParams(new ListView.LayoutParams(ListView.LayoutParams.MATCH_PARENT,
-                ListView.LayoutParams.WRAP_CONTENT));
 
         mPullListView.doPullRefreshing(true, 500);
 
