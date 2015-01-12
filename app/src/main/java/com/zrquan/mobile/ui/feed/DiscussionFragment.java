@@ -56,9 +56,6 @@ public class DiscussionFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         context = getActivity().getApplicationContext();
-        AppLogger.d("123");
-
-//        View vBanner = inflater.inflate(R.layout.fragment_discussion, container, false);
 
         mPullListView = new PullToRefreshListView(context);
         mPullListView.setPullLoadEnabled(false);
@@ -90,7 +87,18 @@ public class DiscussionFragment extends Fragment {
             }
         });
         setLastUpdateTime();
-//        mPullListView.addHeaderView(initBanner(inflater, container));
+
+        View bannerView = initBanner(inflater, container);
+        mPullListView.addHeaderView(bannerView);
+
+        //http://stackoverflow.com/questions/4393775/android-classcastexception-when-adding-a-header-view-to-expandablelistview
+        //ERROR/AndroidRuntime(421): Caused by:java.lang.ClassCastException: android.widget.LinearLayout$LayoutParams
+        //修复因HeadView不是ListView导致的运行时异常
+        //So basically, if you are adding a view to another,
+        // you MUST set the LayoutParams of the view to the LayoutParams type that the parent uses,
+        // or you will get a runtime error.
+        bannerView.setLayoutParams(new ListView.LayoutParams(ListView.LayoutParams.MATCH_PARENT,
+                ListView.LayoutParams.WRAP_CONTENT));
 
         mPullListView.doPullRefreshing(true, 500);
 
