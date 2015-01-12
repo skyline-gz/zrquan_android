@@ -3,7 +3,7 @@
  * trinea.cn ("Confidential Information"). You shall not disclose such Confidential Information and shall use it only in
  * accordance with the terms of the license agreement you entered into with trinea.cn.
  */
-package com.zrquan.mobile.ui.viewpager;
+package com.zrquan.mobile.widget.viewpager;
 
 import java.util.List;
 
@@ -13,7 +13,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import com.zrquan.mobile.support.util.ListUtils;
 
-import com.zrquan.mobile.ui.salvage.RecyclingPagerAdapter;
+import com.zrquan.mobile.widget.salvage.RecyclingPagerAdapter;
 
 /**
  * ImagePagerAdapter

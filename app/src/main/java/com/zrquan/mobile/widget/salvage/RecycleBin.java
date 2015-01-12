@@ -1,4 +1,4 @@
-package com.zrquan.mobile.ui.salvage;
+package com.zrquan.mobile.widget.salvage;
 
 import android.os.Build;
 import android.util.SparseArray;

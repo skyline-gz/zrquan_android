@@ -1,4 +1,4 @@
-package com.zrquan.mobile.ui.picker;
+package com.zrquan.mobile.widget.picker;
 
 import android.annotation.SuppressLint;
 import android.content.Context;

@@ -1,4 +1,4 @@
-package com.zrquan.mobile.ui.salvage;
+package com.zrquan.mobile.widget.salvage;
 
 import android.support.v4.view.PagerAdapter;
 import android.view.View;

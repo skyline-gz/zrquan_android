@@ -13,7 +13,7 @@
         android:layout_height="match_parent"
         android:alpha="1.0">
 
-        <com.zrquan.mobile.ui.viewpager.AutoScrollViewPager
+        <com.zrquan.mobile.widget.viewpager.AutoScrollViewPager
             android:id="@+id/view_pager_banner"
             android:layout_width="match_parent"
             android:layout_height="150dp" />

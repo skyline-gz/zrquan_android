@@ -1,4 +1,4 @@
-package com.zrquan.mobile.ui.viewpager;
+package com.zrquan.mobile.widget.viewpager;
 
 import android.content.Context;
 import android.view.animation.Interpolator;

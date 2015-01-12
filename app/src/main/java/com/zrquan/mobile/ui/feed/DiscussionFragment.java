@@ -4,19 +4,18 @@ import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 
 import com.zrquan.mobile.R;
 import com.viewpagerindicator.CirclePageIndicator;
-import com.zrquan.mobile.ui.viewpager.AutoScrollViewPager;
-import com.zrquan.mobile.ui.viewpager.ImagePagerAdapter;
+
+import com.zrquan.mobile.widget.viewpager.AutoScrollViewPager;
+import com.zrquan.mobile.widget.viewpager.ImagePagerAdapter;
 
 import java.util.ArrayList;
 import java.util.List;
