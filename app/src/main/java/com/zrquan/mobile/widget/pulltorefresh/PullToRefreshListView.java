@@ -1,7 +1,5 @@
 package com.zrquan.mobile.widget.pulltorefresh;
 
-import com.lee.pullrefresh.ui.ILoadingLayout.State;
-
 import android.content.Context;
 import android.util.AttributeSet;
 import android.view.View;
@@ -9,6 +7,8 @@ import android.widget.AbsListView;
 import android.widget.AbsListView.OnScrollListener;
 import android.widget.Adapter;
 import android.widget.ListView;
+
+import com.zrquan.mobile.widget.pulltorefresh.ILoadingLayout.State;
 
 /**
  * 这个类实现了ListView下拉刷新，上加载更多和滑到底部自动加载
@@ -82,6 +82,10 @@ public class PullToRefreshListView extends PullToRefreshBase<ListView> implement
                 footerLoadingLayout.setState(State.NO_MORE_DATA);
             }
         }
+    }
+
+    public void addHeaderView(View v) {
+        mListView.addHeaderView(v);
     }
 
     /**

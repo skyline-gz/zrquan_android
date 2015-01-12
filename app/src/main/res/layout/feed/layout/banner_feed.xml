@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/layout_banner"
+    android:layout_marginTop="6dp"
+    android:layout_marginLeft="6dp"
+    android:layout_marginRight="6dp"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:alpha="1.0">
+
+    <com.zrquan.mobile.widget.viewpager.AutoScrollViewPager
+        android:id="@+id/view_pager_banner"
+        android:layout_width="match_parent"
+        android:layout_height="150dp" />
+
+    <com.viewpagerindicator.CirclePageIndicator
+        android:id="@+id/indicator_banner"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/view_pager_banner"
+        android:layout_centerHorizontal="true"
+        android:padding="@dimen/dp_8" />
+
+    <ImageView
+        android:id="@+id/image_view_cancel_banner"
+        android:contentDescription="删除banner"
+        android:layout_alignTop="@+id/view_pager_banner"
+        android:layout_alignRight="@+id/view_pager_banner"
+        android:src="@drawable/ad_close_icon"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+</RelativeLayout>
