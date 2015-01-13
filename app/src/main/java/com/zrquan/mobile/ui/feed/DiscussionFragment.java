@@ -39,7 +39,7 @@ import java.util.List;
 public class DiscussionFragment extends Fragment {
     private Context context;
     private AutoScrollViewPager vpBanner;
-    private CirclePageIndicator   indicatorBanner;
+    private CirclePageIndicator indicatorBanner;
     private ImageView ivCancelBanner;
     private RelativeLayout rlBanner;
 
@@ -52,81 +52,82 @@ public class DiscussionFragment extends Fragment {
     private int mCurIndex = 0;
     private static final int mLoadDataCount = 100;
 
-    private int                   index;
+    private int index;
 //    private ScrollControlReceiver scrollControlReceiver;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        context = getActivity().getApplicationContext();
 
-//        LinearLayout discussionLayout = (LinearLayout) inflater.inflate(R.layout.fragment_discussion, null);
+        if (mPullListView == null) {
+            context = getActivity().getApplicationContext();
 
-        View bannerView = initBanner(inflater, container);
-        // http://stackoverflow.com/questions/4393775/android-classcastexception-when-adding-a-header-view-to-expandablelistview
-        // ERROR/AndroidRuntime(421): Caused by:java.lang.ClassCastException: android.widget.LinearLayout$LayoutParams
-        // 修复因HeadView不是ListView导致的运行时异常
-        // So basically, if you are adding a view to another,
-        // you MUST set the LayoutParams of the view to the LayoutParams type that the parent uses,
-        // or you will get a runtime error.
-        bannerView.setLayoutParams(new ListView.LayoutParams(ListView.LayoutParams.MATCH_PARENT,
-                ListView.LayoutParams.WRAP_CONTENT));
+            View bannerView = getBannerView(inflater, container);
+            // http://stackoverflow.com/questions/4393775/android-classcastexception-when-adding-a-header-view-to-expandablelistview
+            // ERROR/AndroidRuntime(421): Caused by:java.lang.ClassCastException: android.widget.LinearLayout$LayoutParams
+            // 修复因HeadView不是ListView导致的运行时异常
+            // So basically, if you are adding a view to another,
+            // you MUST set the LayoutParams of the view to the LayoutParams type that the parent uses,
+            // or you will get a runtime error.
+            bannerView.setLayoutParams(new ListView.LayoutParams(ListView.LayoutParams.MATCH_PARENT,
+                    ListView.LayoutParams.WRAP_CONTENT));
 
-        mPullListView = new PullToRefreshListView(context);
+            mPullListView = new PullToRefreshListView(context);
 
-        mPullListView.setBackgroundColor(getResources().getColor(R.color.main_feed_background_color));
-        mCurIndex = mLoadDataCount;
-        mListItems = new LinkedList<String>();
-        mListItems.addAll(Arrays.asList(mStrings).subList(0, mCurIndex));
-        mAdapter = new ArrayAdapter<String>(context, R.layout.layout_discussion_card_item, R.id.line1, mListItems);
-        mListView = mPullListView.getRefreshableView();
+            mPullListView.setBackgroundColor(getResources().getColor(R.color.main_feed_background_color));
+            mCurIndex = mLoadDataCount;
+            mListItems = new LinkedList<String>();
+            mListItems.addAll(Arrays.asList(mStrings).subList(0, mCurIndex));
+            mAdapter = new ArrayAdapter<String>(context, R.layout.layout_discussion_card_item, R.id.line1, mListItems);
+            mListView = mPullListView.getRefreshableView();
 
-        // Note: When first introduced, this method could only be called before
-        // setting the adapter with {@link #setAdapter(ListAdapter)}. Starting with
-        mListView.addHeaderView(bannerView);
-        mListView.setAdapter(mAdapter);
-        mListView.setDivider(null);
-        float px = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 6, getResources().getDisplayMetrics());
-        mListView.setDividerHeight((int)px);
-        mListView.setSelector(android.R.color.transparent);
-        mListView.setCacheColorHint(Color.TRANSPARENT);
+            // Note: When first introduced, this method could only be called before
+            // setting the adapter with {@link #setAdapter(ListAdapter)}. Starting with
+            mListView.addHeaderView(bannerView);
+            mListView.setAdapter(mAdapter);
+            mListView.setDivider(null);
+            float px = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 6, getResources().getDisplayMetrics());
+            mListView.setDividerHeight((int) px);
+            mListView.setSelector(android.R.color.transparent);
+            mListView.setCacheColorHint(Color.TRANSPARENT);
 
-        mPullListView.setPullLoadEnabled(false);
-        mPullListView.setScrollLoadEnabled(true);
+            mPullListView.setPullLoadEnabled(false);
+            mPullListView.setScrollLoadEnabled(true);
 
-        mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> arg0, View view, int position, long id) {
-                String text = mListItems.get(position) + ", index = " + (position + 1);
-                Toast.makeText(getActivity(), text, Toast.LENGTH_SHORT).show();
-            }
-        });
-        mPullListView.setOnRefreshListener(new PullToRefreshBase.OnRefreshListener<ListView>() {
-            @Override
-            public void onPullDownToRefresh(PullToRefreshBase<ListView> refreshView) {
-                mIsStart = true;
-                new GetDataTask().execute();
-            }
+            mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                @Override
+                public void onItemClick(AdapterView<?> arg0, View view, int position, long id) {
+                    String text = mListItems.get(position) + ", index = " + (position + 1);
+                    Toast.makeText(getActivity(), text, Toast.LENGTH_SHORT).show();
+                }
+            });
+            mPullListView.setOnRefreshListener(new PullToRefreshBase.OnRefreshListener<ListView>() {
+                @Override
+                public void onPullDownToRefresh(PullToRefreshBase<ListView> refreshView) {
+                    mIsStart = true;
+                    new GetDataTask().execute();
+                }
 
-            @Override
-            public void onPullUpToRefresh(PullToRefreshBase<ListView> refreshView) {
-                mIsStart = false;
-                new GetDataTask().execute();
-            }
-        });
-        setLastUpdateTime();
-
-        mPullListView.doPullRefreshing(true, 500);
+                @Override
+                public void onPullUpToRefresh(PullToRefreshBase<ListView> refreshView) {
+                    mIsStart = false;
+                    new GetDataTask().execute();
+                }
+            });
+            setLastUpdateTime();
+        } else {
+            ((ViewGroup) mPullListView.getParent()).removeView(mPullListView);
+        }
 
         return mPullListView;
     }
 
-    private View initBanner(LayoutInflater inflater, ViewGroup container) {
+    private View getBannerView(LayoutInflater inflater, ViewGroup container) {
         View v = inflater.inflate(R.layout.banner_feed, container, false);
-        rlBanner = (RelativeLayout)v.findViewById(R.id.layout_banner);
-        vpBanner = (AutoScrollViewPager)v.findViewById(R.id.view_pager_banner);
-        indicatorBanner = (CirclePageIndicator)v.findViewById(R.id.indicator_banner);
-        ivCancelBanner = (ImageView)v.findViewById(R.id.image_view_cancel_banner);
+        rlBanner = (RelativeLayout) v.findViewById(R.id.layout_banner);
+        vpBanner = (AutoScrollViewPager) v.findViewById(R.id.view_pager_banner);
+        indicatorBanner = (CirclePageIndicator) v.findViewById(R.id.indicator_banner);
+        ivCancelBanner = (ImageView) v.findViewById(R.id.image_view_cancel_banner);
 
         List<Integer> imageIdList = new ArrayList<Integer>();
         imageIdList.add(R.drawable.banner1);

@@ -33,8 +33,6 @@ public class MainActivity extends FragmentActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-//        addCard ();
-
         inflater = LayoutInflater.from(this);
         FragmentTabHost mTabHost = (FragmentTabHost) findViewById(android.R.id.tabhost);
         mTabHost.setup(getApplicationContext(), getSupportFragmentManager(), R.id.real_tab_content);
@@ -106,21 +104,4 @@ public class MainActivity extends FragmentActivity {
         CharSequence cs = "possible value " + id;
         Toast.makeText(this, cs, Toast.LENGTH_LONG).show();
     }
-
-//    private void addCard() {
-//        //Create a Card
-//        Card card = new Card(this);
-//
-//        //Create a CardHeader
-//        CardHeader header = new CardHeader(this);
-//
-//        //Add Header to card
-//        card.addCardHeader(header);
-//
-//        //Set the card inner text
-//        card.setTitle("My Title");
-//
-//        CardViewNative cardView = (CardViewNative) findViewById(R.id.carddemo);
-//        cardView.setCard(card);
-//    }
 }

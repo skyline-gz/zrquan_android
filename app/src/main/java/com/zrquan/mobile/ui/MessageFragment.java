@@ -13,41 +13,17 @@ import com.zrquan.mobile.R;
 
 public class MessageFragment extends Fragment {
 
-//    @Override
-//    protected void onCreate(Bundle savedInstanceState) {
-//        super.onCreate(savedInstanceState);
-//        setContentView(R.layout.activity_feed);
-//    }
+    private View rootView;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        if(rootView == null){
+            rootView = inflater.inflate(R.layout.activity_message, container, false);
+        } else {
+            ((ViewGroup) rootView.getParent()).removeView(rootView);
+        }
 
-        return inflater.inflate(R.layout.activity_message, null);
+        return rootView;
     }
-
-//    @Override
-//    public boolean onCreateOptionsMenu(Menu menu) {
-//        // Inflate the menu; this adds items to the action bar if it is present.
-//        getMenuInflater().inflate(R.menu.menu_main, menu);
-//        return true;
-//    }
-
-//    @Override
-//    public boolean onOptionsItemSelected(MenuItem item) {
-    // Handle action bar item clicks here. The action bar will
-    // automatically handle clicks on the Home/Up button, so long
-    // as you specify a parent activity in AndroidManifest.xml.
-//        int id = item.getItemId();
-//
-//        //noinspection SimplifiableIfStatement
-//        if (id == R.id.action_settings) {
-//
-//            return true;
-//        } else if (id == R.id.action_card) {
-//            return true;
-//        }
-
-//        return super.onOptionsItemSelected(item);
-//    }
 }

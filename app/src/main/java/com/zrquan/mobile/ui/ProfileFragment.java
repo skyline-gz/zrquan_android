@@ -16,13 +16,23 @@ import com.zrquan.mobile.ui.demo.DemoSettingActivity;
 public class ProfileFragment extends Fragment {
 
     private Context context;
+    private View rootView;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        context = getActivity().getApplicationContext();
-        View v = inflater.inflate(R.layout.fragment_profile, null);
+        if(rootView == null){
+            context = getActivity().getApplicationContext();
+            rootView = inflater.inflate(R.layout.fragment_profile, container, false);
+            initNavigationBar(rootView);
+        } else {
+            ((ViewGroup) rootView.getParent()).removeView(rootView);
+        }
 
+        return rootView;
+    }
+
+    private void initNavigationBar(View v) {
         TextView tvBtnSetting = (TextView) v.findViewById(R.id.tv_btn_setting);
         tvBtnSetting.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -34,7 +44,5 @@ public class ProfileFragment extends Fragment {
                 getActivity().startActivity(myIntent);
             }
         });
-
-        return v;
     }
 }

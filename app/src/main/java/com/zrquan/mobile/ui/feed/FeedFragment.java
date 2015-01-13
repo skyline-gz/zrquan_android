@@ -15,44 +15,47 @@ import com.zrquan.mobile.R;
 import java.util.ArrayList;
 
 public class FeedFragment extends Fragment {
+    private View rootView;  //当前Fragment持有的View实例
     private ViewPager mPager;
     private ArrayList<Fragment> fragmentList;
     private TextView tvDiscussion, tvQuestion;
     private int currIndex;//当前页卡编号
 
-//    @Override
-//    protected void onCreate(Bundle savedInstanceState) {
-//        super.onCreate(savedInstanceState);
-//        setContentView(R.layout.activity_feed);
-//    }
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        View view = inflater.inflate(R.layout.fragment_feed, container, false);
-        initNavBar(view);
-        initViewPager(view);
-        return view;
+        //Avoid recreating same view when perform tab switching
+        //http://stackoverflow.com/questions/10716571/avoid-recreating-same-view-when-perform-tab-switching
+        if (rootView == null) {
+            rootView = inflater.inflate(R.layout.fragment_feed, container, false);
+            initNavBar(rootView);
+            initViewPager(rootView);
+            setRetainInstance(true);
+        } else {
+            ((ViewGroup) rootView.getParent()).removeView(rootView);
+        }
+        return rootView;
     }
 
     /*
-	 * 初始化导航栏
+     * 初始化导航栏
 	 */
-    private void initNavBar(View view){
-        tvDiscussion = (TextView)view.findViewById(R.id.tv_discussion);
-        tvQuestion = (TextView)view.findViewById(R.id.tv_question);
+    private void initNavBar(View view) {
+        tvDiscussion = (TextView) view.findViewById(R.id.tv_discussion);
+        tvQuestion = (TextView) view.findViewById(R.id.tv_question);
 
         tvDiscussion.setOnClickListener(new TxListener(0));
         tvQuestion.setOnClickListener(new TxListener(1));
     }
 
-    private class TxListener implements View.OnClickListener{
-        private int index=0;
+    private class TxListener implements View.OnClickListener {
+        private int index = 0;
 
         public TxListener(int i) {
-            index =i;
+            index = i;
         }
+
         @Override
         public void onClick(View v) {
             mPager.setCurrentItem(index);
@@ -62,7 +65,7 @@ public class FeedFragment extends Fragment {
     /*
      * 初始化ViewPager
      */
-    private void initViewPager(View view){
+    private void initViewPager(View view) {
         mPager = (ViewPager) view.findViewById(R.id.viewpager);
         fragmentList = new ArrayList<>();
         fragmentList.add(new DiscussionFragment());
@@ -89,7 +92,7 @@ public class FeedFragment extends Fragment {
 
         @Override
         public void onPageSelected(int position) {
-            switch(position) {
+            switch (position) {
                 case 0:
                     selectTabDiscussion();
                     break;
