@@ -17,6 +17,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".ui.demo.SelectPicPopupWindow" android:theme="@style/BottomMenuDialogTheme" />
+        <activity android:label="@string/app_name" android:name=".ui.demo.DemoSettingActivity"/>
     </application>
 
 </manifest>

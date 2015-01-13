@@ -31,6 +31,7 @@
             android:padding="6dp"
             android:singleLine="true"
             android:text="设置"
+            android:clickable="true"
             android:textColor="@color/navigationbar_text_color"
             android:textSize="15dp" />
     </RelativeLayout>

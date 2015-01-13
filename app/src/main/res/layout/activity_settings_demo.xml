@@ -6,27 +6,39 @@
     android:background="#ffefebe7" >
 
     <RelativeLayout
-        android:id="@+id/top_relative"
+        android:paddingTop="8dp"
+        android:paddingLeft="16dp"
+        android:paddingRight="16dp"
+        android:id="@+id/setting_action_bar"
         android:layout_width="fill_parent"
-        android:background="#106184"
-        android:layout_height="50.0dip" >
+        android:background="@drawable/navigationbar_background"
+        android:layout_height="45dp" >
+
+        <ImageView
+            android:id="@+id/iv_btn_back"
+            android:layout_alignParentLeft="true"
+            android:background="@drawable/navigationbar_back"
+            android:clickable="true"
+            android:onClick="onBtnBackClick"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
 
         <TextView
             android:id="@+id/titleText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
-            android:padding="10.0dip"
+            android:padding="6dp"
             android:singleLine="true"
             android:text="设置"
-            android:textColor="@color/white"
-            android:textSize="15dp" />
+            android:textColor="@color/titlebar_title_text"
+            android:textSize="18dp" />
     </RelativeLayout>
     <!--用来垂直滚动视图，用于设置项较多的情形。如果设置项不多，例如上面的qq，那么就不需要了。-->
     <ScrollView
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/top_relative"
+        android:layout_below="@+id/setting_action_bar"
         android:fadingEdge="none" >
 
         <LinearLayout
