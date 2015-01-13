@@ -5,6 +5,7 @@ import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,6 +14,7 @@ import android.view.animation.AnimationUtils;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
@@ -58,6 +60,8 @@ public class DiscussionFragment extends Fragment {
                              Bundle savedInstanceState) {
         context = getActivity().getApplicationContext();
 
+//        LinearLayout discussionLayout = (LinearLayout) inflater.inflate(R.layout.fragment_discussion, null);
+
         View bannerView = initBanner(inflater, container);
         // http://stackoverflow.com/questions/4393775/android-classcastexception-when-adding-a-header-view-to-expandablelistview
         // ERROR/AndroidRuntime(421): Caused by:java.lang.ClassCastException: android.widget.LinearLayout$LayoutParams
@@ -69,19 +73,26 @@ public class DiscussionFragment extends Fragment {
                 ListView.LayoutParams.WRAP_CONTENT));
 
         mPullListView = new PullToRefreshListView(context);
-        mPullListView.setPullLoadEnabled(false);
-        mPullListView.setScrollLoadEnabled(true);
-        mPullListView.setBackgroundColor(Color.BLACK);
+
+        mPullListView.setBackgroundColor(getResources().getColor(R.color.main_feed_background_color));
         mCurIndex = mLoadDataCount;
         mListItems = new LinkedList<String>();
         mListItems.addAll(Arrays.asList(mStrings).subList(0, mCurIndex));
-        mAdapter = new ArrayAdapter<String>(context, android.R.layout.simple_list_item_1, mListItems);
+        mAdapter = new ArrayAdapter<String>(context, R.layout.layout_discussion_card_item, R.id.line1, mListItems);
         mListView = mPullListView.getRefreshableView();
 
         // Note: When first introduced, this method could only be called before
         // setting the adapter with {@link #setAdapter(ListAdapter)}. Starting with
         mListView.addHeaderView(bannerView);
         mListView.setAdapter(mAdapter);
+        mListView.setDivider(null);
+        float px = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 6, getResources().getDisplayMetrics());
+        mListView.setDividerHeight((int)px);
+        mListView.setSelector(android.R.color.transparent);
+        mListView.setCacheColorHint(Color.TRANSPARENT);
+
+        mPullListView.setPullLoadEnabled(false);
+        mPullListView.setScrollLoadEnabled(true);
 
         mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -106,7 +117,6 @@ public class DiscussionFragment extends Fragment {
         setLastUpdateTime();
 
         mPullListView.doPullRefreshing(true, 500);
-
 
         return mPullListView;
     }

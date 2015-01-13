@@ -154,10 +154,6 @@
     <color name="main_content_button_text_color">#ff929292</color>
     <color name="main_content_subtitle_text_color">#ff828282</color>
     <color name="main_content_split_line_color">#ffdadada</color>
-    <color name="main_feed_background_color">#fff2f2f2</color>
-    <color name="main_feed_retweet_background_color">#fff8f8f8</color>
-    <color name="main_feed_card_background_color">#ffffffff</color>
-    <color name="main_feed_selected_background_color">#fff0f0f0</color>
     <color name="main_link_text_color">#ff507daf</color>
     <color name="main_link_disabled_text_color">#66507daf</color>
     <color name="main_focus_text_color">#fff3b800</color>
@@ -474,4 +470,9 @@
     <color name="tabbar_selected_title_color">#ffff8200</color>
     <color name="tabbar_badge_text_color">#ffffffff</color>
     <color name="toolbar_button_text_color">#ffdbdbdb</color>
+
+    <color name="main_feed_background_color">#fff2f2f2</color>
+    <color name="main_feed_retweet_background_color">#fff8f8f8</color>
+    <color name="main_feed_card_background_color">#ffffffff</color>
+    <color name="main_feed_selected_background_color">#fff0f0f0</color>
 </resources>
