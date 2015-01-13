@@ -8,11 +8,13 @@ package com.zrquan.mobile.widget.viewpager;
 import java.util.List;
 
 import android.content.Context;
+import android.graphics.Color;
+import android.util.TypedValue;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import com.zrquan.mobile.support.util.ListUtils;
 
+import com.zrquan.mobile.widget.roundedimageview.RoundedImageView;
 import com.zrquan.mobile.widget.salvage.RecyclingPagerAdapter;
 
 /**
@@ -56,19 +58,24 @@ public class ImagePagerAdapter extends RecyclingPagerAdapter {
         ViewHolder holder;
         if (view == null) {
             holder = new ViewHolder();
-            view = holder.imageView = new ImageView(context);
+            view = holder.imageView = new RoundedImageView(context);
             view.setTag(holder);
         } else {
             holder = (ViewHolder)view.getTag();
         }
+
+        float roundPx = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 4, context.getResources().getDisplayMetrics());
+
+        holder.imageView.setCornerRadius((float) roundPx);
+        holder.imageView.mutateBackground(true);
         holder.imageView.setImageResource(imageIdList.get(getPosition(position)));
-        holder.imageView.setScaleType(ImageView.ScaleType.FIT_XY);
+        holder.imageView.setScaleType(RoundedImageView.ScaleType.FIT_XY);
         return view;
     }
 
     private static class ViewHolder {
 
-        ImageView imageView;
+        RoundedImageView imageView;
     }
 
     /**
