@@ -19,7 +19,7 @@ public class MainActivity extends FragmentActivity {
 
     //定义数组来存放Fragment界面
     private Class fragmentArray[] = {FeedFragment.class, MessageFragment.class,
-            FeedFragment.class,MessageFragment.class};
+            MessageFragment.class, ProfileFragment.class};
 
     //定义数组来存放按钮图片
     private int mImageViewArray[] = {R.drawable.tab_home_btn, R.drawable.tab_find_btn,

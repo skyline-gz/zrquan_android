@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector
+  xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:state_pressed="true">
+        <nine-patch android:src="@drawable/table_center_press" />
+    </item>
+    <item android:state_enabled="false">
+        <nine-patch android:src="@drawable/table_center" />
+    </item>
+    <item>
+        <nine-patch android:src="@drawable/table_center" />
+    </item>
+</selector>
