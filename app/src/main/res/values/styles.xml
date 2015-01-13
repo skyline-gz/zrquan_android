@@ -34,4 +34,7 @@
         <item name="android:windowCloseOnTouchOutside">true</item>
     </style>
 
+    <style name="StartUpTheme" parent="@style/AppTheme">
+        <item name="android:windowBackground">@drawable/splash</item>
+    </style>
 </resources>
