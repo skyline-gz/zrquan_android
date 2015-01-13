@@ -40,12 +40,9 @@ dependencies {
     compile 'com.android.support:appcompat-v7:21.0.3'
     //google guava
     compile group: 'com.google.guava', name: 'guava', version: '18.0'
-    //Core card library
-    compile 'com.github.gabrielemariotti.cards:cardslib-core:2.0.1'
-    //Optional for built-in cards
-    compile 'com.github.gabrielemariotti.cards:cardslib-cards:2.0.1'
-    //Optional for RecyclerView
-    compile 'com.github.gabrielemariotti.cards:cardslib-recyclerview:2.0.1'
-    compile(name:'library-2.4.1', ext:'aar')
+    //A powerful image downloading and caching library for Android http://square.github.io/picasso/
+    compile 'com.squareup.picasso:picasso:2.4.0'
+    //viewpagerindicator 换页指示器
+    compile(name:'viewpagerindicator-2.4.1', ext:'aar')
 }
 
