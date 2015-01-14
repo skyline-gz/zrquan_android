@@ -7,35 +7,35 @@ import android.webkit.WebView;
 
 /**
  * 封装了WebView的下拉刷新
- * 
+ *
  * @author Li Hong
  * @since 2013-8-22
  */
 public class PullToRefreshWebView extends PullToRefreshBase<WebView> {
     /**
      * 构造方法
-     * 
+     *
      * @param context context
      */
     public PullToRefreshWebView(Context context) {
         this(context, null);
     }
-    
+
     /**
      * 构造方法
-     * 
+     *
      * @param context context
-     * @param attrs attrs
+     * @param attrs   attrs
      */
     public PullToRefreshWebView(Context context, AttributeSet attrs) {
         this(context, attrs, 0);
     }
-    
+
     /**
      * 构造方法
-     * 
-     * @param context context
-     * @param attrs attrs
+     *
+     * @param context  context
+     * @param attrs    attrs
      * @param defStyle defStyle
      */
     public PullToRefreshWebView(Context context, AttributeSet attrs, int defStyle) {

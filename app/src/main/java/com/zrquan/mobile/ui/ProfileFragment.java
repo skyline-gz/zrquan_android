@@ -21,7 +21,7 @@ public class ProfileFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        if(rootView == null){
+        if (rootView == null) {
             context = getActivity().getApplicationContext();
             rootView = inflater.inflate(R.layout.fragment_profile, container, false);
             initNavigationBar(rootView);
@@ -38,7 +38,7 @@ public class ProfileFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 CharSequence cs = "点击了设置按钮";
-                Toast.makeText( context, cs, Toast.LENGTH_LONG).show();
+                Toast.makeText(context, cs, Toast.LENGTH_LONG).show();
                 Intent myIntent = new Intent(getActivity(), DemoSettingActivity.class);
 //                myIntent.putExtra("key", value); //Optional parameters
                 getActivity().startActivity(myIntent);

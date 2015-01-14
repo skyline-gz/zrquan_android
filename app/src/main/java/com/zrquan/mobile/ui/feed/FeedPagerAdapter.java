@@ -6,10 +6,11 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
-public class FeedPagerAdapter extends FragmentPagerAdapter{
+public class FeedPagerAdapter extends FragmentPagerAdapter {
 
     ArrayList<Fragment> list;
-    public FeedPagerAdapter(FragmentManager fm,ArrayList<Fragment> list) {
+
+    public FeedPagerAdapter(FragmentManager fm, ArrayList<Fragment> list) {
         super(fm);
         this.list = list;
 

@@ -26,6 +26,7 @@ import com.zrquan.mobile.ui.demo.SelectPicPopupWindow;
 public class QuestionFragment extends Fragment {
 
     private TextView tvTest;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {

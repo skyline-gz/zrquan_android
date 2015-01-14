@@ -12,6 +12,7 @@ import android.graphics.Color;
 import android.util.TypedValue;
 import android.view.View;
 import android.view.ViewGroup;
+
 import com.zrquan.mobile.support.util.ListUtils;
 
 import com.zrquan.mobile.widget.roundedimageview.RoundedImageView;
@@ -19,16 +20,16 @@ import com.zrquan.mobile.widget.salvage.RecyclingPagerAdapter;
 
 /**
  * ImagePagerAdapter
- * 
+ *
  * @author <a href="http://www.trinea.cn" target="_blank">Trinea</a> 2014-2-23
  */
 public class ImagePagerAdapter extends RecyclingPagerAdapter {
 
-    private Context       context;
+    private Context context;
     private List<Integer> imageIdList;
 
-    private int           size;
-    private boolean       isInfiniteLoop;
+    private int size;
+    private boolean isInfiniteLoop;
 
     public ImagePagerAdapter(Context context, List<Integer> imageIdList) {
         this.context = context;
@@ -45,7 +46,7 @@ public class ImagePagerAdapter extends RecyclingPagerAdapter {
 
     /**
      * get really position
-     * 
+     *
      * @param position
      * @return
      */
@@ -61,7 +62,7 @@ public class ImagePagerAdapter extends RecyclingPagerAdapter {
             view = holder.imageView = new RoundedImageView(context);
             view.setTag(holder);
         } else {
-            holder = (ViewHolder)view.getTag();
+            holder = (ViewHolder) view.getTag();
         }
 
         float roundPx = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 4, context.getResources().getDisplayMetrics());

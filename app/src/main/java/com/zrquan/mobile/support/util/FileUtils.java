@@ -98,7 +98,7 @@ public class FileUtils {
      *
      * @param filePath
      * @param content
-     * @param append is append, if true, write to the end of file, else clear content of file and write into it
+     * @param append   is append, if true, write to the end of file, else clear content of file and write into it
      * @return return false if content is empty, true otherwise
      * @throws RuntimeException if an error occurs while operator FileWriter
      */
@@ -132,7 +132,7 @@ public class FileUtils {
      *
      * @param filePath
      * @param contentList
-     * @param append is append, if true, write to the end of file, else clear content of file and write into it
+     * @param append      is append, if true, write to the end of file, else clear content of file and write into it
      * @return return false if contentList is empty, true otherwise
      * @throws RuntimeException if an error occurs while operator FileWriter
      */
@@ -204,7 +204,7 @@ public class FileUtils {
     /**
      * write file
      *
-     * @param file the file to be opened for writing.
+     * @param file   the file to be opened for writing.
      * @param stream the input stream
      * @param append if <code>true</code>, then bytes will be written to the end of the file rather than the beginning
      * @return return true
@@ -229,7 +229,7 @@ public class FileUtils {
     /**
      * write file
      *
-     * @param file the file to be opened for writing.
+     * @param file   the file to be opened for writing.
      * @param stream the input stream
      * @param append if <code>true</code>, then bytes will be written to the end of the file rather than the beginning
      * @return return true
@@ -321,7 +321,7 @@ public class FileUtils {
 
     /**
      * get file name from path, not include suffix
-     *
+     * <p/>
      * <pre>
      *      getFileNameWithoutExtension(null)               =   null
      *      getFileNameWithoutExtension("")                 =   ""
@@ -359,7 +359,7 @@ public class FileUtils {
 
     /**
      * get file name from path, include suffix
-     *
+     * <p/>
      * <pre>
      *      getFileName(null)               =   null
      *      getFileName("")                 =   ""
@@ -389,7 +389,7 @@ public class FileUtils {
 
     /**
      * get folder name from path
-     *
+     * <p/>
      * <pre>
      *      getFolderName(null)               =   null
      *      getFolderName("")                 =   ""
@@ -421,7 +421,7 @@ public class FileUtils {
 
     /**
      * get suffix of file from path
-     *
+     * <p/>
      * <pre>
      *      getFileExtension(null)               =   ""
      *      getFileExtension("")                 =   ""
@@ -466,12 +466,12 @@ public class FileUtils {
      *
      * @param filePath
      * @return true if the necessary directories have been created or the target directory already exists, false one of
-     *         the directories can not be created.
-     *         <ul>
-     *         <li>if {@link FileUtils#getFolderName(String)} return null, return false</li>
-     *         <li>if target directory already exists, return true</li>
-     *         <li>return {@link java.io.File#makeFolder}</li>
-     *         </ul>
+     * the directories can not be created.
+     * <ul>
+     * <li>if {@link FileUtils#getFolderName(String)} return null, return false</li>
+     * <li>if target directory already exists, return true</li>
+     * <li>return {@link java.io.File#makeFolder}</li>
+     * </ul>
      */
     public static boolean makeDirs(String filePath) {
         String folderName = getFolderName(filePath);
@@ -494,7 +494,7 @@ public class FileUtils {
 
     /**
      * Indicates if this file represents a file on the underlying file system.
-     * 
+     *
      * @param filePath
      * @return
      */
@@ -509,7 +509,7 @@ public class FileUtils {
 
     /**
      * Indicates if this file represents a directory on the underlying file system.
-     * 
+     *
      * @param directoryPath
      * @return
      */
@@ -529,7 +529,7 @@ public class FileUtils {
      * <li>if path not exist, return true</li>
      * <li>if path exist, delete recursion. return true</li>
      * <ul>
-     * 
+     *
      * @param path
      * @return
      */
@@ -564,7 +564,7 @@ public class FileUtils {
      * <li>if path is null or empty, return -1</li>
      * <li>if path exist and it is a file, return file size, else return -1</li>
      * <ul>
-     * 
+     *
      * @param path
      * @return returns the length of this file in bytes. returns -1 if the file does not exist.
      */

@@ -18,7 +18,7 @@ public class MessageFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        if(rootView == null){
+        if (rootView == null) {
             rootView = inflater.inflate(R.layout.activity_message, container, false);
         } else {
             ((ViewGroup) rootView.getParent()).removeView(rootView);

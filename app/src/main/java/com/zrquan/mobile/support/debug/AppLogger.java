@@ -1,6 +1,7 @@
 package com.zrquan.mobile.support.debug;
 
 import com.zrquan.mobile.BuildConfig;
+
 /**
  * Wrapper API for sending log output.
  */
