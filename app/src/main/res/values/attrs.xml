@@ -37,4 +37,9 @@
             <enum name="mirror" value="2" />
         </attr>
     </declare-styleable>
+
+    <declare-styleable name="CircleImageView">
+        <attr name="border_width" format="dimension" />
+        <attr name="border_color" format="color" />
+    </declare-styleable>
 </resources>

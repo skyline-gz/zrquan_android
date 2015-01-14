@@ -8,13 +8,14 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 
 import com.zrquan.mobile.R;
 
 public class SelectPicPopupWindow extends Activity implements OnClickListener {
 
     private Button btn_take_photo, btn_pick_photo, btn_cancel;
-    private LinearLayout layout;
+    private RelativeLayout layout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,7 +25,7 @@ public class SelectPicPopupWindow extends Activity implements OnClickListener {
         btn_pick_photo = (Button) this.findViewById(R.id.btn_pick_photo);
         btn_cancel = (Button) this.findViewById(R.id.btn_cancel);
 
-        layout = (LinearLayout) findViewById(R.id.pop_layout);
+        layout = (RelativeLayout) findViewById(R.id.pop_layout);
 
         //添加选择窗口范围监听可以优先获取触点，即不再执行onTouchEvent()函数，点击其他地方时执行onTouchEvent()函数销毁Activity
 //		layout.setOnClickListener(new OnClickListener() {

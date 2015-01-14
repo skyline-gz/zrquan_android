@@ -1,14 +1,14 @@
-package com.zrquan.mobile.support.debug;
+package com.zrquan.mobile.support.util;
 
 import com.zrquan.mobile.BuildConfig;
 
 /**
  * Wrapper API for sending log output.
  */
-public class AppLogger {
+public class LogUtil {
     protected static final String TAG = BuildConfig.APPLICATION_ID;
 
-    private AppLogger() {
+    private LogUtil() {
     }
 
     /**

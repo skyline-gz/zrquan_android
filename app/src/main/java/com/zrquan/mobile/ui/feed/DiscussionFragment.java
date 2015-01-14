@@ -14,7 +14,6 @@ import android.view.animation.AnimationUtils;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
@@ -22,7 +21,6 @@ import android.widget.Toast;
 import com.zrquan.mobile.R;
 import com.viewpagerindicator.CirclePageIndicator;
 
-import com.zrquan.mobile.support.debug.AppLogger;
 import com.zrquan.mobile.widget.pulltorefresh.PullToRefreshBase;
 import com.zrquan.mobile.widget.pulltorefresh.PullToRefreshListView;
 import com.zrquan.mobile.widget.viewpager.AutoScrollViewPager;
