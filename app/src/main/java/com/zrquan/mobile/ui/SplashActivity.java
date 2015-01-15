@@ -14,8 +14,8 @@ public class SplashActivity extends Activity {
 
     /** Called when the activity is first created. */
     @Override
-    public void onCreate(Bundle icicle) {
-        super.onCreate(icicle);
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
 
         /* New Handler to start the Menu-Activity
          * and close this Splash-Screen after some seconds.*/
