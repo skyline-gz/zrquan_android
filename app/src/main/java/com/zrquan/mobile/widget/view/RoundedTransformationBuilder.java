@@ -14,7 +14,7 @@
 * limitations under the License.
 */
 
-package com.zrquan.mobile.widget.roundedimageview;
+package com.zrquan.mobile.widget.view;
 
 import android.content.res.ColorStateList;
 import android.content.res.Resources;

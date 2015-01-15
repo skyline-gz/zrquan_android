@@ -8,14 +8,13 @@ package com.zrquan.mobile.widget.viewpager;
 import java.util.List;
 
 import android.content.Context;
-import android.graphics.Color;
 import android.util.TypedValue;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.zrquan.mobile.support.util.ListUtils;
 
-import com.zrquan.mobile.widget.roundedimageview.RoundedImageView;
+import com.zrquan.mobile.widget.view.RoundedImageView;
 import com.zrquan.mobile.widget.salvage.RecyclingPagerAdapter;
 
 /**

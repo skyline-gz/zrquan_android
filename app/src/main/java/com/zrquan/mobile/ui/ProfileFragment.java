@@ -44,5 +44,18 @@ public class ProfileFragment extends Fragment {
                 getActivity().startActivity(myIntent);
             }
         });
+
+        TextView tvBtnLogin = (TextView) v.findViewById(R.id.tv_btn_login);
+        tvBtnLogin.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                CharSequence cs = "点击了登陆按钮";
+                Toast.makeText(context, cs, Toast.LENGTH_LONG).show();
+                Intent myIntent = new Intent(getActivity(), LoginActivity.class);
+//                myIntent.putExtra("key", value); //Optional parameters
+                getActivity().startActivity(myIntent);
+                getActivity().overridePendingTransition(R.anim.right2left_enter, R.anim.right2left_exit );
+            }
+        });
     }
 }

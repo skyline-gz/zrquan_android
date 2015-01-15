@@ -19,7 +19,8 @@
         </activity>
         <activity android:label="@string/app_name" android:name=".ui.MainActivity"/>
         <!--<activity android:name=".ui.demo.SelectPicPopupWindow" android:theme="@style/BottomMenuDialogTheme" />-->
-        <activity android:label="@string/app_name" android:name=".ui.demo.DemoSettingActivity"/>
+        <activity android:label="设置Demo" android:name=".ui.demo.DemoSettingActivity"/>
+        <activity android:label="用户登录" android:name=".ui.LoginActivity"/>
     </application>
 
 </manifest>

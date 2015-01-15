@@ -34,6 +34,18 @@
             android:clickable="true"
             android:textColor="@color/navigationbar_text_color"
             android:textSize="15dp" />
+
+        <TextView
+            android:id="@+id/tv_btn_login"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:padding="6dp"
+            android:singleLine="true"
+            android:text="登录"
+            android:clickable="true"
+            android:textColor="@color/navigationbar_text_color"
+            android:textSize="15dp" />
     </RelativeLayout>
 
     <View

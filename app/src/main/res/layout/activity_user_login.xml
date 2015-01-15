@@ -1,0 +1,208 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:zrquan="http://schemas.android.com/apk/res-auto"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:gravity="center_horizontal"
+    android:orientation="vertical">
+
+    <ScrollView
+        android:id="@+id/scorllview"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:paddingLeft="0.0dip"
+        android:paddingRight="0.0dip"
+        android:scrollbars="none">
+
+        <RelativeLayout
+            android:id="@+id/ly_top"
+            android:layout_width="fill_parent"
+            android:layout_height="360.0dip">
+
+            <FrameLayout
+                android:id="@+id/flUserIcon"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:background="@color/transparent"
+                android:paddingBottom="22.0dip"
+                android:paddingTop="56.0dp">
+
+                <com.zrquan.mobile.widget.view.RoundedImageView
+                    android:id="@+id/ivUserPic"
+                    android:layout_width="84.0dip"
+                    android:layout_height="84.0dip"
+                    android:layout_marginBottom="4.0dip"
+                    android:adjustViewBounds="false"
+                    android:saveEnabled="true"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/login_picture"
+                    zrquan:riv_border_color="#0d000000"
+                    zrquan:riv_border_width="1.0px"
+                    zrquan:riv_corner_radius="42.0dip" />
+            </FrameLayout>
+
+            <LinearLayout
+                android:id="@+id/input_layout"
+                android:layout_width="fill_parent"
+                android:layout_height="96.0dip"
+                android:layout_below="@id/flUserIcon"
+                android:layout_centerHorizontal="true"
+                android:background="@drawable/login_background"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:id="@+id/focus"
+                    android:layout_width="0.0dip"
+                    android:layout_height="0.0dip"
+                    android:focusable="true"
+                    android:focusableInTouchMode="true"
+                    android:orientation="horizontal" />
+
+                <LinearLayout
+                    android:id="@+id/input_layout_username"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:baselineAligned="false"
+                    android:orientation="horizontal">
+
+                    <LinearLayout
+                        android:layout_width="0.0dip"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1.0">
+
+                        <TextView
+                            android:id="@+id/tvUsrname"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="18.0dip"
+                            android:background="@drawable/login_user"
+                            android:textColor="@color/login_name"
+                            android:textSize="15.0sp" />
+
+                        <AutoCompleteTextView
+                            android:id="@+id/etLoginUsername"
+                            android:layout_width="fill_parent"
+                            android:layout_height="48.0dip"
+                            android:layout_marginLeft="28.0dip"
+                            android:background="@color/login_input_bg_color"
+                            android:hint="邮箱/手机号"
+                            android:imeOptions="actionNext"
+                            android:inputType="textEmailAddress"
+                            android:maxLength="64"
+                            android:popupBackground="@drawable/login_background_more"
+                            android:singleLine="true"
+                            android:textColor="@color/main_content_text_color"
+                            android:textColorHint="@color/empty_view_text_color"
+                            android:textSize="15.0sp" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/login_user_clear_btn"
+                        android:layout_width="wrap_content"
+                        android:layout_height="fill_parent"
+                        android:layout_marginRight="12.0dip"
+                        android:gravity="center_vertical">
+
+                        <ImageView
+                            android:id="@+id/login_user_tips_btn"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:padding="8.0dip"
+                            android:src="@drawable/login_clear_btn"
+                            android:visibility="gone" />
+                    </LinearLayout>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:baselineAligned="false"
+                    android:orientation="horizontal">
+
+                    <LinearLayout
+                        android:layout_width="0.0dip"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1.0">
+
+                        <TextView
+                            android:id="@+id/tvPwd"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="18.0dip"
+                            android:background="@drawable/login_key"
+                            android:textColor="@color/login_name"
+                            android:textSize="15.0sp" />
+
+                        <EditText
+                            android:id="@+id/etPwd"
+                            android:layout_width="fill_parent"
+                            android:layout_height="48.0dip"
+                            android:layout_marginLeft="28.0dip"
+                            android:background="@color/login_input_bg_color"
+                            android:hint="请输入密码"
+                            android:imeOptions="actionNext"
+                            android:inputType="textPassword"
+                            android:maxLength="64"
+                            android:singleLine="true"
+                            android:textColor="@color/main_content_text_color"
+                            android:textColorHint="@color/empty_view_text_color"
+                            android:textSize="15.0sp" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/login_password_clear_btn"
+                        android:layout_width="wrap_content"
+                        android:layout_height="fill_parent"
+                        android:gravity="center_vertical"
+                        android:paddingRight="12.0dip">
+
+                        <ImageView
+                            android:id="@+id/login_password_tips_btn"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:padding="8.0dip"
+                            android:src="@drawable/login_clear_btn"
+                            android:visibility="gone" />
+                    </LinearLayout>
+                </LinearLayout>
+            </LinearLayout>
+
+            <Button
+                android:id="@+id/bnLogin"
+                android:layout_width="fill_parent"
+                android:layout_height="44.0dp"
+                android:layout_below="@id/input_layout"
+                android:layout_centerHorizontal="true"
+                android:layout_marginLeft="10.0dip"
+                android:layout_marginRight="10.0dip"
+                android:layout_marginTop="22.0dip"
+                android:background="@drawable/login_button_big_orange_bg"
+                android:text="登陆"
+                android:textColor="@color/main_button_disabled_text_color_for_light_color_button"
+                android:textSize="17.0sp" />
+
+            <TextView
+                android:id="@+id/login_blocking"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_below="@+id/bnLogin"
+                android:layout_marginRight="10.0dip"
+                android:layout_marginTop="15.0dip"
+                android:text="忘记密码？"
+                android:textColor="@color/main_link_text_color"
+                android:textSize="14.0sp" />
+        </RelativeLayout>
+    </ScrollView>
+    <ImageButton
+        android:id="@+id/bnBack"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@color/transparent"
+        android:gravity="center"
+        android:onClick="onBtnBackClick"
+        android:padding="18.0dip"
+        android:scaleType="fitCenter"
+        android:src="@drawable/login_close_btn" />
+</RelativeLayout>
