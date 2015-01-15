@@ -129,17 +129,19 @@ public class PullToRefreshListView extends PullToRefreshBase<ListView> implement
 
     @Override
     public void setScrollLoadEnabled(boolean scrollLoadEnabled) {
+        if (isScrollLoadEnabled() == scrollLoadEnabled) {
+            return;
+        }
+
         super.setScrollLoadEnabled(scrollLoadEnabled);
 
         if (scrollLoadEnabled) {
             // 设置Footer
             if (null == mLoadMoreFooterLayout) {
                 mLoadMoreFooterLayout = new FooterLoadingLayout(getContext());
-            }
-
-            if (null == mLoadMoreFooterLayout.getParent()) {
                 mListView.addFooterView(mLoadMoreFooterLayout, null, false);
             }
+
             mLoadMoreFooterLayout.show(true);
         } else {
             if (null != mLoadMoreFooterLayout) {

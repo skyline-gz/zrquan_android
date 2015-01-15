@@ -96,6 +96,8 @@ public abstract class LoadingLayout extends FrameLayout implements ILoadingLayou
             } else {
                 params.height = 0;
             }
+
+            requestLayout();
             setVisibility(show ? View.VISIBLE : View.INVISIBLE);
         }
     }
