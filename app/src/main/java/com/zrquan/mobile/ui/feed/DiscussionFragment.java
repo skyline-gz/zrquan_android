@@ -4,6 +4,7 @@ import android.content.Context;
 import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.support.v4.app.Fragment;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
@@ -42,6 +43,7 @@ public class DiscussionFragment extends Fragment {
     private RelativeLayout rlBanner;
 
     private ListView mListView;
+    private Parcelable mListViewState;                   //用于保存ListView状态
     private PullToRefreshListView mPullListView;
     private ArrayAdapter<String> mAdapter;
     private LinkedList<String> mListItems;
@@ -115,9 +117,19 @@ public class DiscussionFragment extends Fragment {
             setLastUpdateTime();
         } else {
             ((ViewGroup) mPullListView.getParent()).removeView(mPullListView);
+            // Restore previous state (including selected item index and scroll position)
+            mListView.onRestoreInstanceState(mListViewState);
         }
 
         return mPullListView;
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        // see http://stackoverflow.com/questions/3014089/maintain-save-restore-scroll-position-when-returning-to-a-listview/3035521#3035521
+        // Save ListView state
+        mListViewState = mListView.onSaveInstanceState();
     }
 
     private View getBannerView(LayoutInflater inflater, ViewGroup container) {
