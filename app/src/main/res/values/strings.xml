@@ -479,7 +479,7 @@ The end time: %2$s"</string>
     <string name="video_tech_provider">Video playing tech. is supported by vitamio</string>
     <string name="save_pic_ok">Picture saved to (Galary > Weibo)</string>
     <string name="save_pic_failed">Failed in saving image! Network anomalies or SD card does not included</string>
-    <string name="app_name">Weibo</string>
+    <string name="app_name">Zrquan</string>
     <string name="title_publish">New Weibo</string>
     <string name="title_forward">Repost</string>
     <string name="title_comment">Comment</string>

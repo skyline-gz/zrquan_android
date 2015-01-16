@@ -385,7 +385,7 @@
     <string name="video_tech_provider">视频播放技术由vitamio提供</string>
     <string name="save_pic_ok">图片已保存（手机相册 > weibo）</string>
     <string name="save_pic_failed">保存图片失败!网络异常或者没有SD卡</string>
-    <string name="app_name">微博</string>
+    <string name="app_name">职人圈</string>
     <string name="title_publish">发布新微博</string>
     <string name="title_forward">转发微博</string>
     <string name="title_comment">发评论</string>
