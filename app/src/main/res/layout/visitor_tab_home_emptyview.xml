@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content">
+
+    <RelativeLayout
+        android:layout_width="fill_parent"
+        android:layout_height="@dimen/visitor_height"
+        android:paddingBottom="8.0dip">
+
+        <LinearLayout
+            android:id="@id/ly_home_content"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="67.0dip"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:visibility="visible">
+
+            <RelativeLayout
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent">
+
+                <RelativeLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true">
+
+                    <ImageView
+                        android:id="@id/ivVisitorHomeDash"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentBottom="true"
+                        android:layout_centerHorizontal="true"
+                        android:src="@drawable/visitordiscover_feed_image_smallicon"
+                        android:visibility="invisible" />
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentBottom="true"
+                        android:layout_marginBottom="30.0dip"
+                        android:orientation="vertical">
+
+                        <ImageView
+                            android:layout_width="165.0dip"
+                            android:layout_height="45.0dip"
+                            android:layout_alignParentBottom="true"
+                            android:layout_centerHorizontal="true"
+                            android:src="@drawable/visitor_home_drawable" />
+
+                        <ImageView
+                            android:id="@id/sharp"
+                            android:layout_width="165.0dip"
+                            android:layout_height="40.0dip"
+                            android:layout_alignParentBottom="true"
+                            android:background="@drawable/global_background" />
+                    </LinearLayout>
+                </RelativeLayout>
+
+                <ImageView
+                    android:id="@id/ivVisitorHomePic"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:paddingTop="@dimen/visitor_home_housepadding"
+                    android:src="@drawable/visitordiscover_feed_image_house"
+                    android:visibility="invisible" />
+            </RelativeLayout>
+        </LinearLayout>
+
+        <TextView
+            android:id="@id/tvVisitorHomeTips"
+            android:layout_width="wrap_content"
+            android:layout_height="60.0dip"
+            android:layout_alignParentTop="true"
+            android:layout_below="@id/ly_home_content"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="227.0dip"
+            android:gravity="center_horizontal"
+            android:lineSpacingMultiplier="1.1"
+            android:maxWidth="@dimen/visitor_text_maxwidth"
+            android:paddingBottom="10.0dip"
+            android:shadowDx="1.0"
+            android:shadowDy="1.0"
+            android:shadowRadius="1.0"
+            android:text="@string/visitor_home_tips"
+            android:textColor="@color/visitor_tab_activity_tips_color"
+            android:textSize="14.0sp" />
+
+        <include
+            android:id="@id/ly_buttons"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            layout="@layout/visitor_common_bottom_btns"
+            android:layout_below="@id/tvVisitorHomeTips" />
+    </RelativeLayout>
+</ScrollView>

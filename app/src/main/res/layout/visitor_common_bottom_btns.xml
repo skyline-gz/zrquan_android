@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merge xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:facebook="http://schemas.android.com/apk/res-auto">
+
+    <LinearLayout
+        android:id="@id/ly_buttons"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="8.0dip"
+        android:layout_marginLeft="2.0dip"
+        android:layout_marginRight="2.0dip"
+        android:gravity="center"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="12.0dip"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <Button
+                style="?android:attr/borderlessButtonStyle"
+                android:id="@id/btn_regist"
+                android:layout_width="fill_parent"
+                android:layout_height="46.0dip"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginLeft="30.0dip"
+                android:layout_marginRight="8.0dip"
+                android:layout_weight="1.0"
+                android:background="@drawable/empty_guide_button_bg"
+                android:text="@string/account_regist"
+                android:textColor="#ffff8200"
+                android:textSize="16.0sp" />
+
+            <Button
+                style="?android:attr/borderlessButtonStyle"
+                android:id="@id/btn_login"
+                android:layout_width="fill_parent"
+                android:layout_height="46.0dip"
+                android:layout_marginLeft="8.0dip"
+                android:layout_marginRight="30.0dip"
+                android:layout_weight="1.0"
+                android:background="@drawable/empty_guide_button_bg"
+                android:text="@string/login"
+                android:textColor="@color/main_button_text_color_for_light_color_button"
+                android:textSize="16.0sp" />
+        </LinearLayout>
+    </LinearLayout>
+</merge>

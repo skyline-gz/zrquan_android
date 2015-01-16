@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@id/pic_layout"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:clickable="true"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="@dimen/visitor_card_item_distance_inner_h">
+
+        <ImageView
+            android:id="@id/iv_pic"
+            android:layout_width="@dimen/visitor_card_item_pic_width"
+            android:layout_height="@dimen/visitor_card_item_pic_width"
+            android:layout_alignParentLeft="true"
+            android:scaleType="fitXY"
+            android:src="@drawable/preview_card_pic_loading" />
+
+        <TextView
+            android:id="@id/tv_desc"
+            android:layout_width="@dimen/visitor_card_item_pic_width"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/iv_pic"
+            android:layout_marginTop="10.0dip"
+            android:gravity="center"
+            android:singleLine="true"
+            android:textColor="#ff333333"
+            android:textSize="12.0sp" />
+
+        <TextView
+            android:id="@id/tv_title"
+            android:layout_width="@dimen/visitor_card_item_pic_width"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/tv_desc"
+            android:layout_marginTop="6.0dip"
+            android:gravity="center_vertical"
+            android:singleLine="true"
+            android:textColor="#ffababab"
+            android:textSize="10.0sp" />
+    </RelativeLayout>
+</LinearLayout>

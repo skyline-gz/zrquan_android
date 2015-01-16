@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent">
+
+    <android.support.v4.view.ViewPager
+        android:id="@+id/guidePages"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent" />
+
+    <LinearLayout
+        android:id="@+id/btns"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="13.0dip"
+        android:gravity="center">
+
+        <Button
+            android:id="@+id/btn_regist"
+            style="?android:attr/borderlessButtonStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="46.0dip"
+            android:layout_marginLeft="15.0dip"
+            android:layout_weight="1.0"
+            android:background="@drawable/common_button_white_bg"
+            android:text="@string/account_regist"
+            android:textColor="@color/main_link_text_color"
+            android:textSize="17.0sp" />
+
+        <Button
+            android:id="@+id/btn_login"
+            style="?android:attr/borderlessButtonStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="46.0dip"
+            android:layout_marginLeft="14.0dip"
+            android:layout_marginRight="15.0dip"
+            android:layout_weight="1.0"
+            android:background="@drawable/common_button_white_bg"
+            android:text="@string/login"
+            android:textColor="@color/main_content_retweet_text_color"
+            android:textSize="17.0sp" />
+    </LinearLayout>
+
+    <!--<LinearLayout-->
+        <!--android:id="@+id/guideIndex"-->
+        <!--android:layout_width="fill_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_alignParentBottom="true"-->
+        <!--android:layout_marginBottom="87.0dip"-->
+        <!--android:gravity="center_horizontal" />-->
+</RelativeLayout>

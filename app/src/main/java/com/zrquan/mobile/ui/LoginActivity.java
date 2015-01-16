@@ -20,14 +20,19 @@ public class LoginActivity extends Activity {
     }
 
     public void onBtnBackClick(View view) {
-        finish();
-        overridePendingTransition(R.anim.left2right_enter, R.anim.left2right_exit);
+        doBack();
     }
 
     @Override
     public void onBackPressed() {
         super.onBackPressed();
+        doBack();
+    }
+
+    private void doBack() {
+        hideKeyboard();
         overridePendingTransition(R.anim.left2right_enter, R.anim.left2right_exit);
+        finish();
     }
 
     private void hideKeyboard() {

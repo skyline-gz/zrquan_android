@@ -37,4 +37,35 @@
     <style name="StartUpTheme" parent="@style/AppTheme">
         <item name="android:windowBackground">@drawable/splash</item>
     </style>
+
+    <style name="SettingTitleText">
+        <item name="android:textSize">14.0sp</item>
+        <item name="android:gravity">left</item>
+        <item name="android:paddingLeft">@dimen/settings_item_padding_left</item>
+        <item name="android:layout_marginTop">@dimen/settings_text_margin_top</item>
+        <item name="android:layout_marginBottom">@dimen/settings_text_margin_bottom</item>
+    </style>
+    <style name="SettingMainText">
+        <item name="android:textSize">17.0sp</item>
+        <item name="android:layout_marginLeft">@dimen/settings_item_padding_left</item>
+    </style>
+    <style name="SettingSubText">
+        <item name="android:textSize">14.0sp</item>
+        <item name="android:layout_marginRight">@dimen/settings_item_text_padding_right</item>
+    </style>
+    <style name="SettingHintText">
+        <item name="android:textSize">14.0sp</item>
+        <item name="android:gravity">left</item>
+        <item name="android:paddingLeft">@dimen/settings_item_padding_left</item>
+        <item name="android:layout_marginTop">@dimen/settings_text_margin_top</item>
+        <item name="android:layout_marginBottom">@dimen/settings_text_margin_bottom</item>
+    </style>
+    <style name="SettingExplainText">
+        <item name="android:textSize">12.0sp</item>
+        <item name="android:gravity">left</item>
+        <item name="android:paddingLeft">@dimen/settings_item_padding_left</item>
+        <item name="android:duplicateParentState">true</item>
+        <item name="android:layout_marginTop">@dimen/settings_text_explain_margin_top</item>
+        <item name="android:layout_marginBottom">@dimen/settings_text_margin_top</item>
+    </style>
 </resources>
