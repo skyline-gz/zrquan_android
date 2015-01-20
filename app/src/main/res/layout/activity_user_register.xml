@@ -1,0 +1,205 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@id/new_regist_rootview"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="@color/main_feed_background_color"
+    android:fadingEdge="none"
+    android:paddingLeft="0.0dip"
+    android:paddingRight="0.0dip">
+
+    <ScrollView
+        android:id="@id/regist_scrollview"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/main_feed_background_color">
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/main_feed_background_color"
+            android:fadingEdge="none"
+            android:orientation="vertical"
+            android:paddingLeft="0.0dip"
+            android:paddingRight="0.0dip">
+
+            <LinearLayout
+                android:id="@id/input_layout"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10.0dip"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:id="@id/phone_layout"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/login_top_background"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <EditText
+                        android:id="@id/phoneNum"
+                        android:layout_width="0.0dip"
+                        android:layout_height="@dimen/new_regist_height_et"
+                        android:layout_weight="1.0"
+                        android:background="@null"
+                        android:hint="@string/new_regist_phone_num"
+                        android:inputType="phone"
+                        android:paddingLeft="@dimen/new_regist_user_padding_left"
+                        android:singleLine="true"
+                        android:textColor="@color/search_input_text"
+                        android:textColorHint="@color/empty_view_text_color"
+                        android:textSize="16.0sp" />
+
+                    <ImageView
+                        android:id="@id/regist_phone_num_clear_btn"
+                        android:layout_width="wrap_content"
+                        android:layout_height="fill_parent"
+                        android:padding="7.0dip"
+                        android:paddingLeft="12.0dip"
+                        android:paddingRight="12.0dip"
+                        android:scaleType="fitCenter"
+                        android:src="@drawable/login_clear_btn"
+                        android:visibility="gone" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@id/password_layout"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/login_bottom_background"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <EditText
+                        android:id="@id/password"
+                        android:layout_width="0.0dip"
+                        android:layout_height="@dimen/new_regist_height_et"
+                        android:layout_weight="1.0"
+                        android:background="@null"
+                        android:hint="@string/new_regist_password"
+                        android:inputType="textPassword"
+                        android:paddingLeft="@dimen/new_regist_user_padding_left"
+                        android:singleLine="true"
+                        android:textColor="@color/search_input_text"
+                        android:textColorHint="@color/empty_view_text_color"
+                        android:textSize="16.0sp" />
+
+                    <ImageView
+                        android:id="@id/regist_password_clear_btn"
+                        android:layout_width="wrap_content"
+                        android:layout_height="fill_parent"
+                        android:padding="7.0dip"
+                        android:paddingLeft="12.0dip"
+                        android:paddingRight="12.0dip"
+                        android:scaleType="fitCenter"
+                        android:src="@drawable/login_clear_btn"
+                        android:visibility="gone" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <TextView
+                android:id="@id/tv_tips"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10.0dip"
+                android:ellipsize="end"
+                android:maxLines="2"
+                android:paddingLeft="10.0dip"
+                android:text="@string/pwd_tips"
+                android:textColor="@color/main_content_subtitle_text_color"
+                android:textSize="14.0sp" />
+
+            <LinearLayout
+                android:id="@id/verification"
+                android:layout_width="fill_parent"
+                android:layout_height="@dimen/new_regist_height"
+                android:layout_marginBottom="@dimen/new_regist_margin"
+                android:layout_marginTop="@dimen/new_regist_margin"
+                android:orientation="horizontal"
+                android:visibility="gone">
+
+                <ImageView
+                    android:id="@id/code_image"
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent"
+                    android:layout_weight="3.0"
+                    android:gravity="center"
+                    android:src="@drawable/face113" />
+
+                <EditText
+                    android:id="@id/code_et"
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent"
+                    android:layout_weight="1.0"
+                    android:gravity="center"
+                    android:hint="@string/new_regist_input_code" />
+            </LinearLayout>
+
+            <RelativeLayout
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10.0dip"
+                android:layout_marginRight="10.0dip"
+                android:orientation="horizontal">
+
+                <Button
+                    android:id="@id/btRegist"
+                    android:layout_width="fill_parent"
+                    android:layout_height="@dimen/new_regist_height_bt"
+                    android:layout_centerHorizontal="true"
+                    android:background="@drawable/login_button_big_orange_bg"
+                    android:text="@string/account_regist"
+                    android:textColor="@color/main_button_disabled_text_color_for_light_color_button"
+                    android:textSize="17.0sp" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <!--<com.sina.weibo.view.MBlogTextView-->
+                <!--android:id="@id/sina_notice"-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:layout_marginTop="8.0dip"-->
+                <!--android:bufferType="spannable"-->
+                <!--android:paddingLeft="@dimen/new_regist_home_err_msg_margin_bottom"-->
+                <!--android:text="@string/new_regist_notice"-->
+                <!--android:textColor="@color/main_content_subtitle_text_color"-->
+                <!--android:textSize="13.0sp" />-->
+
+                <RelativeLayout
+                    android:id="@id/check_notice"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+                    <!--android:layout_below="@id/sina_notice"-->
+
+                    <CheckBox
+                        android:id="@id/check"
+                        android:layout_width="18.0dip"
+                        android:layout_height="19.0dip"
+                        android:layout_marginLeft="10.0dip"
+                        android:layout_marginTop="8.0dip"
+                        android:button="@drawable/check_box"
+                        android:checked="true" />
+
+                    <!--<com.sina.weibo.view.MBlogTextView-->
+                    <!--android:id="@id/upload_phone_list_tv"-->
+                    <!--android:layout_width="wrap_content"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:layout_marginTop="8.0dip"-->
+                    <!--android:layout_toRightOf="@id/check"-->
+                    <!--android:bufferType="spannable"-->
+                    <!--android:paddingLeft="8.0dip"-->
+                    <!--android:text="@string/new_regist_upload_address"-->
+                    <!--android:textColor="@color/main_content_subtitle_text_color"-->
+                    <!--android:textSize="13.0sp" />-->
+                </RelativeLayout>
+            </RelativeLayout>
+        </LinearLayout>
+    </ScrollView>
+</FrameLayout>
