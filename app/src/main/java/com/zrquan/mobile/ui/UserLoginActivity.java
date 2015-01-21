@@ -2,9 +2,11 @@ package com.zrquan.mobile.ui;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.TextView;
 
 import com.zrquan.mobile.R;
 
@@ -21,6 +23,12 @@ public class UserLoginActivity extends Activity {
 
     public void onBtnBackClick(View view) {
         doBack();
+    }
+
+    public void onBtnRegisterClick(View view) {
+        Intent myIntent = new Intent(this, UserRegisterActivity.class);
+        startActivity(myIntent);
+        overridePendingTransition(R.anim.right2left_enter, R.anim.right2left_exit);
     }
 
     @Override

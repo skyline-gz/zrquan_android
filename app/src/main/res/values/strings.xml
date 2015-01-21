@@ -2733,5 +2733,5 @@ More interesting comments:"</string>
     <string name="default_value_initialcommand_preference">export PATH=/data/local/bin:$PATH</string>
     <string name="channel">WeiboChannelInfo</string>
     <string name="choseclient">Please select email client</string>
-    <string name="main_follows">follow's</string>
+    <string name="main_follows">follow\'s</string>
 </resources>

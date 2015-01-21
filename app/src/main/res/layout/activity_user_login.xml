@@ -205,4 +205,18 @@
         android:padding="18.0dip"
         android:scaleType="fitCenter"
         android:src="@drawable/login_close_btn" />
+
+    <TextView
+        android:id="@+id/btn_login_register"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:clickable="true"
+        android:onClick="onBtnRegisterClick"
+        android:gravity="center"
+        android:layout_marginBottom="8dp"
+        android:text="注册账号"
+        android:textColor="@color/main_link_text_color"
+        android:textSize="14.0sp" />
 </RelativeLayout>

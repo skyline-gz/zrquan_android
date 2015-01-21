@@ -44,4 +44,17 @@
         android:text="注册"
         android:textColor="@color/navigationbar_text_color"
         android:textSize="15dp" />
+
+    <TextView
+        android:id="@+id/tv_btn_back"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:visibility="gone"
+        android:clickable="true"
+        android:padding="6dp"
+        android:singleLine="true"
+        android:text="取消"
+        android:textColor="@color/navigationbar_text_color"
+        android:textSize="15dp" />
 </RelativeLayout>

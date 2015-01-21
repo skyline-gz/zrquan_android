@@ -1,15 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@id/new_regist_rootview"
-    android:layout_width="fill_parent"
-    android:layout_height="fill_parent"
-    android:background="@color/main_feed_background_color"
-    android:fadingEdge="none"
-    android:paddingLeft="0.0dip"
-    android:paddingRight="0.0dip">
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <include
+        layout="@layout/visitor_titlebar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        />
+    <View
+        android:layout_width="fill_parent"
+        android:layout_height="1dp"
+        android:background="@color/border_main_frame_color"/>
 
     <ScrollView
         android:id="@id/regist_scrollview"
+        android:layout_marginTop="20dp"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:background="@color/main_feed_background_color">
@@ -202,4 +209,4 @@
             </RelativeLayout>
         </LinearLayout>
     </ScrollView>
-</FrameLayout>
+</LinearLayout>
