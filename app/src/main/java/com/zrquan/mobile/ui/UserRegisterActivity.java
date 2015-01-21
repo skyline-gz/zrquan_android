@@ -10,18 +10,26 @@ import android.widget.TextView;
 
 import com.zrquan.mobile.R;
 
+import butterknife.ButterKnife;
+import butterknife.InjectView;
+import butterknife.OnClick;
+
 public class UserRegisterActivity extends Activity{
     private Context context;
+
+    @InjectView(R.id.titleText) TextView tvTitle;
+    @InjectView(R.id.tv_btn_back) TextView tvBtnBack;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         context = getApplicationContext();
         setContentView(R.layout.activity_user_register);
-
+        ButterKnife.inject(this);
         initNavigationBar();
     }
 
+    @OnClick(R.id.tv_btn_back)
     public void onBtnBackClick(View view) {
         doBack();
     }
@@ -33,18 +41,9 @@ public class UserRegisterActivity extends Activity{
     }
 
     private void initNavigationBar() {
-        TextView tvTitle = (TextView) findViewById(R.id.titleText);
         tvTitle.setText(R.string.account_regist);
         tvTitle.setVisibility(View.VISIBLE);
-
-        TextView tvBtnBack = (TextView) findViewById(R.id.tv_btn_back);
         tvBtnBack.setVisibility(View.VISIBLE);
-        tvBtnBack.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                doBack();
-            }
-        });
     }
 
     private void doBack() {

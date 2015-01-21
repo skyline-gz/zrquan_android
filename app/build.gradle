@@ -46,6 +46,8 @@ dependencies {
     // Android optimized event bus that simplifies communication between Activities,
     // Fragments, Threads, Services, etc. Less code, better quality.
     compile 'de.greenrobot:eventbus:2.4.0'
+    //View "injection" library for Android which uses annotation processing to generate boilerplate code for you.
+    compile 'com.jakewharton:butterknife:6.0.0'
     // viewpagerindicator 换页指示器
     compile(name:'viewpagerindicator-2.4.1', ext:'aar')
 }

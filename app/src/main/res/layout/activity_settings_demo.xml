@@ -19,7 +19,6 @@
             android:layout_alignParentLeft="true"
             android:background="@drawable/navigationbar_back"
             android:clickable="true"
-            android:onClick="onBtnBackClick"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
 

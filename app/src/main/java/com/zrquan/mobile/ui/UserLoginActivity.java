@@ -10,6 +10,9 @@ import android.widget.TextView;
 
 import com.zrquan.mobile.R;
 
+import butterknife.ButterKnife;
+import butterknife.OnClick;
+
 public class UserLoginActivity extends Activity {
 
     private Context context;
@@ -19,12 +22,15 @@ public class UserLoginActivity extends Activity {
         super.onCreate(savedInstanceState);
         context = getApplicationContext();
         setContentView(R.layout.activity_user_login);
+        ButterKnife.inject(this);
     }
 
+    @OnClick(R.id.btn_back)
     public void onBtnBackClick(View view) {
         doBack();
     }
 
+    @OnClick(R.id.btn_login_register)
     public void onBtnRegisterClick(View view) {
         Intent myIntent = new Intent(this, UserRegisterActivity.class);
         startActivity(myIntent);
