@@ -8,7 +8,7 @@ import android.view.inputmethod.InputMethodManager;
 
 import com.zrquan.mobile.R;
 
-public class LoginActivity extends Activity {
+public class UserLoginActivity extends Activity {
 
     private Context context;
 

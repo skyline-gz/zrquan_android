@@ -18,7 +18,7 @@ public class MainActivity extends FragmentActivity {
     private LayoutInflater inflater;
 
     //定义数组来存放Fragment界面
-    private Class fragmentArray[] = {FeedFragment.class, MessageFragment.class,
+    private Class fragmentArray[] = {FeedFragment.class, FollowFragment.class,
             MessageFragment.class, ProfileFragment.class};
 
     //定义数组来存放按钮图片

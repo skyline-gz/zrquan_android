@@ -22,7 +22,7 @@
 
             <Button
                 style="?android:attr/borderlessButtonStyle"
-                android:id="@id/btn_regist"
+                android:id="@+id/tv_btn_content_register"
                 android:layout_width="fill_parent"
                 android:layout_height="46.0dip"
                 android:layout_gravity="center_horizontal"
@@ -36,7 +36,7 @@
 
             <Button
                 style="?android:attr/borderlessButtonStyle"
-                android:id="@id/btn_login"
+                android:id="@+id/tv_btn_content_login"
                 android:layout_width="fill_parent"
                 android:layout_height="46.0dip"
                 android:layout_marginLeft="8.0dip"

@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+    <include
+        layout="@layout/visitor_titlebar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+     />
+    <View
+        android:layout_width="fill_parent"
+        android:layout_height="1dp"
+        android:background="@color/border_main_frame_color"/>
+    <ScrollView
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        xmlns:android="http://schemas.android.com/apk/res/android">
+
+        <RelativeLayout
+            android:id="@id/rlVIsitorMessage"
+            android:layout_width="fill_parent"
+            android:layout_height="@dimen/visitor_height">
+
+            <ImageView
+                android:layout_gravity="center"
+                android:id="@id/ivVisitorMessagePic"
+                android:paddingTop="96.0dip"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8.0dip"
+                android:src="@drawable/visitordiscover_image_message"
+                android:layout_centerHorizontal="true" />
+
+            <TextView
+                android:textSize="14.0sp"
+                android:textColor="@color/visitor_tab_activity_tips_color"
+                android:gravity="center_horizontal"
+                android:id="@id/tvVisitorMessageTips"
+                android:layout_width="wrap_content"
+                android:layout_height="60.0dip"
+                android:layout_marginTop="236.0dip"
+                android:maxWidth="@dimen/visitor_text_maxwidth"
+                android:text="@string/visitor_message_tips"
+                android:shadowDx="1.0"
+                android:shadowDy="1.0"
+                android:shadowRadius="1.0"
+                android:layout_below="@id/ivVisitorMessagePic"
+                android:layout_alignParentTop="true"
+                android:layout_centerHorizontal="true"
+                android:lineSpacingMultiplier="1.1" />
+
+            <include
+                android:id="@id/ly_buttons"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/tvVisitorMessageTips"
+                layout="@layout/visitor_common_bottom_btns" />
+        </RelativeLayout>
+    </ScrollView>
+</LinearLayout>

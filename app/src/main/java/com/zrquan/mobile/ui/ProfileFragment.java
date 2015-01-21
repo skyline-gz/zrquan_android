@@ -11,6 +11,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.zrquan.mobile.R;
+import com.zrquan.mobile.ZrquanApplication;
 import com.zrquan.mobile.ui.demo.DemoSettingActivity;
 
 public class ProfileFragment extends Fragment {
@@ -23,8 +24,13 @@ public class ProfileFragment extends Fragment {
                              Bundle savedInstanceState) {
         if (rootView == null) {
             context = getActivity().getApplicationContext();
-            rootView = inflater.inflate(R.layout.fragment_profile, container, false);
-            initNavigationBar(rootView);
+            if(!((ZrquanApplication) getActivity().getApplicationContext()).getAccount().isLogin()) {
+                rootView = inflater.inflate(R.layout.visitor_tab_profile_fragment, container, false);
+                initVisitorNavigationBar(rootView);
+                initVisitorContentView(rootView);
+            }
+//            rootView = inflater.inflate(R.layout.fragment_profile, container, false);
+//            initNavigationBar(rootView);
         } else {
             ((ViewGroup) rootView.getParent()).removeView(rootView);
         }
@@ -32,26 +38,39 @@ public class ProfileFragment extends Fragment {
         return rootView;
     }
 
-    private void initNavigationBar(View v) {
-        TextView tvBtnSetting = (TextView) v.findViewById(R.id.tv_btn_setting);
-        tvBtnSetting.setOnClickListener(new View.OnClickListener() {
+    private void initVisitorNavigationBar(View v) {
+        TextView tvTitle = (TextView) v.findViewById(R.id.titleText);
+        tvTitle.setText(R.string.main_me);
+        tvTitle.setVisibility(View.VISIBLE);
+
+        TextView tvBtnRegister = (TextView) v.findViewById(R.id.tv_btn_register);
+        tvBtnRegister.setVisibility(View.GONE);
+
+        TextView tvBtnLogin = (TextView) v.findViewById(R.id.tv_btn_login);
+        tvBtnLogin.setVisibility(View.GONE);
+    }
+
+    private void initVisitorContentView(View v) {
+        TextView tvBtnRegister = (TextView) v.findViewById(R.id.tv_btn_content_register);
+        tvBtnRegister.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                CharSequence cs = "点击了设置按钮";
+                CharSequence cs = "点击了注册按钮";
                 Toast.makeText(context, cs, Toast.LENGTH_LONG).show();
-                Intent myIntent = new Intent(getActivity(), DemoSettingActivity.class);
+                Intent myIntent = new Intent(getActivity(), UserRegisterActivity.class);
 //                myIntent.putExtra("key", value); //Optional parameters
                 getActivity().startActivity(myIntent);
+                getActivity().overridePendingTransition(R.anim.right2left_enter, R.anim.right2left_exit );
             }
         });
 
-        TextView tvBtnLogin = (TextView) v.findViewById(R.id.tv_btn_login);
+        TextView tvBtnLogin = (TextView) v.findViewById(R.id.tv_btn_content_login);
         tvBtnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 CharSequence cs = "点击了登陆按钮";
                 Toast.makeText(context, cs, Toast.LENGTH_LONG).show();
-                Intent myIntent = new Intent(getActivity(), LoginActivity.class);
+                Intent myIntent = new Intent(getActivity(), UserLoginActivity.class);
 //                myIntent.putExtra("key", value); //Optional parameters
                 getActivity().startActivity(myIntent);
                 getActivity().overridePendingTransition(R.anim.right2left_enter, R.anim.right2left_exit );
