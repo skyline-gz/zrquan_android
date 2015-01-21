@@ -1,16 +1,12 @@
-package com.zrquan.mobile.bean;
+package com.zrquan.mobile.modal;
 
 import android.os.Parcel;
 import android.os.Parcelable;
-import android.text.TextUtils;
 
 //import org.qii.weiciyuan.support.utils.ObjectToStringUtility;
 
-/**
- * User: Jiang Qi
- * Date: 12-7-30
- */
-public class AccountBean implements Parcelable {
+
+public class Account implements Parcelable {
 
     private String access_token;
     private long expires_time;
@@ -89,25 +85,25 @@ public class AccountBean implements Parcelable {
 //        dest.writeParcelable(info, flags);
     }
 
-    public static final Creator<AccountBean> CREATOR =
-            new Creator<AccountBean>() {
-                public AccountBean createFromParcel(Parcel in) {
-                    AccountBean accountBean = new AccountBean();
-                    accountBean.access_token = in.readString();
-                    accountBean.expires_time = in.readLong();
-                    accountBean.navigationPosition = in.readInt();
+    public static final Creator<Account> CREATOR =
+            new Creator<Account>() {
+                public Account createFromParcel(Parcel in) {
+                    Account account = new Account();
+                    account.access_token = in.readString();
+                    account.expires_time = in.readLong();
+                    account.navigationPosition = in.readInt();
 
                     boolean[] booleans = new boolean[1];
                     in.readBooleanArray(booleans);
-                    accountBean.black_magic = booleans[0];
+                    account.black_magic = booleans[0];
 
 //                    accountBean.info = in.readParcelable(UserBean.class.getClassLoader());
 
-                    return accountBean;
+                    return account;
                 }
 
-                public AccountBean[] newArray(int size) {
-                    return new AccountBean[size];
+                public Account[] newArray(int size) {
+                    return new Account[size];
                 }
             };
 
