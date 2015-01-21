@@ -40,12 +40,14 @@ dependencies {
     compile 'com.android.support:appcompat-v7:21.0.3'
     //google guava
     compile group: 'com.google.guava', name: 'guava', version: '18.0'
-    //A powerful image downloading and caching library for Android http://square.github.io/picasso/
-    compile 'com.squareup.picasso:picasso:2.4.0'
-    //Android optimized event bus that simplifies communication between Activities,
+    // HTTP library announced by google in I/O 2013. Illustrates, JSONRequest,StringRequest, Image caching
+    compile 'com.mcxiaoke.volley:library:1.0.+'
+    // A powerful image downloading and caching library for Android http://square.github.io/picasso/
+//    compile 'com.squareup.picasso:picasso:2.4.0'
+    // Android optimized event bus that simplifies communication between Activities,
     // Fragments, Threads, Services, etc. Less code, better quality.
     compile 'de.greenrobot:eventbus:2.4.0'
-    //viewpagerindicator 换页指示器
+    // viewpagerindicator 换页指示器
     compile(name:'viewpagerindicator-2.4.1', ext:'aar')
 }
 
