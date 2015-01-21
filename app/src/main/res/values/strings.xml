@@ -1837,7 +1837,7 @@ you could long press the bubble to reply"</string>
     <string name="visitor_square_default_2">pic</string>
     <string name="visitor_square_default_3">constellation</string>
     <string name="visitor_square_default_4">fun</string>
-    <string name="pwd_tips">Password is 6~16 figures or letters</string>
+    <string name="pwd_tips">Password is 8~16 figures or letters</string>
     <string name="nickname_tips">4~30 characters, support Chinese, English and figures</string>
     <string name="discovery_interest_notify">Please select at least three your favorite categories</string>
     <string name="discovery_interest_tips">Please select at least three interest categories.</string>

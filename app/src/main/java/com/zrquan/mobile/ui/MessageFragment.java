@@ -48,7 +48,7 @@ public class MessageFragment extends Fragment {
     }
 
     private void initVisitorNavigationBar(View v) {
-        tvTitle.setText(R.string.main_me);
+        tvTitle.setText(R.string.main_news);
         tvTitle.setVisibility(View.VISIBLE);
         tvNavBtnRegister.setVisibility(View.GONE);
         tvNavBtnLogin.setVisibility(View.GONE);
