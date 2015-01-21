@@ -8,15 +8,21 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.zrquan.mobile.R;
 import com.zrquan.mobile.ZrquanApplication;
+
+import butterknife.ButterKnife;
+import butterknife.InjectView;
+import butterknife.OnClick;
 
 public class ProfileFragment extends Fragment {
 
     private Context context;
     private View rootView;
+    @InjectView(R.id.titleText) TextView tvTitle;
+    @InjectView(R.id.tv_btn_register) TextView tvNavBtnRegister;
+    @InjectView(R.id.tv_btn_login) TextView tvNavBtnLogin;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -25,8 +31,8 @@ public class ProfileFragment extends Fragment {
             context = getActivity().getApplicationContext();
             if(!((ZrquanApplication) getActivity().getApplicationContext()).getAccount().isLogin()) {
                 rootView = inflater.inflate(R.layout.visitor_tab_profile_fragment, container, false);
+                ButterKnife.inject(this, rootView);
                 initVisitorNavigationBar(rootView);
-                initVisitorContentView(rootView);
             }
 //            rootView = inflater.inflate(R.layout.fragment_profile, container, false);
 //            initNavigationBar(rootView);
@@ -38,36 +44,23 @@ public class ProfileFragment extends Fragment {
     }
 
     private void initVisitorNavigationBar(View v) {
-        TextView tvTitle = (TextView) v.findViewById(R.id.titleText);
         tvTitle.setText(R.string.main_me);
         tvTitle.setVisibility(View.VISIBLE);
-
-        TextView tvBtnRegister = (TextView) v.findViewById(R.id.tv_btn_register);
-        tvBtnRegister.setVisibility(View.GONE);
-
-        TextView tvBtnLogin = (TextView) v.findViewById(R.id.tv_btn_login);
-        tvBtnLogin.setVisibility(View.GONE);
+        tvNavBtnRegister.setVisibility(View.GONE);
+        tvNavBtnLogin.setVisibility(View.GONE);
     }
 
-    private void initVisitorContentView(View v) {
-        TextView tvBtnRegister = (TextView) v.findViewById(R.id.tv_btn_content_register);
-        tvBtnRegister.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent myIntent = new Intent(getActivity(), UserRegisterActivity.class);
-                getActivity().startActivity(myIntent);
-                getActivity().overridePendingTransition(R.anim.right2left_enter, R.anim.right2left_exit );
-            }
-        });
+    @OnClick(R.id.tv_btn_content_register)
+    public void onContentRegisterClick() {
+        Intent myIntent = new Intent(getActivity(), UserRegisterActivity.class);
+        getActivity().startActivity(myIntent);
+        getActivity().overridePendingTransition(R.anim.right2left_enter, R.anim.right2left_exit );
+    }
 
-        TextView tvBtnLogin = (TextView) v.findViewById(R.id.tv_btn_content_login);
-        tvBtnLogin.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent myIntent = new Intent(getActivity(), UserLoginActivity.class);
-                getActivity().startActivity(myIntent);
-                getActivity().overridePendingTransition(R.anim.right2left_enter, R.anim.right2left_exit );
-            }
-        });
+    @OnClick(R.id.tv_btn_content_login)
+    public void onContentLoginCLick() {
+        Intent myIntent = new Intent(getActivity(), UserLoginActivity.class);
+        getActivity().startActivity(myIntent);
+        getActivity().overridePendingTransition(R.anim.right2left_enter, R.anim.right2left_exit);
     }
 }
