@@ -26,7 +26,7 @@
             android:layout_height="wrap_content"
             android:layout_alignBottom="@+id/view_pager_banner"
             android:layout_centerHorizontal="true"
-            android:padding="80dp" />
+            android:padding="8dp" />
 
         <ImageView
             android:id="@+id/image_view_cancel_banner"

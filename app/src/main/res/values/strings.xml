@@ -36,7 +36,6 @@
     <string name="cardUnbing">解除绑定</string>
     <string name="cardDefaultuse">默认使用该卡支付</string>
     <string name="cardCancle">取消</string>
-    <string name="channel">WeiboChannelInfo</string>
     <string name="com_facebook_loginview_log_out_button">Logout Facebook</string>
     <string name="com_facebook_loginview_log_in_button">Login with Facebook</string>
     <string name="com_facebook_loginview_logged_in_as">Logged in as: %1$s</string>
@@ -2692,7 +2691,6 @@ More interesting comments:"</string>
     <string name="edit_text">Edit text</string>
     <string name="copy_all">Copy all</string>
     <string name="paste">Paste</string>
-    <string name="choseclient">请选择电子邮件客户端</string>
     <string name="screen_preferences">Screen</string>
     <string name="title_statusbar_preference">Status bar</string>
     <string name="summary_statusbar_preference">Show/hide status bar.</string>
@@ -2733,4 +2731,7 @@ More interesting comments:"</string>
     <string name="default_value_ime_preference">0</string>
     <string name="default_value_shell_preference">/system/bin/sh -</string>
     <string name="default_value_initialcommand_preference">export PATH=/data/local/bin:$PATH</string>
+    <string name="channel">WeiboChannelInfo</string>
+    <string name="choseclient">Please select email client</string>
+    <string name="main_follows">follow's</string>
 </resources>

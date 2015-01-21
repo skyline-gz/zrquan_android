@@ -21,7 +21,6 @@ android {
         main {
             res.srcDirs =
                 [
-                    'src/main/res/layout/feed',
                     'src/main/res'
                 ]
         }

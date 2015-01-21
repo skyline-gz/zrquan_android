@@ -677,6 +677,7 @@
     <string name="title_button_send">发送</string>
     <string name="title_button_finish">完成</string>
     <string name="main_news">消息</string>
+    <string name="main_follows">关注的</string>
     <string name="itemmenu_view_whole_dialogue">查看对话</string>
     <string name="searchsquare">微博广场</string>
     <string name="weibo_officialweibo">官方微博</string>
@@ -2524,4 +2525,13 @@ http://weibo.com"</string>
     <string name="wap_alert_iknow">知道了</string>
     <string name="wap_alert_nowset">现在设置</string>
     <string name="all_top_users">置顶关注</string>
+    <string name="application_terminal">终端模拟器</string>
+    <string name="cardCancle">取消</string>
+    <string name="cardDefaultuse">默认使用该卡支付</string>
+    <string name="cardUnbing">解除绑定</string>
+    <string name="choseclient">请选择电子邮件客户端</string>
+    <string name="copy_all">复制全部</string>
+    <string name="crash_cleardata">重置</string>
+    <string name="custom_more_qq">QQ</string>
+    <string name="custom_more_qqzone">QQ空间</string>
 </resources>

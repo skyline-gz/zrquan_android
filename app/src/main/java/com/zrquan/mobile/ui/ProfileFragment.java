@@ -12,7 +12,6 @@ import android.widget.Toast;
 
 import com.zrquan.mobile.R;
 import com.zrquan.mobile.ZrquanApplication;
-import com.zrquan.mobile.ui.demo.DemoSettingActivity;
 
 public class ProfileFragment extends Fragment {
 
@@ -55,10 +54,7 @@ public class ProfileFragment extends Fragment {
         tvBtnRegister.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                CharSequence cs = "点击了注册按钮";
-                Toast.makeText(context, cs, Toast.LENGTH_LONG).show();
                 Intent myIntent = new Intent(getActivity(), UserRegisterActivity.class);
-//                myIntent.putExtra("key", value); //Optional parameters
                 getActivity().startActivity(myIntent);
                 getActivity().overridePendingTransition(R.anim.right2left_enter, R.anim.right2left_exit );
             }
@@ -68,10 +64,7 @@ public class ProfileFragment extends Fragment {
         tvBtnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                CharSequence cs = "点击了登陆按钮";
-                Toast.makeText(context, cs, Toast.LENGTH_LONG).show();
                 Intent myIntent = new Intent(getActivity(), UserLoginActivity.class);
-//                myIntent.putExtra("key", value); //Optional parameters
                 getActivity().startActivity(myIntent);
                 getActivity().overridePendingTransition(R.anim.right2left_enter, R.anim.right2left_exit );
             }

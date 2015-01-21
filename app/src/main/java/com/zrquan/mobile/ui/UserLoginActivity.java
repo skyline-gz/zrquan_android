@@ -31,8 +31,8 @@ public class UserLoginActivity extends Activity {
 
     private void doBack() {
         hideKeyboard();
-        overridePendingTransition(R.anim.left2right_enter, R.anim.left2right_exit);
         finish();
+        overridePendingTransition(R.anim.left2right_enter, R.anim.left2right_exit);
     }
 
     private void hideKeyboard() {
