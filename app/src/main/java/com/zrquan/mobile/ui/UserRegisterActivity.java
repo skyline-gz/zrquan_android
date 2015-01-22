@@ -10,6 +10,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.zrquan.mobile.R;
 import com.zrquan.mobile.support.util.RegUtils;
@@ -20,6 +21,7 @@ import butterknife.ButterKnife;
 import butterknife.InjectView;
 import butterknife.OnClick;
 import butterknife.OnTextChanged;
+import de.greenrobot.event.EventBus;
 
 public class UserRegisterActivity extends Activity{
     public static final String TAG = "UserRegisterActivity";
@@ -43,6 +45,23 @@ public class UserRegisterActivity extends Activity{
         ButterKnife.inject(this);
         initNavigationBar();
     }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        EventBus.getDefault().register(this);
+    }
+
+    @Override
+    public void onStop() {
+        EventBus.getDefault().unregister(this);
+        super.onStop();
+    }
+
+    // This method will be called when a MessageEvent is posted
+//    public void onEvent(MessageEvent event){
+//        Toast.makeText(context, event.message, Toast.LENGTH_SHORT).show();
+//    }
 
     @OnClick(R.id.tv_btn_back)
     public void onBtnBackClick(View view) {

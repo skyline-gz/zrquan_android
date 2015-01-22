@@ -15,7 +15,7 @@ import java.util.Map;
 
 public class AccountDao {
 
-    public static void register(String phoneNum) {
+    public static void sendVerifyCode(String phoneNum) {
         // pass second argument as "null" for GET requests
         Map<String, String> params = new HashMap <>();
         params.put("mobile", phoneNum);
