@@ -90,7 +90,7 @@ public class UserRegisterActivity extends Activity{
         etPhoneNum.setText("");
     }
 
-    @OnClick(R.id.regist_phone_num_clear_btn)
+    @OnClick(R.id.regist_password_clear_btn)
     public void regist_password_clear_btn(View v) {
         etPassword.setText("");
     }
