@@ -118,32 +118,6 @@
                 android:textColor="@color/main_content_subtitle_text_color"
                 android:textSize="14.0sp" />
 
-            <LinearLayout
-                android:id="@id/verification"
-                android:layout_width="fill_parent"
-                android:layout_height="@dimen/new_regist_height"
-                android:layout_marginBottom="@dimen/new_regist_margin"
-                android:layout_marginTop="@dimen/new_regist_margin"
-                android:orientation="horizontal"
-                android:visibility="gone">
-
-                <ImageView
-                    android:id="@id/code_image"
-                    android:layout_width="fill_parent"
-                    android:layout_height="fill_parent"
-                    android:layout_weight="3.0"
-                    android:gravity="center"
-                    android:src="@drawable/face113" />
-
-                <EditText
-                    android:id="@id/code_et"
-                    android:layout_width="fill_parent"
-                    android:layout_height="fill_parent"
-                    android:layout_weight="1.0"
-                    android:gravity="center"
-                    android:hint="@string/new_regist_input_code" />
-            </LinearLayout>
-
             <RelativeLayout
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
@@ -153,6 +127,7 @@
 
                 <Button
                     android:id="@id/btRegist"
+                    android:enabled="false"
                     android:layout_width="fill_parent"
                     android:layout_height="@dimen/new_regist_height_bt"
                     android:layout_centerHorizontal="true"
@@ -161,51 +136,32 @@
                     android:textColor="@color/main_button_disabled_text_color_for_light_color_button"
                     android:textSize="17.0sp" />
             </RelativeLayout>
-
             <RelativeLayout
+                android:id="@id/check_notice"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical">
+                android:orientation="horizontal">
 
-                <!--<com.sina.weibo.view.MBlogTextView-->
-                <!--android:id="@id/sina_notice"-->
-                <!--android:layout_width="wrap_content"-->
-                <!--android:layout_height="wrap_content"-->
-                <!--android:layout_marginTop="8.0dip"-->
-                <!--android:bufferType="spannable"-->
-                <!--android:paddingLeft="@dimen/new_regist_home_err_msg_margin_bottom"-->
-                <!--android:text="@string/new_regist_notice"-->
-                <!--android:textColor="@color/main_content_subtitle_text_color"-->
-                <!--android:textSize="13.0sp" />-->
+                <CheckBox
+                    android:id="@id/check"
+                    android:layout_width="18.0dip"
+                    android:layout_height="19.0dip"
+                    android:layout_marginLeft="10.0dip"
+                    android:layout_marginTop="8.0dip"
+                    android:button="@drawable/check_box"
+                    android:checked="true" />
 
-                <RelativeLayout
-                    android:id="@id/check_notice"
-                    android:layout_width="fill_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal">
-                    <!--android:layout_below="@id/sina_notice"-->
-
-                    <CheckBox
-                        android:id="@id/check"
-                        android:layout_width="18.0dip"
-                        android:layout_height="19.0dip"
-                        android:layout_marginLeft="10.0dip"
-                        android:layout_marginTop="8.0dip"
-                        android:button="@drawable/check_box"
-                        android:checked="true" />
-
-                    <!--<com.sina.weibo.view.MBlogTextView-->
-                    <!--android:id="@id/upload_phone_list_tv"-->
-                    <!--android:layout_width="wrap_content"-->
-                    <!--android:layout_height="wrap_content"-->
-                    <!--android:layout_marginTop="8.0dip"-->
-                    <!--android:layout_toRightOf="@id/check"-->
-                    <!--android:bufferType="spannable"-->
-                    <!--android:paddingLeft="8.0dip"-->
-                    <!--android:text="@string/new_regist_upload_address"-->
-                    <!--android:textColor="@color/main_content_subtitle_text_color"-->
-                    <!--android:textSize="13.0sp" />-->
-                </RelativeLayout>
+                <TextView
+                android:id="@id/upload_phone_list_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8.0dip"
+                android:layout_toRightOf="@id/check"
+                android:bufferType="spannable"
+                android:paddingLeft="8.0dip"
+                android:text="@string/new_regist_notice"
+                android:textColor="@color/main_content_subtitle_text_color"
+                android:textSize="13.0sp" />
             </RelativeLayout>
         </LinearLayout>
     </ScrollView>
