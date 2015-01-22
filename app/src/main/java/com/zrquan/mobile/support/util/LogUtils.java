@@ -5,10 +5,10 @@ import com.zrquan.mobile.BuildConfig;
 /**
  * Wrapper API for sending log output.
  */
-public class LogUtil {
+public class LogUtils {
     protected static final String TAG = BuildConfig.APPLICATION_ID;
 
-    private LogUtil() {
+    private LogUtils() {
     }
 
     /**

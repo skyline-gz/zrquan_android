@@ -2,8 +2,8 @@ package com.zrquan.mobile.support.util;
 
 import java.util.regex.Pattern;
 
-public class RegUtil {
-    private RegUtil (){}
+public class RegUtils {
+    private RegUtils(){}
 
     private Pattern emailPattern = Pattern.compile("(([a-zA-Z0-9_\\-\\.]+)@([a-zA-Z0-9_\\-\\.]+)*\\.([a-zA-Z0-9_\\-\\.])+)");
     private Pattern ipPattern = Pattern.compile("((http|ftp|https):\\/\\/((25[0-5]|2[0-4]\\d|((1\\d{2})|([1-9]?\\d)))\\.){3}(?:25[0-5]|2[0-4]\\d|((1\\d{2})|([1-9]?\\d))))");
@@ -12,7 +12,7 @@ public class RegUtil {
     private Pattern passwordPattern = Pattern.compile("([a-zA-Z0-9]{8,20})");
     private Pattern urlPattern = Pattern.compile("(([Hh][Tt][Tt][Pp]://)|([Hh][Tt][Tt][Pp][Ss]://))?(((([a-zA-Z0-9_\\-])+[.]){1,}([a-zA-Z0-9\\-]+)(((\\/[\\~]*|\\[\\~]*)([a-zA-Z0-9_\\-])+)|[.]([a-zA-Z0-9_\\-])+)*(((([?|#]([a-zA-Z0-9_\\-])+){1}[=]*))*(([a-zA-Z0-9_\\-])+){1}([\\&]*([a-zA-Z0-9_\\-])*[\\=]*([a-zA-Z0-9_\\-])*[\\%]*([a-zA-Z0-9_\\-])*)*)*))|(www){1}([[a-zA-Z0-9_\\-]\\.\\-/:]+)([a-zA-Z0-9\\-]+)");
 
-    public static RegUtil getInstance() {
+    public static RegUtils getInstance() {
         return InstanceInner.instance;
     }
 
@@ -37,6 +37,6 @@ public class RegUtil {
 
     //使用类级内部类保证　lazy loading 见http://www.cnblogs.com/java-my-life/archive/2012/03/31/2425631.html
     private static class InstanceInner {
-        private static RegUtil instance = new RegUtil();
+        private static RegUtils instance = new RegUtils();
     }
 }

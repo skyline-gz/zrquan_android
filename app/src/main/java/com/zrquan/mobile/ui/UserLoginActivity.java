@@ -15,6 +15,8 @@ import butterknife.OnClick;
 
 public class UserLoginActivity extends Activity {
 
+    public static final String TAG = "UserLoginActivity";
+
     private Context context;
 
     @Override

@@ -1,8 +1,8 @@
 package com.zrquan.mobile.ui;
 
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
@@ -10,10 +10,9 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.zrquan.mobile.R;
-import com.zrquan.mobile.support.util.RegUtil;
+import com.zrquan.mobile.support.util.RegUtils;
 
 import java.util.regex.Matcher;
 
@@ -23,6 +22,8 @@ import butterknife.OnClick;
 import butterknife.OnTextChanged;
 
 public class UserRegisterActivity extends Activity{
+    public static final String TAG = "UserRegisterActivity";
+
     private Context context;
 
     @InjectView(R.id.titleText) TextView tvTitle;
@@ -62,7 +63,10 @@ public class UserRegisterActivity extends Activity{
 
     @OnClick(R.id.btRegist)
     public void onRegisterBtnClick() {
-        Toast.makeText(this, "点击了登陆按钮", Toast.LENGTH_LONG).show();
+        ProgressDialog localProgressDialog = new ProgressDialog(this);
+        localProgressDialog.setCancelable(false);
+        localProgressDialog.setMessage(getResources().getString(R.string.new_regist_confirm_registing));
+        localProgressDialog.show();
     }
 
     @OnTextChanged(R.id.phoneNum)
@@ -107,7 +111,7 @@ public class UserRegisterActivity extends Activity{
     }
 
     private boolean checkPhoneNum(String s) {
-        Matcher matcher = RegUtil.getInstance().getMobilePattern().matcher(s);
+        Matcher matcher = RegUtils.getInstance().getMobilePattern().matcher(s);
         if(!matcher.matches()) {
             tvInputTips.setText(R.string.login_phone_number_error_tips);
             tvInputTips.setTextColor(getResources().getColor(R.color.main_highlight_text_color));
@@ -120,7 +124,7 @@ public class UserRegisterActivity extends Activity{
     }
 
     private boolean checkPassword(String s) {
-        Matcher matcher = RegUtil.getInstance().getPasswordPattern().matcher(s);
+        Matcher matcher = RegUtils.getInstance().getPasswordPattern().matcher(s);
         if(!matcher.matches()) {
             tvInputTips.setText(R.string.pwd_tips);
             tvInputTips.setTextColor(getResources().getColor(R.color.main_highlight_text_color));
