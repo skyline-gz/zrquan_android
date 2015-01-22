@@ -37,7 +37,12 @@ dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
     compile 'com.android.support:support-v4:21.0.+'
     compile 'com.android.support:appcompat-v7:21.0.3'
-    //google guava
+    // Gson is a Java library that can be used to convert Java Objects into their JSON representation.
+    // It can also be used to convert a JSON string to an equivalent Java object.
+    compile 'com.google.code.gson:gson:2.3.1'
+    //google Guava project contains several of Google's core libraries that we rely on in our
+    // Java-based projects: collections, caching, primitives support, concurrency libraries,
+    // common annotations, string processing, I/O, and so forth.
     compile group: 'com.google.guava', name: 'guava', version: '18.0'
     // HTTP library announced by google in I/O 2013. Illustrates, JSONRequest,StringRequest, Image caching
     compile 'com.mcxiaoke.volley:library:1.0.+'
