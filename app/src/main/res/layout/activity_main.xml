@@ -23,7 +23,7 @@
         android:layout_height="1dp"
         android:background="@color/border_main_frame_color"/>
 
-    <android.support.v4.app.FragmentTabHost
+    <com.zrquan.mobile.widget.fragment.FragmentTabHost
         android:id="@android:id/tabhost"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content">
@@ -32,5 +32,5 @@
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:layout_weight="0" />
-    </android.support.v4.app.FragmentTabHost>
+    </com.zrquan.mobile.widget.fragment.FragmentTabHost>
 </LinearLayout>
