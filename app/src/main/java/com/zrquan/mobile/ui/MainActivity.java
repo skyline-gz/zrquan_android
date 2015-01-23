@@ -15,6 +15,8 @@ import android.widget.Toast;
 
 import com.google.common.base.Optional;
 import com.zrquan.mobile.R;
+import com.zrquan.mobile.support.util.LogUtils;
+import com.zrquan.mobile.support.util.StringUtils;
 import com.zrquan.mobile.ui.feed.FeedFragment;
 import com.zrquan.mobile.widget.fragment.FragmentTabHost;
 
@@ -35,6 +37,8 @@ public class MainActivity extends FragmentActivity {
     //Tab选项卡的文字
     private String mTextViewArray[] = {"首页", "关注的", "发表", "消息", "我"};
 
+    //Tab对象
+    private FragmentTabHost mTabHost;
     private PopupWindow mPopupWindow;
 
     @Override
@@ -44,7 +48,7 @@ public class MainActivity extends FragmentActivity {
 
         context = getApplicationContext();
         inflater = LayoutInflater.from(this);
-        FragmentTabHost mTabHost = (FragmentTabHost) findViewById(android.R.id.tabhost);
+        mTabHost = (FragmentTabHost) findViewById(android.R.id.tabhost);
         mTabHost.setup(getApplicationContext(), getSupportFragmentManager(), R.id.real_tab_content);
 
         //得到fragment的个数
@@ -61,7 +65,7 @@ public class MainActivity extends FragmentActivity {
                 //为每一个Tab按钮设置图标、文字和内容
                 indicator = getIndicatorView(mTextViewArray[i], mImageViewArray[i]);
             }
-            tabSpec = mTabHost.newTabSpec(mTextViewArray[i]).setIndicator(indicator);
+            tabSpec = mTabHost.newTabSpec(Integer.toString(i)).setIndicator(indicator);
             //将Tab按钮添加进Tab选项卡中
             mTabHost.addTab(tabSpec, fragmentArray[i], null);
             //设置Tab按钮的背景
@@ -78,7 +82,7 @@ public class MainActivity extends FragmentActivity {
         mTabHost.setOnTabChangedListener(new TabHost.OnTabChangeListener() {
             @Override
             public void onTabChanged(String tabId) {
-                if(tabId.equals(mTextViewArray[COMPOSE_TAB_INDEX])) {
+                if(tabId.equals(Integer.toString(COMPOSE_TAB_INDEX))) {
                     mPopupWindow.setAnimationStyle(R.style.ComposePopupAnimation);
                     mPopupWindow.showAtLocation(findViewById(android.R.id.content), Gravity.TOP| Gravity.START, 0, 0);
                     mPopupWindow.update();
@@ -96,7 +100,16 @@ public class MainActivity extends FragmentActivity {
                 WindowManager.LayoutParams.MATCH_PARENT, true);
         mPopupWindow.setTouchable(true);
         mPopupWindow.setOutsideTouchable(true);
-//        mPopupWindow.setBackgroundDrawable(new BitmapDrawable(getResources(), (Bitmap) null));
+
+        View ivCloseViewBtn = popupView.findViewById(R.id.pop_control_bar_front_holder);
+        ivCloseViewBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mPopupWindow.dismiss();
+                String lastTabId = mTabHost.getLastTabId();
+                mTabHost.setCurrentTabByTag(lastTabId);
+            }
+        });
     }
 
 //    @Override

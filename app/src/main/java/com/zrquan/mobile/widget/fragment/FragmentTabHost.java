@@ -62,6 +62,7 @@ public class FragmentTabHost extends TabHost
     private TabInfo mLastTab;
     private boolean mAttached;
     private Fragment mFragmentShowInEmptyTab;
+    private String mLastTabId;
 
     static final class TabInfo {
         private final String tag;
@@ -312,6 +313,9 @@ public class FragmentTabHost extends TabHost
 
     @Override
     public void onTabChanged(String tabId) {
+        if(mLastTab != null) {
+            mLastTabId = mLastTab.tag;
+        }
         if (mAttached) {
             FragmentTransaction ft = doTabChanged(tabId, null);
             if (ft != null) {
@@ -321,6 +325,11 @@ public class FragmentTabHost extends TabHost
         if (mOnTabChangeListener != null) {
             mOnTabChangeListener.onTabChanged(tabId);
         }
+    }
+
+    //获取上次Change之前的tab tag
+    public String getLastTabId() {
+        return mLastTabId;
     }
 
     private FragmentTransaction doTabChanged(String tabId, FragmentTransaction ft) {
