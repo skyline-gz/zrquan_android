@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:background="@drawable/tabbar_background"
+    android:gravity="center"
+    android:layout_height="wrap_content">
+
+    <RelativeLayout
+    android:id="@id/rl_composer"
+    android:background="@drawable/tabbar_btn_compose"
+    android:layout_width="fill_parent"
+    android:layout_height="0dp"
+    android:layout_weight="1.0">
+
+        <ImageView
+            android:id="@id/plus_icon"
+            android:background="@drawable/tabbar_icon_compose_add"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true" />
+    </RelativeLayout>
+</LinearLayout>

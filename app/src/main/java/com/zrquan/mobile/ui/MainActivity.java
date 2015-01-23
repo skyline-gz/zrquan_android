@@ -17,16 +17,18 @@ import com.zrquan.mobile.ui.feed.FeedFragment;
 public class MainActivity extends FragmentActivity {
     private LayoutInflater inflater;
 
+    private final int COMPOSE_TAB_INDEX = 2;
+
     //定义数组来存放Fragment界面
-    private Class fragmentArray[] = {FeedFragment.class, FollowFragment.class,
+    private Class fragmentArray[] = {FeedFragment.class, FollowFragment.class, FollowFragment.class,
             MessageFragment.class, ProfileFragment.class};
 
     //定义数组来存放按钮图片
-    private int mImageViewArray[] = {R.drawable.tab_home_btn, R.drawable.tab_find_btn,
+    private int mImageViewArray[] = {R.drawable.tab_home_btn, R.drawable.tab_find_btn, -1,
             R.drawable.tab_message_btn, R.drawable.tab_myself_btn};
 
     //Tab选项卡的文字
-    private String mTextViewArray[] = {"首页", "关注的", "消息", "我"};
+    private String mTextViewArray[] = {"首页", "关注的", "发表", "消息", "我"};
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,7 +43,14 @@ public class MainActivity extends FragmentActivity {
         int count = fragmentArray.length;
 
         for (int i = 0; i < count; i++) {
-            View indicator = getIndicatorView(mTextViewArray[i], mImageViewArray[i]);
+
+            View indicator;
+            if(i == COMPOSE_TAB_INDEX) {
+                indicator = inflater.inflate(R.layout.tab_compose, null);
+            } else {
+                indicator = getIndicatorView(mTextViewArray[i], mImageViewArray[i]);
+            }
+
             //为每一个Tab按钮设置图标、文字和内容
             TabHost.TabSpec tabSpec = mTabHost.newTabSpec(mTextViewArray[i]).setIndicator(indicator);
             //将Tab按钮添加进Tab选项卡中
