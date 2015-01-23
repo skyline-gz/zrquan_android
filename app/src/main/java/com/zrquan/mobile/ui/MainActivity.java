@@ -10,6 +10,8 @@ import android.view.WindowManager;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.view.animation.RotateAnimation;
+import android.view.animation.Transformation;
+import android.view.animation.TranslateAnimation;
 import android.widget.ImageView;
 import android.widget.PopupWindow;
 import android.widget.TabHost;
@@ -90,6 +92,7 @@ public class MainActivity extends FragmentActivity {
                     mPopupWindow.showAtLocation(findViewById(android.R.id.content), Gravity.TOP| Gravity.START, 0, 0);
                     mPopupWindow.update();
                     animRotateCancelBtn();
+                    animPanelHolder();
                 }
             }
         });
@@ -116,11 +119,21 @@ public class MainActivity extends FragmentActivity {
         });
     }
 
+    private void animPanelHolder() {
+        View ivPanelHolder = mPopupWindow.getContentView().findViewById(R.id.panel_holder);
+        TranslateAnimation t = new TranslateAnimation(Animation.RELATIVE_TO_SELF, 0,Animation.RELATIVE_TO_SELF, 0,
+                Animation.RELATIVE_TO_SELF, 0.3f,Animation.RELATIVE_TO_SELF, 0);
+        t.setInterpolator(AnimationUtils.loadInterpolator(context, android.R.interpolator.overshoot));
+        t.setDuration(300);
+        t.setFillAfter(true);
+        ivPanelHolder.startAnimation(t);
+    }
+
     private void animRotateCancelBtn() {
         View ivCancelBtn = mPopupWindow.getContentView().findViewById(R.id.pop_control_bar_front_close_img);
         RotateAnimation r = new RotateAnimation(0.0f, 45.0f, Animation.RELATIVE_TO_SELF,
                 0.5f, Animation.RELATIVE_TO_SELF, 0.5f);
-        r.setInterpolator(AnimationUtils.loadInterpolator(context, android.R.interpolator.accelerate_cubic));
+        r.setInterpolator(AnimationUtils.loadInterpolator(context, android.R.interpolator.accelerate_quad));
         r.setDuration(200);
         r.setFillAfter(true);
         ivCancelBtn.startAnimation(r);

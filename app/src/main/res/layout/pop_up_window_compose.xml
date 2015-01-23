@@ -77,20 +77,83 @@
         <!--</LinearLayout>-->
     </LinearLayout>
 
-    <!--<LinearLayout-->
-        <!--android:orientation="horizontal"-->
-        <!--android:id="@id/panel_holder"-->
-        <!--android:layout_width="fill_parent"-->
-        <!--android:layout_height="fill_parent"-->
-        <!--android:layout_alignParentLeft="true"-->
-        <!--android:layout_alignParentTop="true"-->
-        <!--android:layout_above="@id/pop_control_bar" />-->
+    <RelativeLayout
+        android:orientation="horizontal"
+        android:id="@id/panel_holder"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:layout_above="@id/pop_control_bar">
+        <LinearLayout
+            android:layout_alignParentBottom="true"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="40dp"
+            android:orientation="horizontal">
+                <LinearLayout
+                    android:gravity="center"
+                    android:orientation="vertical"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1">
+
+                    <ImageView
+                        android:id="@id/composer_item_image"
+                        android:background="#00ffffff"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/tabbar_compose_weibo" />
+
+                    <TextView
+                        android:textSize="14.0sp"
+                        android:textColor="@color/compose_tabbar_text_color"
+                        android:gravity="center"
+                        android:id="@id/composer_item_text"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="7.0dip"
+                        android:text="说说"
+                        android:shadowColor="@null" />
+                </LinearLayout>
+                <LinearLayout
+                    android:gravity="center"
+                    android:orientation="vertical"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1">
+
+                    <ImageView
+                        android:id="@id/composer_item_image"
+                        android:background="#00ffffff"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/tabbar_compose_idea" />
+
+                    <TextView
+                        android:textSize="14.0sp"
+                        android:textColor="@color/compose_tabbar_text_color"
+                        android:gravity="center"
+                        android:id="@id/composer_item_text"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="7.0dip"
+                        android:text="问答"
+                        android:shadowColor="@null" />
+                </LinearLayout>
+                <ImageView
+                    android:layout_width="0dp"
+                    android:layout_height="1dp"
+                    android:layout_weight="1"/>
+        </LinearLayout>
+
+    </RelativeLayout>
 
     <ImageView
         android:id="@id/composer_slogan"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="85.0dip"
+        android:layout_marginTop="150.0dip"
         android:src="@drawable/compose_slogan"
         android:layout_centerHorizontal="true" />
 
