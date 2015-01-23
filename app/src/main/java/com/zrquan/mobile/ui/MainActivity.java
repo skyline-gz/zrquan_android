@@ -7,6 +7,9 @@ import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.WindowManager;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
+import android.view.animation.RotateAnimation;
 import android.widget.ImageView;
 import android.widget.PopupWindow;
 import android.widget.TabHost;
@@ -86,6 +89,7 @@ public class MainActivity extends FragmentActivity {
                     mPopupWindow.setAnimationStyle(R.style.ComposePopupAnimation);
                     mPopupWindow.showAtLocation(findViewById(android.R.id.content), Gravity.TOP| Gravity.START, 0, 0);
                     mPopupWindow.update();
+                    animRotateCancelBtn();
                 }
             }
         });
@@ -110,6 +114,16 @@ public class MainActivity extends FragmentActivity {
                 mTabHost.setCurrentTabByTag(lastTabId);
             }
         });
+    }
+
+    private void animRotateCancelBtn() {
+        View ivCancelBtn = mPopupWindow.getContentView().findViewById(R.id.pop_control_bar_front_close_img);
+        RotateAnimation r = new RotateAnimation(0.0f, 45.0f, Animation.RELATIVE_TO_SELF,
+                0.5f, Animation.RELATIVE_TO_SELF, 0.5f);
+        r.setInterpolator(AnimationUtils.loadInterpolator(context, android.R.interpolator.accelerate_cubic));
+        r.setDuration(200);
+        r.setFillAfter(true);
+        ivCancelBtn.startAnimation(r);
     }
 
 //    @Override

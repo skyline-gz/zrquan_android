@@ -58,10 +58,10 @@ public class UserRegisterActivity extends Activity{
         super.onStop();
     }
 
-    // This method will be called when a MessageEvent is posted
-//    public void onEvent(MessageEvent event){
-//        Toast.makeText(context, event.message, Toast.LENGTH_SHORT).show();
-//    }
+//    This method will be called when a MessageEvent is posted
+    public void onEvent(String event){
+        Toast.makeText(context, event, Toast.LENGTH_SHORT).show();
+    }
 
     @OnClick(R.id.tv_btn_back)
     public void onBtnBackClick(View view) {
