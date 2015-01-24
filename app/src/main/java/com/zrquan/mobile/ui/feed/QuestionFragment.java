@@ -1,26 +1,20 @@
 package com.zrquan.mobile.ui.feed;
 
-import android.app.AlertDialog;
 import android.app.Dialog;
-import android.content.Intent;
-import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentTransaction;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
-import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
+import android.widget.CompoundButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.zrquan.mobile.R;
-import com.zrquan.mobile.ui.demo.BottomMenuFragment;
-import com.zrquan.mobile.ui.demo.SelectPicPopupWindow;
+import com.zrquan.mobile.widget.switchbutton.SwitchButton;
 
 //问答 动态
 public class QuestionFragment extends Fragment {
@@ -32,6 +26,16 @@ public class QuestionFragment extends Fragment {
                              Bundle savedInstanceState) {
 
         View v = inflater.inflate(R.layout.fragment_question, null);
+        SwitchButton sbDefault = (SwitchButton) getActivity().findViewById(R.id.sb_default);
+
+        sbDefault.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                Toast.makeText(getActivity(), "Default style button, new state: " + (isChecked ? "on" : "off"), Toast.LENGTH_SHORT).show();
+            }
+        });
+
         tvTest = (TextView) v.findViewById(R.id.tv_test);
         tvTest.setOnClickListener(new View.OnClickListener() {
             @Override
