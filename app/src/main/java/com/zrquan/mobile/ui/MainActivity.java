@@ -10,7 +10,7 @@ import android.view.WindowManager;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.view.animation.RotateAnimation;
-import android.view.animation.Transformation;
+import android.view.animation.ScaleAnimation;
 import android.view.animation.TranslateAnimation;
 import android.widget.ImageView;
 import android.widget.PopupWindow;
@@ -20,8 +20,6 @@ import android.widget.Toast;
 
 import com.google.common.base.Optional;
 import com.zrquan.mobile.R;
-import com.zrquan.mobile.support.util.LogUtils;
-import com.zrquan.mobile.support.util.StringUtils;
 import com.zrquan.mobile.ui.feed.FeedFragment;
 import com.zrquan.mobile.widget.fragment.FragmentTabHost;
 
@@ -112,11 +110,65 @@ public class MainActivity extends FragmentActivity {
         ivCloseViewBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mPopupWindow.dismiss();
-                String lastTabId = mTabHost.getLastTabId();
-                mTabHost.setCurrentTabByTag(lastTabId);
+                dismissPopupAndRestoreTab();
             }
         });
+
+        View vDiscussBtn = popupView.findViewById(R.id.layout_item_discuss);
+        vDiscussBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(context, "点击了讨论按钮", Toast.LENGTH_LONG).show();
+            }
+        });
+
+        View vQuestionBtn = popupView.findViewById(R.id.layout_item_question);
+        vQuestionBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(context, "点击了问答按钮", Toast.LENGTH_LONG).show();
+            }
+        });
+
+        View ivPanelHolder = mPopupWindow.getContentView().findViewById(R.id.panel_holder);
+        ivPanelHolder.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dismissPopupAndRestoreTab();
+            }
+        });
+    }
+
+    private void dismissPopupAndRestoreTab() {
+        animPanelHolderExitAndDismissPopUp();
+        String lastTabId = mTabHost.getLastTabId();
+        mTabHost.setCurrentTabByTag(lastTabId);
+    }
+
+    private void animPanelHolderExitAndDismissPopUp() {
+        View ivPanelHolder = mPopupWindow.getContentView().findViewById(R.id.panel_holder);
+        TranslateAnimation t = new TranslateAnimation(Animation.RELATIVE_TO_SELF, 0, Animation.RELATIVE_TO_SELF, 0,
+                Animation.RELATIVE_TO_SELF, 0, Animation.RELATIVE_TO_SELF, 0.3f);
+        t.setInterpolator(AnimationUtils.loadInterpolator(context, android.R.interpolator.accelerate_quad));
+        t.setDuration(200);
+        t.setFillAfter(true);
+        t.setAnimationListener(new Animation.AnimationListener() {
+            @Override
+            public void onAnimationStart(Animation animation) {
+
+            }
+
+            @Override
+            public void onAnimationEnd(Animation animation) {
+                mPopupWindow.dismiss();
+            }
+
+            @Override
+            public void onAnimationRepeat(Animation animation) {
+
+            }
+        });
+        ivPanelHolder.startAnimation(t);
     }
 
     private void animPanelHolder() {
