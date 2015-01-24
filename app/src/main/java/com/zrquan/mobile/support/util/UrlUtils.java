@@ -16,7 +16,8 @@ public class UrlUtils {
     public static final String PATHS_SEPARATOR        = "/";
     /** equal sign **/
     public static final String EQUAL_SIGN             = "=";
-    public static final String HOST = "127.0.0.1";
+    //    public static final String HOST = "127.0.0.1:3000";
+    public static final String HOST = "192.168.56.102:3000";
     public static final String HOST_HTTP = "http://" + HOST;
 
     private static final String TAG = "NetUtils";
@@ -37,7 +38,7 @@ public class UrlUtils {
      */
     public static String getUrlWithParams(String url, Map<String, String> paramsMap) {
         StringBuilder urlWithParams = new StringBuilder();
-        urlWithParams.append(HOST_HTTP).append("/").append(StringUtils.isEmpty(url) ? "" : url);
+        urlWithParams.append(HOST_HTTP).append(PATHS_SEPARATOR).append(StringUtils.isEmpty(url) ? "" : url);
         String params = joinParams(paramsMap);
         if (!StringUtils.isEmpty(params)) {
             urlWithParams.append(URL_AND_PARA_SEPARATOR).append(params);

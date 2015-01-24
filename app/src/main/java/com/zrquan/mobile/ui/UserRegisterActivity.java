@@ -13,6 +13,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.zrquan.mobile.R;
+import com.zrquan.mobile.controller.AccountController;
 import com.zrquan.mobile.support.util.RegUtils;
 
 import java.util.regex.Matcher;
@@ -86,6 +87,7 @@ public class UserRegisterActivity extends Activity{
         localProgressDialog.setCancelable(false);
         localProgressDialog.setMessage(getResources().getString(R.string.new_regist_confirm_registing));
         localProgressDialog.show();
+        AccountController.sendVerifyCode(etPhoneNum.getText().toString());
     }
 
     @OnTextChanged(R.id.phoneNum)
