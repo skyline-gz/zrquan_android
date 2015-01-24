@@ -1,5 +1,6 @@
 package com.zrquan.mobile.ui.feed;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -7,30 +8,53 @@ import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.zrquan.mobile.R;
+import com.zrquan.mobile.ZrquanApplication;
+import com.zrquan.mobile.ui.UserLoginActivity;
+import com.zrquan.mobile.ui.UserRegisterActivity;
 
 import java.util.ArrayList;
 
+import butterknife.ButterKnife;
+import butterknife.InjectView;
+import butterknife.OnClick;
+
 public class FeedFragment extends Fragment {
     private View rootView;  //当前Fragment持有的View实例
-    private ViewPager mPager;
     private ArrayList<Fragment> fragmentList;
-    private TextView tvDiscussion, tvQuestion;
-    private int currIndex;//当前页卡编号
+    private int currentIndex;//当前页卡编号
+
+    @InjectView(R.id.iv_search)
+    ImageView ivSearch;
+    @InjectView(R.id.iv_arrange_setting)
+    ImageView ivArrangeSetting;
+    @InjectView(R.id.tv_discussion)
+    TextView tvDiscussion;
+    @InjectView(R.id.tv_question)
+    TextView tvQuestion;
+    @InjectView(R.id.tv_register)
+    TextView tvRegister;
+    @InjectView(R.id.tv_login)
+    TextView tvLogin;
+    @InjectView(R.id.vp_feed_content)
+    ViewPager vpFeedContent;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        boolean isLogin = ((ZrquanApplication) getActivity().getApplicationContext()).getAccount().isLogin();
 
         //Avoid recreating same view when perform tab switching
         //http://stackoverflow.com/questions/10716571/avoid-recreating-same-view-when-perform-tab-switching
         if (rootView == null) {
             rootView = inflater.inflate(R.layout.fragment_feed, container, false);
-            initNavBar(rootView);
-            initViewPager(rootView);
+            ButterKnife.inject(this, rootView);
+            initNavBar(isLogin);
+            initViewPager();
             setRetainInstance(true);
         } else {
             ((ViewGroup) rootView.getParent()).removeView(rootView);
@@ -41,12 +65,34 @@ public class FeedFragment extends Fragment {
     /*
      * 初始化导航栏
 	 */
-    private void initNavBar(View view) {
-        tvDiscussion = (TextView) view.findViewById(R.id.tv_discussion);
-        tvQuestion = (TextView) view.findViewById(R.id.tv_question);
-
+    private void initNavBar(Boolean isLogin) {
         tvDiscussion.setOnClickListener(new TxListener(0));
         tvQuestion.setOnClickListener(new TxListener(1));
+        if (isLogin) {
+            tvLogin.setVisibility(View.GONE);
+            tvRegister.setVisibility(View.GONE);
+            ivSearch.setVisibility(View.VISIBLE);
+            ivArrangeSetting.setVisibility(View.VISIBLE);
+        } else {
+            tvLogin.setVisibility(View.VISIBLE);
+            tvRegister.setVisibility(View.VISIBLE);
+            ivSearch.setVisibility(View.GONE);
+            ivArrangeSetting.setVisibility(View.GONE);
+        }
+    }
+
+    @OnClick(R.id.tv_login)
+    public void onLoginClick(View v) {
+        Intent myIntent = new Intent(getActivity(), UserLoginActivity.class);
+        getActivity().startActivity(myIntent);
+        getActivity().overridePendingTransition(R.anim.right2left_enter, R.anim.right2left_exit);
+    }
+
+    @OnClick(R.id.tv_register)
+    public void onRegisterClick(View v) {
+        Intent myIntent = new Intent(getActivity(), UserRegisterActivity.class);
+        getActivity().startActivity(myIntent);
+        getActivity().overridePendingTransition(R.anim.right2left_enter, R.anim.right2left_exit);
     }
 
     private class TxListener implements View.OnClickListener {
@@ -58,23 +104,22 @@ public class FeedFragment extends Fragment {
 
         @Override
         public void onClick(View v) {
-            mPager.setCurrentItem(index);
+            vpFeedContent.setCurrentItem(index);
         }
     }
 
     /*
      * 初始化ViewPager
      */
-    private void initViewPager(View view) {
-        mPager = (ViewPager) view.findViewById(R.id.viewpager);
+    private void initViewPager() {
         fragmentList = new ArrayList<>();
         fragmentList.add(new DiscussionFragment());
         fragmentList.add(new QuestionFragment());
 
         //给ViewPager设置适配器
-        mPager.setAdapter(new FeedPagerAdapter(getChildFragmentManager(), fragmentList));
-        mPager.setCurrentItem(0);                                           //设置当前显示标签页为第一页
-        mPager.setOnPageChangeListener(new MyOnPageChangeListener());       //页面变化时的监听器
+        vpFeedContent.setAdapter(new FeedPagerAdapter(getChildFragmentManager(), fragmentList));
+        vpFeedContent.setCurrentItem(0);                                           //设置当前显示标签页为第一页
+        vpFeedContent.setOnPageChangeListener(new MyOnPageChangeListener());       //页面变化时的监听器
         selectTabDiscussion();
     }
 

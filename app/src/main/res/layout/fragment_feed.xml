@@ -13,7 +13,21 @@
         android:layout_height="45dp"
         android:orientation="horizontal">
 
+        <TextView
+            android:id="@+id/tv_register"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:visibility="gone"
+            android:clickable="true"
+            android:padding="6dp"
+            android:singleLine="true"
+            android:text="注册"
+            android:textColor="@color/navigationbar_text_color"
+            android:textSize="15dp" />
+
         <ImageView
+            android:id="@+id/iv_search"
             android:contentDescription="搜索"
             android:layout_alignParentLeft="true"
             android:src="@drawable/btn_navigation_search"
@@ -49,7 +63,21 @@
                 android:textSize="18sp" />
             </LinearLayout>
 
+        <TextView
+            android:id="@+id/tv_login"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:visibility="gone"
+            android:clickable="true"
+            android:padding="6dp"
+            android:singleLine="true"
+            android:text="登录"
+            android:textColor="@color/navigationbar_text_color"
+            android:textSize="15dp" />
+
         <ImageView
+            android:id="@+id/iv_arrange_setting"
             android:contentDescription="添加"
             android:layout_alignParentRight="true"
             android:src="@drawable/btn_navigation_compose"
@@ -63,7 +91,7 @@
         android:background="@color/border_main_frame_color"/>
 
     <android.support.v4.view.ViewPager
-        android:id="@+id/viewpager"
+        android:id="@+id/vp_feed_content"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
         android:layout_gravity="center"

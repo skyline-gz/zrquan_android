@@ -26,7 +26,7 @@ public class QuestionFragment extends Fragment {
                              Bundle savedInstanceState) {
 
         View v = inflater.inflate(R.layout.fragment_question, null);
-        SwitchButton sbDefault = (SwitchButton) getActivity().findViewById(R.id.sb_default);
+        SwitchButton sbDefault = (SwitchButton) v.findViewById(R.id.sb_default);
 
         sbDefault.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
 
