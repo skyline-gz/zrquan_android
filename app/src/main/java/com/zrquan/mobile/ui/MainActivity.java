@@ -148,9 +148,9 @@ public class MainActivity extends FragmentActivity {
     private void animPanelHolderExitAndDismissPopUp() {
         View ivPanelHolder = mPopupWindow.getContentView().findViewById(R.id.panel_holder);
         TranslateAnimation t = new TranslateAnimation(Animation.RELATIVE_TO_SELF, 0, Animation.RELATIVE_TO_SELF, 0,
-                Animation.RELATIVE_TO_SELF, 0, Animation.RELATIVE_TO_SELF, 0.3f);
+                Animation.RELATIVE_TO_SELF, 0, Animation.RELATIVE_TO_SELF, 0.5f);
         t.setInterpolator(AnimationUtils.loadInterpolator(context, android.R.interpolator.accelerate_quad));
-        t.setDuration(200);
+        t.setDuration(150);
         t.setFillAfter(true);
         t.setAnimationListener(new Animation.AnimationListener() {
             @Override
