@@ -2,6 +2,7 @@ package com.zrquan.mobile.ui;
 
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -29,6 +30,7 @@ public class UserRegisterActivity extends CommonActivity{
     public static final String TAG = "UserRegisterActivity";
 
     private Context context;
+    private ProgressDialog mProgressDialog;
 
     @InjectView(R.id.titleText) TextView tvTitle;
     @InjectView(R.id.tv_btn_back) TextView tvBackBtn;
@@ -36,8 +38,6 @@ public class UserRegisterActivity extends CommonActivity{
     @InjectView(R.id.btRegist) Button btRegist;
     @InjectView(R.id.phoneNum) EditText etPhoneNum;
     @InjectView(R.id.regist_phone_num_clear_btn) ImageView ivClearPhoneNumBtn;
-    @InjectView(R.id.password) EditText etPassword;
-    @InjectView(R.id.regist_password_clear_btn) ImageView ivClearPasswordBtn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,6 +64,10 @@ public class UserRegisterActivity extends CommonActivity{
     public void onEvent(AccountEvent event){
         CharSequence ch = "短信验证码：" + event.verifyCode;
         Toast.makeText(context, ch, Toast.LENGTH_SHORT).show();
+        mProgressDialog.dismiss();
+        Intent myIntent = new Intent(this, UserRegisterSetPasswordActivity.class);
+        startActivity(myIntent);
+        overridePendingTransition(R.anim.right2left_enter, R.anim.right2left_exit);
     }
 
     @OnClick(R.id.tv_btn_back)
@@ -85,10 +89,10 @@ public class UserRegisterActivity extends CommonActivity{
 
     @OnClick(R.id.btRegist)
     public void onRegisterBtnClick() {
-        ProgressDialog localProgressDialog = new ProgressDialog(this);
-        localProgressDialog.setCancelable(false);
-        localProgressDialog.setMessage(getResources().getString(R.string.new_regist_confirm_registing));
-        localProgressDialog.show();
+        mProgressDialog = new ProgressDialog(this);
+        mProgressDialog.setCancelable(false);
+        mProgressDialog.setMessage(getResources().getString(R.string.new_regist_confirm_registing));
+        mProgressDialog.show();
         AccountController.sendVerifyCode(etPhoneNum.getText().toString());
     }
 
@@ -102,29 +106,13 @@ public class UserRegisterActivity extends CommonActivity{
         checkRegisterParams();
     }
 
-    @OnTextChanged(R.id.password)
-    public void onPasswordTextChanged(CharSequence s, int start, int before, int count) {
-        if(s.toString().trim().length() > 0) {
-            ivClearPasswordBtn.setVisibility(View.VISIBLE);
-        } else {
-            ivClearPasswordBtn.setVisibility(View.GONE);
-        }
-        checkRegisterParams();
-    }
-
     @OnClick(R.id.regist_phone_num_clear_btn)
     public void onClearPhoneNumBtnClick(View v) {
         etPhoneNum.setText("");
     }
 
-    @OnClick(R.id.regist_password_clear_btn)
-    public void regist_password_clear_btn(View v) {
-        etPassword.setText("");
-    }
-
     private void checkRegisterParams() {
-        if(checkPhoneNum(etPhoneNum.getText().toString())
-                && checkPassword(etPassword.getText().toString())) {
+        if(checkPhoneNum(etPhoneNum.getText().toString())) {
             btRegist.setEnabled(true);
             btRegist.setTextColor(getResources().getColor(R.color.main_button_shadow_text_color_for_light_color_button));
         } else {
@@ -140,20 +128,7 @@ public class UserRegisterActivity extends CommonActivity{
             tvInputTips.setTextColor(getResources().getColor(R.color.main_highlight_text_color));
             return false;
         } else {
-            tvInputTips.setText(R.string.pwd_tips);
-            tvInputTips.setTextColor(getResources().getColor(R.color.main_content_subtitle_text_color));
-        }
-        return true;
-    }
-
-    private boolean checkPassword(String s) {
-        Matcher matcher = RegUtils.getInstance().getPasswordPattern().matcher(s);
-        if(!matcher.matches()) {
-            tvInputTips.setText(R.string.pwd_tips);
-            tvInputTips.setTextColor(getResources().getColor(R.color.main_highlight_text_color));
-            return false;
-        } else {
-            tvInputTips.setText(R.string.pwd_tips);
+            tvInputTips.setText(R.string.register_phone_num_input_tips);
             tvInputTips.setTextColor(getResources().getColor(R.color.main_content_subtitle_text_color));
         }
         return true;

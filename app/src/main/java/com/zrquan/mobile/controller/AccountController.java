@@ -1,10 +1,6 @@
 package com.zrquan.mobile.controller;
 
-import com.android.volley.AuthFailureError;
-import com.android.volley.Response;
 import com.android.volley.VolleyError;
-import com.android.volley.toolbox.JsonObjectRequest;
-import com.zrquan.mobile.ZrquanApplication;
 import com.zrquan.mobile.event.AccountEvent;
 import com.zrquan.mobile.support.util.LogUtils;
 import com.zrquan.mobile.support.util.UrlUtils;

@@ -2534,4 +2534,6 @@ http://weibo.com"</string>
     <string name="crash_cleardata">重置</string>
     <string name="custom_more_qq">QQ</string>
     <string name="custom_more_qqzone">QQ空间</string>
+    <string name="register_phone_num_input_tips">请输入11位手机号码</string>
+    <string name="account_register_set_password">设置密码</string>
 </resources>
