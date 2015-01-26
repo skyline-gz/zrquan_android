@@ -8,6 +8,7 @@ import com.zrquan.mobile.ZrquanApplication;
 import com.zrquan.mobile.event.AccountEvent;
 import com.zrquan.mobile.support.util.LogUtils;
 import com.zrquan.mobile.support.util.UrlUtils;
+import com.zrquan.mobile.support.volley.VolleyJsonRequest;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -23,40 +24,27 @@ public class AccountController {
         // pass second argument as "null" for GET requests
         Map<String, String> params = new HashMap<>();
         params.put("mobile", phoneNum);
-        final String URL = UrlUtils.getUrlWithParams("users/send_verify_code", params);
-        LogUtils.d(URL);
-        JsonObjectRequest req = new JsonObjectRequest(URL, null,
-                new Response.Listener<JSONObject>() {
-                    @Override
-                    public void onResponse(JSONObject response) {
-                        try {
-                            LogUtils.d("收到请求的回复了");
-                            LogUtils.d("Response:" + response.toString(4));
-                            JSONObject results = response.getJSONObject("results");
-                            String verifyCode = results.getString("verify_code");
-                            LogUtils.d("verify_code", verifyCode);
-                            EventBus.getDefault().post(new AccountEvent(verifyCode));
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
-                    }
-                }, new Response.ErrorListener() {
+        final String url = UrlUtils.getUrlWithParams("users/send_verify_code", params);
+        LogUtils.d(url);
+        VolleyJsonRequest.get(url, new VolleyJsonRequest.ResponseHandler() {
+            @Override
+            public void onResponse(JSONObject response) {
+                try {
+                    LogUtils.d("收到请求的回复了");
+                    LogUtils.d("Response:" + response.toString(4));
+                    JSONObject results = response.getJSONObject("results");
+                    String verifyCode = results.getString("verify_code");
+                    LogUtils.d("verify_code", verifyCode);
+                    EventBus.getDefault().post(new AccountEvent(verifyCode));
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+
             @Override
             public void onErrorResponse(VolleyError error) {
-                LogUtils.d("Error: " + error.getMessage());
-            }
-        }
-        ) {
-            @Override
-            public Map<String, String> getHeaders() throws AuthFailureError {
-                HashMap<String, String> headers = new HashMap<String, String>();
-                headers.put("Content-Type", "application/json");
-                LogUtils.d("headers=" + headers);
-                return headers;
-            }
-        };
 
-        // add the request object to the queue to be executed
-        ZrquanApplication.getInstance().addToRequestQueue(req);
+            }
+        });
     }
 }
