@@ -1,7 +1,6 @@
 package com.zrquan.mobile.ui;
 
 import android.content.Context;
-import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -10,7 +9,6 @@ import android.view.WindowManager;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.view.animation.RotateAnimation;
-import android.view.animation.ScaleAnimation;
 import android.view.animation.TranslateAnimation;
 import android.widget.ImageView;
 import android.widget.PopupWindow;
@@ -20,10 +18,11 @@ import android.widget.Toast;
 
 import com.google.common.base.Optional;
 import com.zrquan.mobile.R;
+import com.zrquan.mobile.ui.common.CommonFragmentActivity;
 import com.zrquan.mobile.ui.feed.FeedFragment;
 import com.zrquan.mobile.widget.fragment.FragmentTabHost;
 
-public class MainActivity extends FragmentActivity {
+public class MainActivity extends CommonFragmentActivity {
     private LayoutInflater inflater;
     private Context context;
 

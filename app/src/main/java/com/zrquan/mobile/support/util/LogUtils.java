@@ -43,6 +43,16 @@ public class LogUtils {
     }
 
     /**
+     * Send a DEBUG log message with tag.
+     *
+     * @param msg The message you would like logged.
+     */
+    public static void d(String tag, String msg) {
+        if (BuildConfig.DEBUG)
+            android.util.Log.d(tag, buildMessage(msg));
+    }
+
+    /**
      * Send a DEBUG log message and log the exception.
      *
      * @param msg The message you would like logged.
@@ -51,6 +61,17 @@ public class LogUtils {
     public static void d(String msg, Throwable thr) {
         if (BuildConfig.DEBUG)
             android.util.Log.d(TAG, buildMessage(msg), thr);
+    }
+
+    /**
+     * Send a DEBUG log message and log the exception with tag.
+     *
+     * @param msg The message you would like logged.
+     * @param thr An exception to log
+     */
+    public static void d(String tag, String msg, Throwable thr) {
+        if (BuildConfig.DEBUG)
+            android.util.Log.d(tag, buildMessage(msg), thr);
     }
 
     /**

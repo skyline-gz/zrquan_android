@@ -1,10 +1,6 @@
 package com.zrquan.mobile.support.util;
 
-import java.net.HttpURLConnection;
-import java.text.SimpleDateFormat;
-import java.util.HashMap;
 import java.util.Iterator;
-import java.util.Locale;
 import java.util.Map;
 
 public class UrlUtils {

@@ -6,14 +6,15 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
-import android.widget.TextView;
 
 import com.zrquan.mobile.R;
+import com.zrquan.mobile.support.util.ScreenUtils;
+import com.zrquan.mobile.ui.common.CommonActivity;
 
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-public class UserLoginActivity extends Activity {
+public class UserLoginActivity extends CommonActivity {
 
     public static final String TAG = "UserLoginActivity";
 
@@ -46,17 +47,8 @@ public class UserLoginActivity extends Activity {
     }
 
     private void doBack() {
-        hideKeyboard();
+        ScreenUtils.hideSoftInput(this);
         finish();
         overridePendingTransition(R.anim.left2right_enter, R.anim.left2right_exit);
-    }
-
-    private void hideKeyboard() {
-        // Check if no view has focus:
-        View view = this.getCurrentFocus();
-        if (view != null) {
-            InputMethodManager inputManager = (InputMethodManager) this.getSystemService(Context.INPUT_METHOD_SERVICE);
-            inputManager.hideSoftInputFromWindow(view.getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
-        }
     }
 }

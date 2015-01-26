@@ -1,6 +1,5 @@
 package com.zrquan.mobile.ui;
 
-import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.os.Bundle;
@@ -15,6 +14,8 @@ import android.widget.Toast;
 import com.zrquan.mobile.R;
 import com.zrquan.mobile.controller.AccountController;
 import com.zrquan.mobile.support.util.RegUtils;
+import com.zrquan.mobile.support.util.ScreenUtils;
+import com.zrquan.mobile.ui.common.CommonActivity;
 
 import java.util.regex.Matcher;
 
@@ -24,7 +25,7 @@ import butterknife.OnClick;
 import butterknife.OnTextChanged;
 import de.greenrobot.event.EventBus;
 
-public class UserRegisterActivity extends Activity{
+public class UserRegisterActivity extends CommonActivity{
     public static final String TAG = "UserRegisterActivity";
 
     private Context context;
@@ -158,17 +159,8 @@ public class UserRegisterActivity extends Activity{
     }
 
     private void doBack() {
-        hideKeyboard();
+        ScreenUtils.hideSoftInput(this);
         finish();
         overridePendingTransition(R.anim.left2right_enter, R.anim.left2right_exit);
-    }
-
-    private void hideKeyboard() {
-        // Check if no view has focus:
-        View view = this.getCurrentFocus();
-        if (view != null) {
-            InputMethodManager inputManager = (InputMethodManager) this.getSystemService(Context.INPUT_METHOD_SERVICE);
-            inputManager.hideSoftInputFromWindow(view.getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
-        }
     }
 }
