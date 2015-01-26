@@ -4,7 +4,6 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.os.Bundle;
 import android.view.View;
-import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -13,6 +12,7 @@ import android.widget.Toast;
 
 import com.zrquan.mobile.R;
 import com.zrquan.mobile.controller.AccountController;
+import com.zrquan.mobile.event.AccountEvent;
 import com.zrquan.mobile.support.util.RegUtils;
 import com.zrquan.mobile.support.util.ScreenUtils;
 import com.zrquan.mobile.ui.common.CommonActivity;
@@ -61,8 +61,9 @@ public class UserRegisterActivity extends CommonActivity{
     }
 
 //    This method will be called when a MessageEvent is posted
-    public void onEvent(String event){
-        Toast.makeText(context, event, Toast.LENGTH_SHORT).show();
+    public void onEvent(AccountEvent event){
+        CharSequence ch = "短信验证码：" + event.verifyCode;
+        Toast.makeText(context, ch, Toast.LENGTH_SHORT).show();
     }
 
     @OnClick(R.id.tv_btn_back)

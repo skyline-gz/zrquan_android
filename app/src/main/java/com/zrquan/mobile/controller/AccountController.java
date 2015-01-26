@@ -5,6 +5,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.zrquan.mobile.ZrquanApplication;
+import com.zrquan.mobile.event.AccountEvent;
 import com.zrquan.mobile.support.util.LogUtils;
 import com.zrquan.mobile.support.util.UrlUtils;
 
@@ -13,6 +14,8 @@ import org.json.JSONObject;
 
 import java.util.HashMap;
 import java.util.Map;
+
+import de.greenrobot.event.EventBus;
 
 public class AccountController {
 
@@ -29,6 +32,10 @@ public class AccountController {
                         try {
                             LogUtils.d("收到请求的回复了");
                             LogUtils.d("Response:" + response.toString(4));
+                            JSONObject results = response.getJSONObject("results");
+                            String verifyCode = results.getString("verify_code");
+                            LogUtils.d("verify_code", verifyCode);
+                            EventBus.getDefault().post(new AccountEvent(verifyCode));
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
