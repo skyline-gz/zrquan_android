@@ -3,7 +3,6 @@ package com.zrquan.mobile.ui;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,12 +14,13 @@ import android.widget.TextView;
 
 import com.zrquan.mobile.R;
 import com.zrquan.mobile.ZrquanApplication;
+import com.zrquan.mobile.ui.common.CommonFragment;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 import butterknife.OnClick;
 
-public class FollowFragment extends Fragment {
+public class FollowFragment extends CommonFragment {
 
     private Context context;
     private View rootView;

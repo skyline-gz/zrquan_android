@@ -3,7 +3,6 @@ package com.zrquan.mobile.ui.feed;
 import android.app.Dialog;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,10 +13,11 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.zrquan.mobile.R;
+import com.zrquan.mobile.ui.common.CommonFragment;
 import com.zrquan.mobile.widget.switchbutton.SwitchButton;
 
 //问答 动态
-public class QuestionFragment extends Fragment {
+public class QuestionFragment extends CommonFragment {
 
     private TextView tvTest;
 

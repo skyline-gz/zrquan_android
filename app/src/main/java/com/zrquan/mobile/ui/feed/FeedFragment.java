@@ -3,7 +3,6 @@ package com.zrquan.mobile.ui.feed;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,6 +15,7 @@ import com.zrquan.mobile.R;
 import com.zrquan.mobile.ZrquanApplication;
 import com.zrquan.mobile.ui.UserLoginActivity;
 import com.zrquan.mobile.ui.UserRegisterActivity;
+import com.zrquan.mobile.ui.common.CommonFragment;
 
 import java.util.ArrayList;
 
@@ -23,9 +23,9 @@ import butterknife.ButterKnife;
 import butterknife.InjectView;
 import butterknife.OnClick;
 
-public class FeedFragment extends Fragment {
+public class FeedFragment extends CommonFragment {
     private View rootView;  //当前Fragment持有的View实例
-    private ArrayList<Fragment> fragmentList;
+    private ArrayList<CommonFragment> fragmentList;
     private int currentIndex;//当前页卡编号
 
     @InjectView(R.id.iv_search)

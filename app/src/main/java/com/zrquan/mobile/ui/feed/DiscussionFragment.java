@@ -5,7 +5,6 @@ import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Parcelable;
-import android.support.v4.app.Fragment;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -22,6 +21,7 @@ import android.widget.Toast;
 import com.zrquan.mobile.R;
 import com.viewpagerindicator.CirclePageIndicator;
 
+import com.zrquan.mobile.ui.common.CommonFragment;
 import com.zrquan.mobile.widget.pulltorefresh.PullToRefreshBase;
 import com.zrquan.mobile.widget.pulltorefresh.PullToRefreshListView;
 import com.zrquan.mobile.widget.viewpager.AutoScrollViewPager;
@@ -35,7 +35,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 //轻讨论 动态
-public class DiscussionFragment extends Fragment {
+public class DiscussionFragment extends CommonFragment {
     private Context context;
     private AutoScrollViewPager vpBanner;
     private CirclePageIndicator indicatorBanner;

@@ -2,15 +2,16 @@ package com.zrquan.mobile.ui.feed;
 
 import java.util.ArrayList;
 
-import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
+import com.zrquan.mobile.ui.common.CommonFragment;
+
 public class FeedPagerAdapter extends FragmentPagerAdapter {
 
-    ArrayList<Fragment> list;
+    ArrayList<CommonFragment> list;
 
-    public FeedPagerAdapter(FragmentManager fm, ArrayList<Fragment> list) {
+    public FeedPagerAdapter(FragmentManager fm, ArrayList<CommonFragment> list) {
         super(fm);
         this.list = list;
 
@@ -22,7 +23,7 @@ public class FeedPagerAdapter extends FragmentPagerAdapter {
     }
 
     @Override
-    public Fragment getItem(int arg0) {
+    public CommonFragment getItem(int arg0) {
         return list.get(arg0);
     }
 
