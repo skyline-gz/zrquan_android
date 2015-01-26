@@ -173,7 +173,7 @@ public class MainActivity extends CommonFragmentActivity {
     private void animPanelHolder() {
         View ivPanelHolder = mPopupWindow.getContentView().findViewById(R.id.panel_holder);
         TranslateAnimation t = new TranslateAnimation(Animation.RELATIVE_TO_SELF, 0,Animation.RELATIVE_TO_SELF, 0,
-                Animation.RELATIVE_TO_SELF, 0.3f,Animation.RELATIVE_TO_SELF, 0);
+                Animation.RELATIVE_TO_SELF, 0.5f,Animation.RELATIVE_TO_SELF, 0);
         t.setInterpolator(AnimationUtils.loadInterpolator(context, android.R.interpolator.overshoot));
         t.setDuration(300);
         t.setFillAfter(true);
