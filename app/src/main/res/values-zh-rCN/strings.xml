@@ -1363,7 +1363,7 @@ http://weibo.com"</string>
     <string name="new_regist_verification_code_content">"你的手机%s
 会收到一条含有6位数字验证码的短信"</string>
     <string name="new_regist_input_code">请输入验证码</string>
-    <string name="new_regist_resent_verification_code_bt">重新发送验证码(%sS)</string>
+    <string name="new_regist_resent_verification_code_bt">重新发送(%sS)</string>
     <string name="new_regist_resent_verification_content">重新发送验证码</string>
     <string name="new_regist_success">完善个人资料</string>
     <string name="new_regist_interest_people">关注感兴趣的人</string>

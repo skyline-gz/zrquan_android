@@ -13,7 +13,7 @@ public class UrlUtils {
     /** equal sign **/
     public static final String EQUAL_SIGN             = "=";
 //    public static final String HOST = "127.0.0.1:3000";
-    public static final String HOST = "192.168.56.1:3000";
+    public static final String HOST = "192.168.1.112:3000";
     public static final String HOST_HTTP = "http://" + HOST;
 
     private static final String TAG = "NetUtils";

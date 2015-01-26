@@ -2735,5 +2735,4 @@ More interesting comments:"</string>
     <string name="choseclient">Please select email client</string>
     <string name="main_follows">follow\'s</string>
     <string name="register_phone_num_input_tips">Please input 11 digist phone num</string>
-    <string name="account_register_set_password">Set Password</string>
 </resources>

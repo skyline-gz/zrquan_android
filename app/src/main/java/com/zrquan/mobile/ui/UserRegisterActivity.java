@@ -60,13 +60,13 @@ public class UserRegisterActivity extends CommonActivity{
         super.onStop();
     }
 
-//    This method will be called when a MessageEvent is posted
     public void onEvent(AccountEvent event){
         CharSequence ch = "短信验证码：" + event.verifyCode;
-        Toast.makeText(context, ch, Toast.LENGTH_SHORT).show();
+        Toast.makeText(context, ch, Toast.LENGTH_LONG).show();
         mProgressDialog.dismiss();
-        Intent myIntent = new Intent(this, UserRegisterSetPasswordActivity.class);
-        startActivity(myIntent);
+        Intent intent = new Intent(this, UserRegisterSetPasswordActivity.class);
+        intent.putExtra("REGISTER_MOBILE", etPhoneNum.getText().toString());
+        startActivity(intent);
         overridePendingTransition(R.anim.right2left_enter, R.anim.right2left_exit);
     }
 
