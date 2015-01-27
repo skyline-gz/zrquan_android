@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:zrquan="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/white"
@@ -88,15 +89,18 @@
                         android:textColor="#A1A1A1" />
                 </RelativeLayout>
 
-                <ImageView
+                <com.zrquan.mobile.widget.view.RoundedImageView
                     android:id="@+id/user_avatar"
                     android:layout_width="68dp"
                     android:layout_height="68dp"
                     android:padding="1px"
-                    android:background="@android:color/white"
+                    android:background="@android:color/transparent"
                     android:layout_marginLeft="21dp"
                     android:contentDescription="@null"
-                    android:src="@drawable/avatar_default" />
+                    android:src="@drawable/avatar_default"
+                    zrquan:riv_border_color="#0d000000"
+                    zrquan:riv_border_width="1.0px"
+                    zrquan:riv_corner_radius="34.dp"/>
 
                 <TextView
                     android:id="@+id/user_name"

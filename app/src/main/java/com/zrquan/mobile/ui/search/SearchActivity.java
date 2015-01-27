@@ -1,7 +1,64 @@
 package com.zrquan.mobile.ui.search;
 
-import com.zrquan.mobile.ui.common.CommonActivity;
+import android.os.Bundle;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.view.ViewPager;
 
-public class SearchActivity extends CommonActivity {
+import com.viewpagerindicator.TabPageIndicator;
+import com.zrquan.mobile.support.util.ScreenUtils;
+import com.zrquan.mobile.ui.common.CommonFragmentActivity;
+import com.zrquan.mobile.R;
 
+public class SearchActivity extends CommonFragmentActivity {
+
+    private static final String[] SUBJECTS = new String[] { "讨论", "问答", "职人", "主题"};
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_search);
+
+        FragmentPagerAdapter adapter = new GoogleMusicAdapter(getSupportFragmentManager());
+
+        ViewPager pager = (ViewPager)findViewById(R.id.pager);
+        pager.setAdapter(adapter);
+
+        TabPageIndicator indicator = (TabPageIndicator)findViewById(R.id.indicator);
+        indicator.setViewPager(pager);
+    }
+
+    class GoogleMusicAdapter extends FragmentPagerAdapter {
+        public GoogleMusicAdapter(FragmentManager fm) {
+            super(fm);
+        }
+
+        @Override
+        public Fragment getItem(int position) {
+            return new SearchDiscussionFragment();
+        }
+
+        @Override
+        public CharSequence getPageTitle(int position) {
+            return SUBJECTS[position % SUBJECTS.length].toUpperCase();
+        }
+
+        @Override
+        public int getCount() {
+            return SUBJECTS.length;
+        }
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        doBack();
+    }
+
+    private void doBack() {
+        ScreenUtils.hideSoftInput(this);
+        finish();
+        overridePendingTransition(R.anim.right2left_enter, R.anim.right2left_exit);
+    }
 }

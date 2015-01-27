@@ -13,7 +13,6 @@ import com.zrquan.mobile.R;
 
 /**
  * 自定义ScrollView
- * 
  * @author markmjw
  * @date 2014-04-30
  */

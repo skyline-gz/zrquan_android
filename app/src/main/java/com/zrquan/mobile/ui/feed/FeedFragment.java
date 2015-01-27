@@ -16,6 +16,7 @@ import com.zrquan.mobile.ZrquanApplication;
 import com.zrquan.mobile.ui.UserLoginActivity;
 import com.zrquan.mobile.ui.UserRegisterActivity;
 import com.zrquan.mobile.ui.common.CommonFragment;
+import com.zrquan.mobile.ui.search.SearchActivity;
 
 import java.util.ArrayList;
 
@@ -93,6 +94,13 @@ public class FeedFragment extends CommonFragment {
         Intent myIntent = new Intent(getActivity(), UserRegisterActivity.class);
         getActivity().startActivity(myIntent);
         getActivity().overridePendingTransition(R.anim.right2left_enter, R.anim.right2left_exit);
+    }
+
+    @OnClick(R.id.iv_search)
+    public void onSearchClick(View v) {
+        Intent myIntent = new Intent(getActivity(), SearchActivity.class);
+        getActivity().startActivity(myIntent);
+        getActivity().overridePendingTransition(R.anim.left2right_enter, R.anim.left2right_exit);
     }
 
     private class TxListener implements View.OnClickListener {

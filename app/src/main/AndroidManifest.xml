@@ -23,6 +23,11 @@
         <activity android:label="设置Demo" android:name=".ui.demo.DemoSettingActivity"/>
         <activity android:label="登录" android:name=".ui.UserLoginActivity" android:windowSoftInputMode="stateHidden"/>
         <activity android:label="注册" android:name=".ui.UserRegisterActivity" android:windowSoftInputMode="stateHidden"/>
+        <activity
+            android:label="搜索"
+            android:name=".ui.search.SearchActivity"
+            android:theme="@style/Theme.PageIndicatorDefaults"
+            android:windowSoftInputMode="stateHidden"/>
         <activity android:label="设置密码" android:name=".ui.UserRegisterSetPasswordActivity" android:windowSoftInputMode="stateHidden"/>
     </application>
 
