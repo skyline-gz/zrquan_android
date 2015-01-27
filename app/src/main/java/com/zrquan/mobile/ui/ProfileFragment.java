@@ -1,66 +1,105 @@
 package com.zrquan.mobile.ui;
 
 import android.content.Context;
-import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.TableLayout;
+import android.widget.TableRow;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.zrquan.mobile.R;
 import com.zrquan.mobile.ZrquanApplication;
 import com.zrquan.mobile.ui.common.CommonFragment;
+import com.zrquan.mobile.ui.viewholder.VisitorContentViewHolder;
+import com.zrquan.mobile.widget.scrollview.PullScrollView;
 
-import butterknife.ButterKnife;
-import butterknife.InjectView;
-import butterknife.OnClick;
-
-public class ProfileFragment extends CommonFragment {
+public class ProfileFragment extends CommonFragment  implements PullScrollView.OnTurnListener {
 
     private Context context;
     private View rootView;
-    @InjectView(R.id.titleText) TextView tvTitle;
-    @InjectView(R.id.tv_btn_register) TextView tvNavBtnRegister;
-    @InjectView(R.id.tv_btn_login) TextView tvNavBtnLogin;
+    private VisitorContentViewHolder mVisitorContentViewHolder;
+
+    private PullScrollView mScrollView;
+    private ImageView mHeadImg;
+    private TableLayout mMainLayout;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        boolean isLogin = ((ZrquanApplication) getActivity().getApplicationContext()).getAccount().isLogin();
+
         if (rootView == null) {
             context = getActivity().getApplicationContext();
-            if(!((ZrquanApplication) getActivity().getApplicationContext()).getAccount().isLogin()) {
+            if(!isLogin) {
                 rootView = inflater.inflate(R.layout.visitor_tab_profile_fragment, container, false);
-                ButterKnife.inject(this, rootView);
-                initVisitorNavigationBar(rootView);
+                mVisitorContentViewHolder = new VisitorContentViewHolder(this, rootView);
+                mVisitorContentViewHolder.initVisitorNavigationBar(R.string.main_me);
+            } else {
+                rootView = inflater.inflate(R.layout.fragment_user_profile, container, false);
+                initView(rootView);
+                showTable();
             }
-//            rootView = inflater.inflate(R.layout.fragment_profile, container, false);
-//            initNavigationBar(rootView);
         } else {
             ((ViewGroup) rootView.getParent()).removeView(rootView);
         }
 
+        setRetainInstance(true);
         return rootView;
     }
 
-    private void initVisitorNavigationBar(View v) {
-        tvTitle.setText(R.string.main_me);
-        tvTitle.setVisibility(View.VISIBLE);
-        tvNavBtnRegister.setVisibility(View.GONE);
-        tvNavBtnLogin.setVisibility(View.GONE);
+    protected void initView(View v) {
+        mScrollView = (PullScrollView) v.findViewById(R.id.scroll_view);
+        mHeadImg = (ImageView) v.findViewById(R.id.background_img);
+
+        mMainLayout = (TableLayout) v.findViewById(R.id.table_layout);
+
+        mScrollView.setHeader(mHeadImg);
+        mScrollView.setOnTurnListener(this);
     }
 
-    @OnClick(R.id.tv_btn_content_register)
-    public void onContentRegisterClick() {
-        Intent myIntent = new Intent(getActivity(), UserRegisterActivity.class);
-        getActivity().startActivity(myIntent);
-        getActivity().overridePendingTransition(R.anim.right2left_enter, R.anim.right2left_exit );
+    public void showTable() {
+        TableRow.LayoutParams layoutParams = new TableRow.LayoutParams(
+                TableRow.LayoutParams.MATCH_PARENT,
+                TableRow.LayoutParams.WRAP_CONTENT);
+        layoutParams.gravity = Gravity.CENTER;
+        layoutParams.leftMargin = 30;
+        layoutParams.bottomMargin = 10;
+        layoutParams.topMargin = 10;
+
+        for (int i = 0; i < 30; i++) {
+            TableRow tableRow = new TableRow(context);
+            TextView textView = new TextView(context);
+            textView.setText("Test pull down scroll view " + i);
+            textView.setTextSize(20);
+            textView.setPadding(15, 15, 15, 15);
+
+            tableRow.addView(textView, layoutParams);
+            if (i % 2 != 0) {
+                tableRow.setBackgroundColor(Color.LTGRAY);
+            } else {
+                tableRow.setBackgroundColor(Color.WHITE);
+            }
+
+            final int n = i;
+            tableRow.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Toast.makeText(getActivity(), "Click item " + n, Toast.LENGTH_SHORT).show();
+                }
+            });
+
+            mMainLayout.addView(tableRow);
+        }
     }
 
-    @OnClick(R.id.tv_btn_content_login)
-    public void onContentLoginCLick() {
-        Intent myIntent = new Intent(getActivity(), UserLoginActivity.class);
-        getActivity().startActivity(myIntent);
-        getActivity().overridePendingTransition(R.anim.right2left_enter, R.anim.right2left_exit);
+    @Override
+    public void onTurn() {
+
     }
 }

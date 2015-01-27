@@ -6,36 +6,33 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 
 import com.zrquan.mobile.R;
 import com.zrquan.mobile.ZrquanApplication;
 import com.zrquan.mobile.ui.common.CommonFragment;
-
-import butterknife.ButterKnife;
-import butterknife.InjectView;
-import butterknife.OnClick;
+import com.zrquan.mobile.ui.viewholder.VisitorContentViewHolder;
 
 public class MessageFragment extends CommonFragment {
 
     private Context context;
     private View rootView;
-    @InjectView(R.id.titleText) TextView tvTitle;
-    @InjectView(R.id.tv_btn_register) TextView tvNavBtnRegister;
-    @InjectView(R.id.tv_btn_login) TextView tvNavBtnLogin;
+    private VisitorContentViewHolder mVisitorContentViewHolder;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        boolean isLogin = ((ZrquanApplication) getActivity().getApplicationContext()).getAccount().isLogin();
+
         if (rootView == null) {
             context = getActivity().getApplicationContext();
-            if(!((ZrquanApplication) getActivity().getApplicationContext()).getAccount().isLogin()) {
+            if(!isLogin) {
                 rootView = inflater.inflate(R.layout.visitor_tab_msg_fragment, container, false);
-                ButterKnife.inject(this, rootView);
-                initVisitorNavigationBar(rootView);
-            }
-
+                mVisitorContentViewHolder = new VisitorContentViewHolder(this, rootView);
+                mVisitorContentViewHolder.initVisitorNavigationBar(R.string.main_news);
+            } else {
 //            rootView = inflater.inflate(R.layout.activity_message, container, false);
+                rootView = new View(context);
+            }
         } else {
             ((ViewGroup) rootView.getParent()).removeView(rootView);
         }
@@ -43,24 +40,12 @@ public class MessageFragment extends CommonFragment {
         return rootView;
     }
 
-    private void initVisitorNavigationBar(View v) {
-        tvTitle.setText(R.string.main_news);
-        tvTitle.setVisibility(View.VISIBLE);
-        tvNavBtnRegister.setVisibility(View.GONE);
-        tvNavBtnLogin.setVisibility(View.GONE);
-    }
-
-    @OnClick(R.id.tv_btn_content_register)
-    public void onContentRegisterClick() {
-        Intent myIntent = new Intent(getActivity(), UserRegisterActivity.class);
-        getActivity().startActivity(myIntent);
-        getActivity().overridePendingTransition(R.anim.right2left_enter, R.anim.right2left_exit);
-    }
-
-    @OnClick(R.id.tv_btn_content_login)
-    public void onContentLoginCLick() {
-        Intent myIntent = new Intent(getActivity(), UserLoginActivity.class);
-        getActivity().startActivity(myIntent);
-        getActivity().overridePendingTransition(R.anim.right2left_enter, R.anim.right2left_exit);
-    }
+//    @Override
+//    public void onDestroyView() {
+//        super.onDestroyView();
+//        if (mVisitorContentViewHolder != null) {
+//            mVisitorContentViewHolder.dispose();
+//            mVisitorContentViewHolder = null;
+//        }
+//    }
 }

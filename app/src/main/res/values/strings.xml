@@ -2735,4 +2735,12 @@ More interesting comments:"</string>
     <string name="choseclient">Please select email client</string>
     <string name="main_follows">follow\'s</string>
     <string name="register_phone_num_input_tips">Please input 11 digist phone num</string>
+
+    <!--for test-->
+    <string name="add_attention">加关注</string>
+    <string name="user_post">职位：产品经理</string>
+    <string name="user_book">书单：25本</string>
+    <string name="user_name">西北老狼michael</string>
+    <string name="user_des">谁能像优乐美一样把我捧在手心，我就能让他的儿子长的更帅女儿长的更漂亮</string>
+    <string name="user_recommend_tip">TA推荐的好书</string>
 </resources>
