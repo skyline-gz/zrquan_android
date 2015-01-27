@@ -53,12 +53,12 @@ public class FeedFragment extends CommonFragment {
         if (rootView == null) {
             rootView = inflater.inflate(R.layout.fragment_feed, container, false);
             ButterKnife.inject(this, rootView);
-            initNavBar(isLogin);
-            initViewPager();
-            setRetainInstance(true);
         } else {
             ((ViewGroup) rootView.getParent()).removeView(rootView);
         }
+        initNavBar(isLogin);
+        initViewPager();
+        setRetainInstance(true);
         return rootView;
     }
 

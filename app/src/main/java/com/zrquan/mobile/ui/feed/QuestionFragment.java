@@ -25,7 +25,7 @@ public class QuestionFragment extends CommonFragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        View v = inflater.inflate(R.layout.fragment_question, null);
+        View v = inflater.inflate(R.layout.fragment_visitor_question, null);
         SwitchButton sbDefault = (SwitchButton) v.findViewById(R.id.sb_default);
 
         sbDefault.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {

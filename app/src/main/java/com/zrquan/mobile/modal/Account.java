@@ -9,7 +9,7 @@ public class Account implements Parcelable {
     private int navigationPosition;
 
     public boolean isLogin() {
-        return false;
+        return true;
     }
 
     public String getAccessToken() {
