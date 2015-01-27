@@ -37,7 +37,7 @@ public class MainActivity extends CommonFragmentActivity {
             R.drawable.tab_message_btn, R.drawable.tab_myself_btn};
 
     //Tab选项卡的文字
-    private String mTextViewArray[] = {"首页", "关注的", "发表", "消息", "我"};
+    private String mTextViewArray[] = {"社区", "关注人", "发表", "消息", "我"};
 
     //Tab对象
     private FragmentTabHost mTabHost;
