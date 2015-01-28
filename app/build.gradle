@@ -34,7 +34,7 @@ repositories {
 }
 
 dependencies {
-    compile fileTree(dir: 'libs', include: ['*.jar'])
+    compile fileTree(include: ['*.jar'], dir: 'libs')
     compile 'com.android.support:support-v4:21.0.+'
     compile 'com.android.support:appcompat-v7:21.0.3'
     // Gson is a Java library that can be used to convert Java Objects into their JSON representation.
@@ -43,17 +43,18 @@ dependencies {
     //google Guava project contains several of Google's core libraries that we rely on in our
     // Java-based projects: collections, caching, primitives support, concurrency libraries,
     // common annotations, string processing, I/O, and so forth.
-    compile group: 'com.google.guava', name: 'guava', version: '18.0'
+    compile 'com.google.guava:guava:18.0'
     // HTTP library announced by google in I/O 2013. Illustrates, JSONRequest,StringRequest, Image caching
     compile 'com.mcxiaoke.volley:library:1.0.+'
-    // A powerful image downloading and caching library for Android http://square.github.io/picasso/
-//    compile 'com.squareup.picasso:picasso:2.4.0'
+    // Powerful and flexible library for loading, caching and displaying images on Android.
+    // https://github.com/nostra13/Android-Universal-Image-Loader
+    compile files('libs/universal-image-loader-1.9.3-with-sources.jar')
     // Android optimized event bus that simplifies communication between Activities,
     // Fragments, Threads, Services, etc. Less code, better quality.
     compile 'de.greenrobot:eventbus:2.4.0'
     //View "injection" library for Android which uses annotation processing to generate boilerplate code for you.
     compile 'com.jakewharton:butterknife:6.0.0'
     // viewpagerindicator 换页指示器
-    compile(name:'viewpagerindicator-2.4.1', ext:'aar')
+    compile(name: 'viewpagerindicator-2.4.1', ext: 'aar')
 }
 
