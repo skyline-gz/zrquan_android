@@ -131,9 +131,9 @@ public class PullScrollView extends ScrollView {
     protected void onScrollChanged(int l, int t, int oldl, int oldt) {
         super.onScrollChanged(l, t, oldl, oldt);
 
-        if (getScrollY() == 0) {
-            isTop = true;
-        }
+//        if (getScrollY() == 0) {
+//            isTop = true;
+//        }
     }
 
     @Override
@@ -199,10 +199,10 @@ public class PullScrollView extends ScrollView {
             mState = State.NORMAL;
 
             // 滑动经过顶部初始位置时，修正Touch down的坐标为当前Touch点的坐标
-            if (isTop) {
-                isTop = false;
-                mTouchDownY = event.getY();
-            }
+//            if (isTop) {
+//                isTop = false;
+//                mTouchDownY = event.getY();
+//            }
         }
 
         float deltaY = event.getY() - mTouchDownY;
@@ -238,23 +238,25 @@ public class PullScrollView extends ScrollView {
 
             // 计算header移动距离(手势移动的距离*阻尼系数*0.5)
             float headerMoveHeight = deltaY * 0.5f * SCROLL_RATIO;
-            mCurrentTop = (int) (mInitTop + headerMoveHeight);
-            mCurrentBottom = (int) (mInitBottom + headerMoveHeight);
+            int calculateTop = (int) (mInitTop + headerMoveHeight);
+            int calculateBottom = (int) (mInitBottom + headerMoveHeight);
 
             // 计算content移动距离(手势移动的距离*阻尼系数)
             float contentMoveHeight = deltaY * SCROLL_RATIO;
 
             // 修正content移动的距离，避免超过header的底边缘
-            int headerBottom = mCurrentBottom - mHeaderVisibleHeight;
+            int headerBottom = calculateBottom - mHeaderVisibleHeight;
             int top = (int) (mContentRect.top + contentMoveHeight);
             int bottom = (int) (mContentRect.bottom + contentMoveHeight);
 
             if (top <= headerBottom) {
-                // 移动content view
-                mContentView.layout(mContentRect.left, top, mContentRect.right, bottom);
-
+                mCurrentTop = calculateTop;
+                mCurrentBottom = calculateBottom;
                 // 移动header view
                 mHeader.layout(mHeader.getLeft(), mCurrentTop, mHeader.getRight(), mCurrentBottom);
+
+                // 移动content view
+                mContentView.layout(mContentRect.left, top, mContentRect.right, bottom);
             }
         }
     }
