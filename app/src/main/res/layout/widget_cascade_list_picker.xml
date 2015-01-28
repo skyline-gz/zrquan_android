@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    android:orientation="vertical"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="fill_parent"
+        android:layout_height="0.0dip"
+        android:layout_weight="1.0">
+
+        <ListView
+            android:id="@+id/list_picker_left"
+            android:background="#fff1f1f1"
+            android:layout_width="80.0dip"
+            android:layout_height="fill_parent"
+            android:divider="@android:color/white"
+            android:dividerHeight="1.0dip" />
+
+        <ListView
+            android:id="@+id/list_picker_ri"
+            android:background="@android:color/white"
+            android:layout_width="0.0dip"
+            android:layout_height="fill_parent"
+            android:divider="#ffcecece"
+            android:dividerHeight="1.0dip"
+            android:layout_weight="1.0" />
+    </LinearLayout>
+
+    <View
+        android:id="@+id/list_picker_edge"
+        android:background="#88333333"
+        android:layout_width="fill_parent"
+        android:layout_height="120.0dip" />
+</LinearLayout>
