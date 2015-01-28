@@ -36,10 +36,7 @@
             android:text="取消" />
     </LinearLayout>
 
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="@color/border_main_frame_color"/>
+    <include layout="@layout/common_border" />
 
     <com.viewpagerindicator.TabPageIndicator
         android:id="@+id/indicator"

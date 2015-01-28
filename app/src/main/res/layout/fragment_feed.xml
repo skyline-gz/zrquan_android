@@ -85,10 +85,7 @@
             android:layout_height="wrap_content" />
     </RelativeLayout>
 
-    <View
-        android:layout_width="fill_parent"
-        android:layout_height="1dp"
-        android:background="@color/border_main_frame_color"/>
+    <include layout="@layout/common_border" />
 
     <android.support.v4.view.ViewPager
         android:id="@+id/vp_feed_content"
