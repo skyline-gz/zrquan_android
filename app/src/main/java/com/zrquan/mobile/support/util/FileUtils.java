@@ -1,5 +1,8 @@
 package com.zrquan.mobile.support.util;
 
+import android.content.Context;
+import android.content.res.AssetManager;
+
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
@@ -52,6 +55,10 @@ public class FileUtils {
         throw new AssertionError();
     }
 
+    public static StringBuilder readFile(String filePath, String charsetName) {
+        return readFile(filePath, charsetName, false, null);
+    }
+
     /**
      * read file
      *
@@ -60,17 +67,32 @@ public class FileUtils {
      * @return if file not exist, return null, else return content of file
      * @throws RuntimeException if an error occurs while operator BufferedReader
      */
-    public static StringBuilder readFile(String filePath, String charsetName) {
-        File file = new File(filePath);
+    public static StringBuilder readFile(String filePath, String charsetName, Boolean isAssets, Context context) {
         StringBuilder fileContent = new StringBuilder("");
-        if (file == null || !file.isFile()) {
-            return null;
-        }
-
         BufferedReader reader = null;
+        if(charsetName == null) {
+            charsetName = "UTF-8";
+        }
         try {
-            InputStreamReader is = new InputStreamReader(new FileInputStream(file), charsetName);
-            reader = new BufferedReader(is);
+            InputStreamReader inputStreamReader;
+            InputStream inputStream;
+            if(isAssets) {
+                //isAssets为true时，必须提供 context参数
+                if(context == null) {
+                    return null;
+                }
+                AssetManager assetManager = context.getAssets();
+                inputStream = assetManager.open(filePath);
+                inputStreamReader = new InputStreamReader(inputStream, charsetName);
+            } else {
+                File file = new File(filePath);
+                if (file == null || !file.isFile()) {
+                    return null;
+                }
+                inputStream = new FileInputStream(file);
+                inputStreamReader = new InputStreamReader(inputStream, charsetName);
+            }
+            reader = new BufferedReader(inputStreamReader);
             String line = null;
             while ((line = reader.readLine()) != null) {
                 if (!fileContent.toString().equals("")) {
