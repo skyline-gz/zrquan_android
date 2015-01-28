@@ -26,7 +26,7 @@
         <activity
             android:label="搜索"
             android:name=".ui.search.SearchActivity"
-            android:theme="@style/Theme.PageIndicatorDefaults"
+            android:theme="@style/PageIndicatorLightDefaults"
             android:windowSoftInputMode="stateHidden"/>
         <activity android:label="设置密码" android:name=".ui.UserRegisterSetPasswordActivity" android:windowSoftInputMode="stateHidden"/>
     </application>

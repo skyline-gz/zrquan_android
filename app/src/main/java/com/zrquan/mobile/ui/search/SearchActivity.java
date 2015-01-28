@@ -11,6 +11,9 @@ import com.zrquan.mobile.support.util.ScreenUtils;
 import com.zrquan.mobile.ui.common.CommonFragmentActivity;
 import com.zrquan.mobile.R;
 
+import butterknife.ButterKnife;
+import butterknife.OnClick;
+
 public class SearchActivity extends CommonFragmentActivity {
 
     private static final String[] SUBJECTS = new String[] { "讨论", "问答", "职人", "主题"};
@@ -19,6 +22,7 @@ public class SearchActivity extends CommonFragmentActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search);
+        ButterKnife.inject(this);
 
         FragmentPagerAdapter adapter = new GoogleMusicAdapter(getSupportFragmentManager());
 
@@ -27,6 +31,11 @@ public class SearchActivity extends CommonFragmentActivity {
 
         TabPageIndicator indicator = (TabPageIndicator)findViewById(R.id.indicator);
         indicator.setViewPager(pager);
+    }
+
+    @OnClick(R.id.tv_search_cancel)
+    public void onSearchCancelClick() {
+        doBack();
     }
 
     class GoogleMusicAdapter extends FragmentPagerAdapter {
