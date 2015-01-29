@@ -51,26 +51,6 @@ public class ZrquanApplication extends Application {
         super.onCreate();
         zrquanApplication = this;
         mAccount = new Account();
-//        testReadSql();
-    }
-
-    public void testReadSql() {
-        String create_sql = FileUtils.readFile("sql/create_industries.sql", null, true, zrquanApplication).toString();
-        String insert_sqls = FileUtils.readFile("sql/insert_industries.sql", null, true, zrquanApplication).toString();
-        DatabaseHelper databaseHelper = new DatabaseHelper(zrquanApplication, "zrquan");
-        SQLiteDatabase sqLiteDatabase = databaseHelper.getWritableDatabase();
-        sqLiteDatabase.execSQL("DROP TABLE INDUSTRIES");
-        sqLiteDatabase.execSQL(create_sql);
-
-//        try {
-        String[] queries = insert_sqls.split(";");
-        for(String query : queries){
-            sqLiteDatabase.execSQL(query);
-        }
-//        } catch (Exception e) {
-//
-//        }
-//        databaseHelper.getWritableDatabase().execSQL(sqls);
     }
 
     /**

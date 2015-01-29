@@ -5,6 +5,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.database.sqlite.SQLiteDatabase.CursorFactory;
 
+import com.zrquan.mobile.support.util.FileUtils;
 import com.zrquan.mobile.support.util.LogUtils;
 
 /**
@@ -14,6 +15,9 @@ import com.zrquan.mobile.support.util.LogUtils;
  */
 public class DatabaseHelper extends SQLiteOpenHelper {
     private static final int VERSION = 1;
+    private static final String DB_NAME = "zrquan";
+
+    private Context context;
 
     /**
      * 在SQLiteOpenHelper的子类当中，必须有该构造函数
@@ -32,21 +36,60 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         this(context,name, null, version);
     }
 
-    //只暴露此方法供构造特定版本
-    public DatabaseHelper(Context context, String name){
+    private DatabaseHelper(Context context, String name){
         this(context, name, VERSION);
+    }
+
+    //只暴露此方法供构造特定名字和版本的sqlite对象
+    public DatabaseHelper(Context context) {
+        this(context, DB_NAME, VERSION);
+        this.context = context;
     }
 
     //该函数是在第一次创建的时候执行，实际上是第一次得到SQLiteDatabase对象的时候才会调用这个方法
     @Override
-    public void onCreate(SQLiteDatabase db) {
-        LogUtils.d("Create a database");
-        //execSQL用于执行SQL语句
-//        db.execSQL("create table user(id int,name varchar(20))");
+    public void onCreate(SQLiteDatabase sqLiteDatabase) {
+        LogUtils.d("Creating database...");
+        initCreateTables(sqLiteDatabase);
+        initInsertTables(sqLiteDatabase);
+        initUpdateTables(sqLiteDatabase);
     }
 
     @Override
-    public void onUpgrade(SQLiteDatabase arg0, int arg1, int arg2) {
-        LogUtils.d("Upgrade a database");
+    public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
+        LogUtils.d("Upgrading database...");
+    }
+
+    private void initCreateTables(SQLiteDatabase sqLiteDatabase) {
+        String[] sqlNames = {"sql/create_industries.sql", "sql/create_locations.sql"
+                , "sql/create_regions.sql"};
+        for (String sqlName : sqlNames) {
+            String create_sql = FileUtils.readFile(sqlName, null, true, context).toString();
+            sqLiteDatabase.execSQL(create_sql);
+        }
+    }
+
+    private void initInsertTables(SQLiteDatabase sqLiteDatabase) {
+        String insert_sqls = FileUtils.readFile("sql/create_industries.sql", null, true, context).toString();
+        String[] queries = insert_sqls.split(";");
+        for(String query : queries){
+            sqLiteDatabase.execSQL(query);
+            execMultiLine(sqLiteDatabase, insert_sqls);
+        }
+    }
+
+    private void initUpdateTables(SQLiteDatabase sqLiteDatabase) {
+        String[] sqlNames = {"sql/update_industries.sql", "sql/update_locations.sql"};
+        for (String sqlName : sqlNames) {
+            String update_sqls = FileUtils.readFile(sqlName, null, true, context).toString();
+            execMultiLine(sqLiteDatabase, update_sqls);
+        }
+    }
+
+    private void execMultiLine(SQLiteDatabase sqLiteDatabase, String multiSqls) {
+        String[] queries = multiSqls.split(";");
+        for(String query : queries){
+            sqLiteDatabase.execSQL(query);
+        }
     }
 }
