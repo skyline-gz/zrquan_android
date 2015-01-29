@@ -1,13 +1,18 @@
 package com.zrquan.mobile.task;
 
-import com.zrquan.mobile.ZrquanApplication;
+import android.content.Context;
+
+import com.zrquan.mobile.event.StartUpEvent;
 import com.zrquan.mobile.support.db.DatabaseHelper;
 import com.zrquan.mobile.ui.common.AsyncTask;
 
-public class StartUpTask extends AsyncTask<Void, Integer, Void> {
+import de.greenrobot.event.EventBus;
+
+public class StartUpTask extends AsyncTask<Object, Void, Void> {
     @Override
-    protected Void doInBackground(Void[] paramArrayOfVoid) {
-        DatabaseHelper databaseHelper = new DatabaseHelper(ZrquanApplication.getInstance());
+    protected Void doInBackground(Object[] paramArrayOfObject) {
+        DatabaseHelper databaseHelper = new DatabaseHelper((Context)paramArrayOfObject[0]);
+        EventBus.getDefault().post(new StartUpEvent(databaseHelper));
         return null;
     }
 }

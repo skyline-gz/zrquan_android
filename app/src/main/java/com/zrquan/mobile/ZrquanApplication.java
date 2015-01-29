@@ -1,7 +1,6 @@
 package com.zrquan.mobile;
 
 import android.app.Application;
-import android.database.sqlite.SQLiteDatabase;
 import android.text.TextUtils;
 
 import com.android.volley.Request;
@@ -10,8 +9,6 @@ import com.android.volley.VolleyLog;
 import com.android.volley.toolbox.Volley;
 import com.zrquan.mobile.modal.Account;
 import com.zrquan.mobile.support.db.DatabaseHelper;
-import com.zrquan.mobile.support.util.FileUtils;
-import com.zrquan.mobile.support.util.LogUtils;
 
 public class ZrquanApplication extends Application {
 
@@ -20,7 +17,7 @@ public class ZrquanApplication extends Application {
      */
     public static final String TAG = "ZrquanApplication";
 
-    //singleton
+    //全局应用实例
     private static ZrquanApplication zrquanApplication = null;
 
     /**
@@ -28,7 +25,7 @@ public class ZrquanApplication extends Application {
      */
     private RequestQueue mRequestQueue;
 
-    //本人账户对象
+    //全局账户对象
     private Account mAccount = null;
 
     public Account getAccount() {
@@ -37,6 +34,17 @@ public class ZrquanApplication extends Application {
 
     public void setAccount(Account mAccount) {
         this.mAccount = mAccount;
+    }
+
+    //全局数据库对象，全局应只使用唯一的dbHelper对象来保证db读写安全
+    private DatabaseHelper dbHelperInstance = null;
+
+    public DatabaseHelper getDatabaseHelper() {
+        return dbHelperInstance;
+    }
+
+    public void setDatabaseHelper(DatabaseHelper dbHelperInstance) {
+        this.dbHelperInstance = dbHelperInstance;
     }
 
     /**
