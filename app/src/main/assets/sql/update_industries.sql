@@ -100,4 +100,3 @@ update INDUSTRIES set parent_industry_id = (select id from (select id, name from
 update INDUSTRIES set parent_industry_id = (select id from (select id, name from INDUSTRIES) t1 where name = '农林牧渔') where name = 	'林业';
 update INDUSTRIES set parent_industry_id = (select id from (select id, name from INDUSTRIES) t1 where name = '农林牧渔') where name = 	'渔业';
 update INDUSTRIES set parent_industry_id = (select id from (select id, name from INDUSTRIES) t1 where name = '农林牧渔') where name = 	'牧业';
-commit;

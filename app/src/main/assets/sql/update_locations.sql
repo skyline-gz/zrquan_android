@@ -371,4 +371,3 @@ update LOCATIONS set region_id = (select id from REGIONS where name = '海外') 
 update LOCATIONS set region_id = (select id from REGIONS where name = '海外') where name = 	'俄罗斯';
 update LOCATIONS set region_id = (select id from REGIONS where name = '海外') where name = 	'巴西';
 update LOCATIONS set region_id = (select id from REGIONS where name = '海外') where name = 	'其他国家';
-commit;

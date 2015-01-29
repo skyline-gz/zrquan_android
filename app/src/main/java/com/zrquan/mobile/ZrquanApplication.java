@@ -1,6 +1,7 @@
 package com.zrquan.mobile;
 
 import android.app.Application;
+import android.database.sqlite.SQLiteDatabase;
 import android.text.TextUtils;
 
 import com.android.volley.Request;
@@ -8,6 +9,9 @@ import com.android.volley.RequestQueue;
 import com.android.volley.VolleyLog;
 import com.android.volley.toolbox.Volley;
 import com.zrquan.mobile.modal.Account;
+import com.zrquan.mobile.support.db.DatabaseHelper;
+import com.zrquan.mobile.support.util.FileUtils;
+import com.zrquan.mobile.support.util.LogUtils;
 
 public class ZrquanApplication extends Application {
 
@@ -47,6 +51,26 @@ public class ZrquanApplication extends Application {
         super.onCreate();
         zrquanApplication = this;
         mAccount = new Account();
+//        testReadSql();
+    }
+
+    public void testReadSql() {
+        String create_sql = FileUtils.readFile("sql/create_industries.sql", null, true, zrquanApplication).toString();
+        String insert_sqls = FileUtils.readFile("sql/insert_industries.sql", null, true, zrquanApplication).toString();
+        DatabaseHelper databaseHelper = new DatabaseHelper(zrquanApplication, "zrquan");
+        SQLiteDatabase sqLiteDatabase = databaseHelper.getWritableDatabase();
+        sqLiteDatabase.execSQL("DROP TABLE INDUSTRIES");
+        sqLiteDatabase.execSQL(create_sql);
+
+//        try {
+        String[] queries = insert_sqls.split(";");
+        for(String query : queries){
+            sqLiteDatabase.execSQL(query);
+        }
+//        } catch (Exception e) {
+//
+//        }
+//        databaseHelper.getWritableDatabase().execSQL(sqls);
     }
 
     /**

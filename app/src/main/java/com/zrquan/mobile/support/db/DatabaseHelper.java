@@ -42,7 +42,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase db) {
         LogUtils.d("Create a database");
         //execSQL用于执行SQL语句
-        db.execSQL("create table user(id int,name varchar(20))");
+//        db.execSQL("create table user(id int,name varchar(20))");
     }
 
     @Override
