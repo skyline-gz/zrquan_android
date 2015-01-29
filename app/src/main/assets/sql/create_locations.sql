@@ -1,1 +1,1 @@
-﻿create table LOCATIONS(id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,name varchar(30), created_at datetime, updated_at datetime);
+﻿create table LOCATIONS(id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,name varchar(30), region_id INTEGER, created_at datetime, updated_at datetime);

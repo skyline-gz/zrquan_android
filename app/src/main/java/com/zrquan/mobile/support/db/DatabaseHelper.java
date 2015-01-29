@@ -70,10 +70,10 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     }
 
     private void initInsertTables(SQLiteDatabase sqLiteDatabase) {
-        String insert_sqls = FileUtils.readFile("sql/create_industries.sql", null, true, context).toString();
-        String[] queries = insert_sqls.split(";");
-        for(String query : queries){
-            sqLiteDatabase.execSQL(query);
+        String[] sqlNames = {"sql/insert_industries.sql", "sql/insert_locations.sql"
+                , "sql/insert_regions.sql"};
+        for (String sqlName : sqlNames) {
+            String insert_sqls = FileUtils.readFile(sqlName, null, true, context).toString();
             execMultiLine(sqLiteDatabase, insert_sqls);
         }
     }
