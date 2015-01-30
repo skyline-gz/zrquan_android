@@ -1,4 +1,4 @@
-package com.zrquan.mobile.ui;
+package com.zrquan.mobile.ui.authentic;
 
 import android.app.ProgressDialog;
 import android.content.Context;

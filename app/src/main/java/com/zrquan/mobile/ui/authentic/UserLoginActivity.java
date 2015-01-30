@@ -1,11 +1,9 @@
-package com.zrquan.mobile.ui;
+package com.zrquan.mobile.ui.authentic;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.view.inputmethod.InputMethodManager;
 
 import com.zrquan.mobile.R;
 import com.zrquan.mobile.support.util.ScreenUtils;

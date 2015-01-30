@@ -49,7 +49,24 @@ public class QuestionFragment extends CommonFragment {
                 createDialog(R.layout.dialog_share);
             }
         });
+
+        TextView tv_test_select_location = (TextView) v.findViewById(R.id.tv_test_select_location);
+        tv_test_select_location.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                createDialog(R.layout.dialog_select_location);
+            }
+        });
+
+        TextView tv_test_select_gender = (TextView) v.findViewById(R.id.tv_test_select_gender);
+        tv_test_select_gender.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                createDialog(R.layout.dialog_select_gender);
+            }
+        });
         return v;
+
     }
 
     public void createDialog(int Resource) {

@@ -5,8 +5,8 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.zrquan.mobile.R;
-import com.zrquan.mobile.ui.UserLoginActivity;
-import com.zrquan.mobile.ui.UserRegisterActivity;
+import com.zrquan.mobile.ui.authentic.UserLoginActivity;
+import com.zrquan.mobile.ui.authentic.UserRegisterActivity;
 import com.zrquan.mobile.ui.common.CommonFragment;
 
 import butterknife.ButterKnife;

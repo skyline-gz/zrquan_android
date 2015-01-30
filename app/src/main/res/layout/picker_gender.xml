@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:zrquan="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:gravity="center_horizontal"
+    android:orientation="horizontal" >
+
+    <com.zrquan.mobile.widget.picker.ScrollerNumberPicker
+        android:id="@+id/gender"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="1dp"
+        android:layout_marginRight="1dp"
+        android:layout_weight="1"
+        zrquan:itemNumber="3"
+        zrquan:lineColor="#ffff6000"
+        zrquan:maskHight="32dp"
+        zrquan:noEmpty="true"
+        zrquan:normalTextColor="#777"
+        zrquan:normalTextSize="14sp"
+        zrquan:selecredTextColor="#ff000000"
+        zrquan:selecredTextSize="22sp"
+        zrquan:unitHight="50dp" />
+
+</LinearLayout>

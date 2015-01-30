@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:background="@android:color/white"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <com.zrquan.mobile.ui.layout.GenderPickerLayout
+        android:id="@+id/ly_gender_picker"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingTop="50dp"
+        android:paddingBottom="50dp"
+        android:layout_gravity="center"
+        android:gravity="center" />
+
+    <include layout="@layout/common_border" />
+
+    <TextView
+        android:textSize="18sp"
+        android:textColor="@color/font_top_btn"
+        android:gravity="center"
+        android:id="@+id/dialogue_share_cancel_btn"
+        android:layout_width="fill_parent"
+        android:layout_height="50dp"
+        android:text="确定" />
+</LinearLayout>

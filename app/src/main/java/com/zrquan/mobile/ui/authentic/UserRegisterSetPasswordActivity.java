@@ -1,4 +1,4 @@
-package com.zrquan.mobile.ui;
+package com.zrquan.mobile.ui.authentic;
 
 import android.content.Context;
 import android.content.Intent;
