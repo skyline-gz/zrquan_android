@@ -2,8 +2,10 @@ package com.zrquan.mobile.support.db;
 
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
-import android.database.sqlite.SQLiteOpenHelper;
 import android.database.sqlite.SQLiteDatabase.CursorFactory;
+
+import com.j256.ormlite.android.apptools.OrmLiteSqliteOpenHelper;
+import com.j256.ormlite.support.ConnectionSource;
 
 import com.zrquan.mobile.support.util.FileUtils;
 import com.zrquan.mobile.support.util.LogUtils;
@@ -13,7 +15,7 @@ import com.zrquan.mobile.support.util.LogUtils;
  * 第一，getReadableDatabase()、getWritableDatabase()可以获得SQLiteDatabase对象，通过该对象可以对数据库进行操作
  * 第二，提供了onCreate()、onUpgrade()两个回调函数，允许我们再创建和升级数据库时，进行自己的操作
  */
-public class DatabaseHelper extends SQLiteOpenHelper {
+public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
     private static final int VERSION = 1;
     private static final String DB_NAME = "zrquan";
 
@@ -48,7 +50,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     //该函数是在第一次创建的时候执行，实际上是第一次得到SQLiteDatabase对象的时候才会调用这个方法
     @Override
-    public void onCreate(SQLiteDatabase sqLiteDatabase) {
+    public void onCreate(SQLiteDatabase sqLiteDatabase, ConnectionSource connectionSource) {
         LogUtils.d("Creating database...");
         initCreateTables(sqLiteDatabase);
         initInsertTables(sqLiteDatabase);
@@ -56,7 +58,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     }
 
     @Override
-    public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
+    public void onUpgrade(SQLiteDatabase db, ConnectionSource connectionSource,
+                          int oldVersion, int newVersion) {
         LogUtils.d("Upgrading database...");
     }
 

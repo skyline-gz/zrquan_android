@@ -5,12 +5,19 @@ import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.widget.LinearLayout;
 
+import com.j256.ormlite.dao.Dao;
+import com.zrquan.mobile.ZrquanApplication;
+import com.zrquan.mobile.modal.Location;
+import com.zrquan.mobile.support.util.LogUtils;
 import com.zrquan.mobile.widget.picker.ScrollerNumberPicker;
 import com.zrquan.mobile.R;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.List;
 
 public class LocationPickerLayout extends LinearLayout {
+    private static String LOG_TAG = "LocationPickerLayout";
 
     /** 滑动控件 */
     private ScrollerNumberPicker regionPicker;
@@ -47,5 +54,22 @@ public class LocationPickerLayout extends LinearLayout {
         locations.add("成都");
         locationPicker.setData(locations);
         locationPicker.setDefault(0);
+        testDao();
+    }
+
+    private void testDao() {
+        try {
+            // get our dao
+            Dao<Location, Integer> locationDao = ZrquanApplication.getInstance()
+                    .getDatabaseHelper().getDao(Location.class);
+            // query for all of the data objects in the database
+            List<Location> list = locationDao.queryForAll();
+            // our string builder for building the content-view
+            StringBuilder sb = new StringBuilder();
+            sb.append("location: got ").append(list.size()).append("\n");
+            LogUtils.d(LOG_TAG, sb.toString());
+        } catch (SQLException e) {
+            LogUtils.d("Load Location from db crash..", e);
+        }
     }
 }
