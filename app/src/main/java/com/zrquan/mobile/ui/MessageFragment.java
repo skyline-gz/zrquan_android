@@ -30,7 +30,7 @@ public class MessageFragment extends CommonFragment {
                 mVisitorContentViewHolder = new VisitorContentViewHolder(this, rootView);
                 mVisitorContentViewHolder.initVisitorNavigationBar(R.string.main_news);
             } else {
-//            rootView = inflater.inflate(R.layout.activity_message, container, false);
+//            rootView = inflater.inflate(R.layout.fragment_message, container, false);
                 rootView = new View(context);
             }
         } else {

@@ -19,13 +19,11 @@ import com.zrquan.mobile.widget.switchbutton.SwitchButton;
 //问答 动态
 public class QuestionFragment extends CommonFragment {
 
-    private TextView tvTest;
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        View v = inflater.inflate(R.layout.fragment_visitor_question, null);
+        View v = inflater.inflate(R.layout.fragment_question, null);
         SwitchButton sbDefault = (SwitchButton) v.findViewById(R.id.sb_default);
 
         sbDefault.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
@@ -36,17 +34,25 @@ public class QuestionFragment extends CommonFragment {
             }
         });
 
-        tvTest = (TextView) v.findViewById(R.id.tv_test);
-        tvTest.setOnClickListener(new View.OnClickListener() {
+        TextView tv_test_photo = (TextView) v.findViewById(R.id.tv_test_photo);
+        tv_test_photo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                createDialog(v);
+                createDialog(R.layout.dialog_select_pic);
+            }
+        });
+
+        TextView tv_test_share = (TextView) v.findViewById(R.id.tv_test_share);
+        tv_test_share.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                createDialog(R.layout.dialog_share);
             }
         });
         return v;
     }
 
-    public void createDialog(View v) {
+    public void createDialog(int Resource) {
 //        startActivity(new Intent(getActivity(), SelectPicPopupWindow.class));
 //        BottomMenuFragment df = new BottomMenuFragment();
 //        FragmentTransaction ft = getChildFragmentManager().beginTransaction();
@@ -54,7 +60,7 @@ public class QuestionFragment extends CommonFragment {
 //        df.show(ft, "df");
 
         final Dialog infoDialog = new Dialog(getActivity(), R.style.BottomMenuDialogTheme2);
-        infoDialog.setContentView(R.layout.select_pic_dialog2);
+        infoDialog.setContentView(Resource);
 //        infoDialog.show();
 
 //        AlertDialog infoDialog = new AlertDialog.Builder(getActivity(), R.style.BottomMenuDialogTheme2)
