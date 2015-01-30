@@ -90,7 +90,7 @@
                 </RelativeLayout>
 
                 <com.zrquan.mobile.widget.view.RoundedImageView
-                    android:id="@+id/user_avatar"
+                    android:id="@+id/riv_user_avatar"
                     android:layout_width="68dp"
                     android:layout_height="68dp"
                     android:padding="1px"
@@ -106,7 +106,7 @@
                     android:id="@+id/user_name"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_toRightOf="@id/user_avatar"
+                    android:layout_toRightOf="@id/riv_user_avatar"
                     android:layout_marginLeft="13dp"
                     android:singleLine="true"
                     android:ellipsize="end"
@@ -122,7 +122,7 @@
                     android:id="@+id/user_divider_layout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_below="@id/user_avatar"
+                    android:layout_below="@id/riv_user_avatar"
                     android:layout_marginTop="4dp"
                     android:layout_marginLeft="21dp"
                     android:layout_marginRight="21dp">

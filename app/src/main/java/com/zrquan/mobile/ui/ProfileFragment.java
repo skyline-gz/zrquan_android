@@ -16,10 +16,11 @@ import android.widget.Toast;
 import com.zrquan.mobile.R;
 import com.zrquan.mobile.ZrquanApplication;
 import com.zrquan.mobile.ui.common.CommonFragment;
+import com.zrquan.mobile.ui.viewholder.UserProfileContentViewHolder;
 import com.zrquan.mobile.ui.viewholder.VisitorContentViewHolder;
 import com.zrquan.mobile.widget.scrollview.PullScrollView;
 
-public class ProfileFragment extends CommonFragment  implements PullScrollView.OnTurnListener {
+public class ProfileFragment extends CommonFragment implements PullScrollView.OnTurnListener {
 
     private Context context;
     private View rootView;
@@ -42,6 +43,7 @@ public class ProfileFragment extends CommonFragment  implements PullScrollView.O
                 mVisitorContentViewHolder.initVisitorNavigationBar(R.string.main_me);
             } else {
                 rootView = inflater.inflate(R.layout.fragment_user_profile, container, false);
+                new UserProfileContentViewHolder(this, rootView);
                 initView(rootView);
                 showTable();
             }
@@ -56,9 +58,7 @@ public class ProfileFragment extends CommonFragment  implements PullScrollView.O
     protected void initView(View v) {
         mScrollView = (PullScrollView) v.findViewById(R.id.scroll_view);
         mHeadImg = (ImageView) v.findViewById(R.id.background_img);
-
         mMainLayout = (TableLayout) v.findViewById(R.id.table_layout);
-
         mScrollView.setHeader(mHeadImg);
         mScrollView.setOnTurnListener(this);
     }
