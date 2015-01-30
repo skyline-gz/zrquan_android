@@ -8,6 +8,7 @@ import android.widget.LinearLayout;
 import com.j256.ormlite.dao.Dao;
 import com.zrquan.mobile.ZrquanApplication;
 import com.zrquan.mobile.modal.Location;
+import com.zrquan.mobile.modal.Region;
 import com.zrquan.mobile.support.util.LogUtils;
 import com.zrquan.mobile.widget.picker.ScrollerNumberPicker;
 import com.zrquan.mobile.R;
@@ -24,6 +25,13 @@ public class LocationPickerLayout extends LinearLayout {
     private ScrollerNumberPicker locationPicker;
 
     private Context context;
+    //缓存全部可选的location 和region
+    private List<Location> locationList;
+    private List<Region>  regionList;
+
+    //缓存当前滚动盘中可选的Location和Region,由于Region是不变的，因此regionCacheList 就是regionList
+    private List<Location> locationCacheList;
+    private List<Region> regionCacheList;
 
     public LocationPickerLayout(Context context, AttributeSet attrs) {
         super(context, attrs);
@@ -39,37 +47,62 @@ public class LocationPickerLayout extends LinearLayout {
     protected void onFinishInflate() {
         super.onFinishInflate();
         LayoutInflater.from(getContext()).inflate(R.layout.picker_location, this);
-
         regionPicker = (ScrollerNumberPicker) findViewById(R.id.region);
         locationPicker = (ScrollerNumberPicker) findViewById(R.id.location);
+        regionPicker.setOnSelectListener(new ScrollerNumberPicker.OnSelectListener() {
+            @Override
+            public void endSelect(int id, String text) {
+                Region currentRegion = regionCacheList.get(id);
+                buildLocationPicker(currentRegion.getId());
+            }
 
-        ArrayList<String> regions = new ArrayList<>();
-        regions.add("广东");
-        regions.add("四川");
-        regionPicker.setData(regions);
-        regionPicker.setDefault(0);
+            @Override
+            public void selecting(int id, String text) {
 
-        ArrayList<String> locations = new ArrayList<>();
-        locations.add("广州");
-        locations.add("成都");
-        locationPicker.setData(locations);
-        locationPicker.setDefault(0);
-        testDao();
+            }
+        });
+        loadData();
+        buildRegionPicker();
+        buildLocationPicker(regionCacheList.get(0).getId());
     }
 
-    private void testDao() {
+    private void loadData() {
+        StringBuilder sb;
         try {
             // get our dao
             Dao<Location, Integer> locationDao = ZrquanApplication.getInstance()
                     .getDatabaseHelper().getDao(Location.class);
+            Dao<Region, Integer> regionDao = ZrquanApplication.getInstance()
+                    .getDatabaseHelper().getDao(Region.class);
             // query for all of the data objects in the database
-            List<Location> list = locationDao.queryForAll();
-            // our string builder for building the content-view
-            StringBuilder sb = new StringBuilder();
-            sb.append("location: got ").append(list.size()).append("\n");
-            LogUtils.d(LOG_TAG, sb.toString());
+            locationList = locationDao.queryForAll();
+            locationCacheList = new ArrayList<>();
+            regionCacheList = regionList = regionDao.queryForAll();
+
         } catch (SQLException e) {
             LogUtils.d("Load Location from db crash..", e);
         }
+    }
+
+    private void buildRegionPicker() {
+        ArrayList<String> regions = new ArrayList<>();
+        for(Region region: regionList) {
+            regions.add(region.getName());
+        }
+        regionPicker.setData(regions);
+        regionPicker.setDefault(0);
+    }
+
+    private void buildLocationPicker(int regionId) {
+        ArrayList<String> locations = new ArrayList<>();
+        locationCacheList.clear();
+        for(Location location: locationList) {
+            if(location.getRegionId() == regionId) {
+                locations.add(location.getName());
+                locationCacheList.add(location);
+            }
+        }
+        locationPicker.setData(locations);
+        locationPicker.setDefault(0);
     }
 }
