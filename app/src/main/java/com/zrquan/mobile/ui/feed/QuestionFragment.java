@@ -19,53 +19,60 @@ import com.zrquan.mobile.widget.switchbutton.SwitchButton;
 //问答 动态
 public class QuestionFragment extends CommonFragment {
 
+    private View rootView;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        View v = inflater.inflate(R.layout.fragment_question, null);
-        SwitchButton sbDefault = (SwitchButton) v.findViewById(R.id.sb_default);
+        if (rootView == null) {
+            rootView = inflater.inflate(R.layout.fragment_question, null);
+            SwitchButton sbDefault = (SwitchButton) rootView.findViewById(R.id.sb_default);
 
-        sbDefault.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            sbDefault.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
 
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                Toast.makeText(getActivity(), "Default style button, new state: " + (isChecked ? "on" : "off"), Toast.LENGTH_SHORT).show();
-            }
-        });
+                @Override
+                public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                    Toast.makeText(getActivity(), "Default style button, new state: " + (isChecked ? "on" : "off"), Toast.LENGTH_SHORT).show();
+                }
+            });
 
-        TextView tv_test_photo = (TextView) v.findViewById(R.id.tv_test_photo);
-        tv_test_photo.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                createDialog(R.layout.dialog_select_pic);
-            }
-        });
+            TextView tv_test_photo = (TextView) rootView.findViewById(R.id.tv_test_photo);
+            tv_test_photo.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    createDialog(R.layout.dialog_select_pic);
+                }
+            });
 
-        TextView tv_test_share = (TextView) v.findViewById(R.id.tv_test_share);
-        tv_test_share.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                createDialog(R.layout.dialog_share);
-            }
-        });
+            TextView tv_test_share = (TextView) rootView.findViewById(R.id.tv_test_share);
+            tv_test_share.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    createDialog(R.layout.dialog_share);
+                }
+            });
 
-        TextView tv_test_select_location = (TextView) v.findViewById(R.id.tv_test_select_location);
-        tv_test_select_location.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                createDialog(R.layout.dialog_select_location);
-            }
-        });
+            TextView tv_test_select_location = (TextView) rootView.findViewById(R.id.tv_test_select_location);
+            tv_test_select_location.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    createDialog(R.layout.dialog_select_location);
+                }
+            });
 
-        TextView tv_test_select_gender = (TextView) v.findViewById(R.id.tv_test_select_gender);
-        tv_test_select_gender.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                createDialog(R.layout.dialog_select_gender);
-            }
-        });
-        return v;
+            TextView tv_test_select_gender = (TextView) rootView.findViewById(R.id.tv_test_select_gender);
+            tv_test_select_gender.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    createDialog(R.layout.dialog_select_gender);
+                }
+            });
+        } else {
+            ((ViewGroup) rootView.getParent()).removeView(rootView);
+        }
+
+        return rootView;
 
     }
 
