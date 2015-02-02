@@ -3,6 +3,8 @@ package com.zrquan.mobile.ui.viewholder;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.view.Gravity;
 import android.view.View;
@@ -16,6 +18,7 @@ import com.zrquan.mobile.ui.GetPictureActivity;
 import com.zrquan.mobile.ui.common.CommonFragment;
 import com.zrquan.mobile.R;
 import com.zrquan.mobile.widget.scrollview.PullScrollView;
+import com.zrquan.mobile.widget.view.RoundedImageView;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
@@ -29,6 +32,8 @@ public class UserProfileContentViewHolder {
     PullScrollView mScrollView;
     @InjectView(R.id.iv_header_image)
     ImageView mHeadImg;
+    @InjectView(R.id.riv_user_avatar)
+    RoundedImageView riv_user_avatar;
     @InjectView(R.id.table_layout)
     TableLayout mMainLayout;
 
@@ -45,20 +50,20 @@ public class UserProfileContentViewHolder {
             public void onClick(DialogInterface paramAnonymousDialogInterface, int paramAnonymousInt) {
                 switch (paramAnonymousInt) {
                     case 0:
-                        Intent localIntent1 = new Intent("cn.zrquan.mobile.action.GET_PICTURE");
-                        localIntent1.putExtra("source", GetPictureActivity.REQUEST_CODE_CAMERA);
-                        localIntent1.putExtra("width", 100);
-                        localIntent1.putExtra("height", 100);
-                        localIntent1.putExtra("crop", true);
-                        context.getActivity().startActivityForResult(localIntent1, 1);
+                        Intent intent1 = new Intent("cn.zrquan.mobile.action.GET_PICTURE");
+                        intent1.putExtra("source", GetPictureActivity.REQUEST_CODE_CAMERA);
+                        intent1.putExtra("width", 100);
+                        intent1.putExtra("height", 100);
+                        intent1.putExtra("crop", true);
+                        context.startActivity(intent1);
                         break;
                     case 1:
-                        Intent localIntent2 = new Intent("cn.zrquan.mobile.action.GET_PICTURE");
-                        localIntent2.putExtra("source", GetPictureActivity.REQUEST_CODE_GALLERY);
-                        localIntent2.putExtra("width", 100);
-                        localIntent2.putExtra("height", 100);
-                        localIntent2.putExtra("crop", true);
-                        context.getActivity().startActivityForResult(localIntent2, 1);
+                        Intent intent2 = new Intent("cn.zrquan.mobile.action.GET_PICTURE");
+                        intent2.putExtra("source", GetPictureActivity.REQUEST_CODE_GALLERY);
+                        intent2.putExtra("width", 100);
+                        intent2.putExtra("height", 100);
+                        intent2.putExtra("crop", true);
+                        context.startActivity(intent2);
                         break;
                     default:
                         paramAnonymousDialogInterface.dismiss();
@@ -67,6 +72,10 @@ public class UserProfileContentViewHolder {
         };
         localBuilder.setItems(new String[]{"拍照", "从相册中选择"}, local1);
         localBuilder.show();
+    }
+
+    public void reloadAvatar(String filePath) {
+        riv_user_avatar.setImageBitmap(BitmapFactory.decodeFile(filePath, null));
     }
 
 

@@ -9,12 +9,15 @@ import android.os.Bundle;
 import android.provider.MediaStore;
 import android.text.TextUtils;
 
+import com.zrquan.mobile.event.ProfileAvatarChangeEvent;
 import com.zrquan.mobile.support.util.BitmapUtil;
 import com.zrquan.mobile.support.util.LogUtils;
 import com.zrquan.mobile.support.util.SDCardUtils;
 import com.zrquan.mobile.ui.common.CommonActivity;
 
 import java.io.File;
+
+import de.greenrobot.event.EventBus;
 
 public class GetPictureActivity extends CommonActivity {
     private final String LOG_TAG = "GetPictureActivity";
@@ -50,73 +53,57 @@ public class GetPictureActivity extends CommonActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        Cursor localCursor;
+
         if (requestCode == REQUEST_CODE_CAMERA) {
             if (!TextUtils.isEmpty(this.mTempCameraPath)) {
-                File localFile1 = new File(this.mTempCameraPath);
-                if ((!localFile1.exists()) || (localFile1.length() == 0L)) {
-                    finish();
-                    return;
+                File cameraFile = new File(this.mTempCameraPath);
+                if ((cameraFile.exists()) && (cameraFile.length() != 0L)) {
+                    if (this.mCrop) {
+                        crop(this.mTempCameraPath);
+                        return;
+                    } else {
+                        String resizeImagePath = resizeForUpload(this.mTempCameraPath);
+                        back(resizeImagePath);
+                        return;
+                    }
                 }
-                long l1 = System.currentTimeMillis();
-                String str3 = this.mTempCameraPath;
-                Bitmap resizeImage1 = BitmapUtil.getSmallBitmap(str3, 100, 100);  //缩放到100像素
-                BitmapUtil.saveBitmap(resizeImage1, str3);
-                long l2 = System.currentTimeMillis() - l1;
-                LogUtils.d(LOG_TAG, "2图片缩小处理耗时" + l2 / 1000L + "." + l2 % 1000L + ", newPath=" + str3);
-                if (this.mCrop) {
-                    crop(str3);
-                    return;
-                }
-                back(str3);
-                return;
-            }
-            finish();
-            return;
-        }
-        if (requestCode == REQUEST_CODE_GALLERY && (resultCode == -1) && (data != null)) {
-            Uri localUri = data.getData();
-            final Bitmap photo = data.getParcelableExtra("data");
-            LogUtils.d(LOG_TAG, localUri.toString());
-            localCursor = getContentResolver().query(localUri, null, null, null, null);
-            if ((localCursor == null) || (localCursor.getCount() < 1)) {
-                LogUtils.d(LOG_TAG, "Gallery cursor is null");
-                setResult(100);
-                if ((localCursor != null) && (!localCursor.isClosed())) {
-                    localCursor.close();
-                }
-            } else {
-                localCursor.moveToFirst();
-                String imagePath2 = localCursor.getString(1);
-                LogUtils.i(LOG_TAG, "path=" + imagePath2);
-                localCursor.close();
-                String str6 = SDCardUtils.tempSendPictureDir(getApplicationContext());
-                long l3 = System.currentTimeMillis();
-                Bitmap resizeImage2 = BitmapUtil.getSmallBitmap(imagePath2, 100, 100);  //缩放到100像素
-                BitmapUtil.saveBitmap(resizeImage2, str6);
-                long l4 = System.currentTimeMillis() - l3;
-                LogUtils.d(LOG_TAG, "1图片缩小处理耗时" + l4 / 1000L + "." + l4 % 1000L + ", newPath=" + str6);
-                if (this.mCrop) {
-                    crop(str6);
-                }
-                back(str6);
-                finish();
-                return;
+                LogUtils.d(LOG_TAG, "Camera image is null");
             }
         }
 
-        if (requestCode == REQUEST_CODE_CROP) {
-            String str1 = data.getDataString();
-            LogUtils.i(LOG_TAG, "after crop, uriString=" + str1);
-            if (TextUtils.isEmpty(str1)) {
-                LogUtils.w(LOG_TAG, "uriString is null, usr saved path=" + this.mTempCroppedPath);
-            }
-            for (String str2 = this.mTempCroppedPath; ; str2 = Uri.parse(str1).getPath()) {
-                LogUtils.i(LOG_TAG, "after crop, path=" + str2);
-                back(str2);
-                return;
+        if (requestCode == REQUEST_CODE_GALLERY && resultCode == RESULT_OK && (data != null)) {
+            Uri localUri = data.getData();
+            final Bitmap photo = data.getParcelableExtra("data");
+            LogUtils.d(LOG_TAG, localUri.toString());
+            Cursor cursor = getContentResolver().query(localUri, null, null, null, null);
+            if ((cursor == null) || (cursor.getCount() < 1)) {
+                LogUtils.d(LOG_TAG, "Gallery cursor is null");
+                setResult(RESULT_NOT_FOUND);
+                if ((cursor != null) && (!cursor.isClosed())) {
+                    cursor.close();
+                }
+            } else {
+                cursor.moveToFirst();
+                String galleryImagePath = cursor.getString(1);
+                cursor.close();
+                if (this.mCrop) {
+                    crop(galleryImagePath);
+                    return;
+                } else {
+                    String resizeImagePath = resizeForUpload(galleryImagePath);
+                    back(resizeImagePath);
+                    return;
+                }
             }
         }
+
+        //见http://blog.csdn.net/floodingfire/article/details/8144615  Android大图片裁剪终极解决方案（中：从相册截图）
+        //此处全部统一将图片指定MediaStore.EXTRA_OUTPUT uri，不使用indent的回传bitmap方式
+        if (requestCode == REQUEST_CODE_CROP && resultCode == RESULT_OK ) {
+            back(this.mTempCroppedPath);
+        }
+
+        finish();
     }
 
     private void getIntentData() {
@@ -131,9 +118,7 @@ public class GetPictureActivity extends CommonActivity {
 
     //返回获取的图片路径并退出本Activity
     private void back(String imagePath) {
-        Intent intent = new Intent();
-        intent.putExtra("path", imagePath);
-        setResult(-1, intent);
+        EventBus.getDefault().post(new ProfileAvatarChangeEvent(imagePath));
         finish();
     }
 
@@ -172,7 +157,8 @@ public class GetPictureActivity extends CommonActivity {
         localIntent.putExtra("noFaceDetection", true);
         localIntent.putExtra("outputFormat", Bitmap.CompressFormat.PNG.toString());
         File localFile2 = new File(str);
-        localIntent.putExtra("output", Uri.fromFile(localFile2));
+        //a content resolver Uri to be used to store the requested image or video.
+        localIntent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(localFile2));
         localIntent.putExtra("return-data", false);
         try {
             startActivityForResult(localIntent, REQUEST_CODE_CROP);
@@ -181,5 +167,17 @@ public class GetPictureActivity extends CommonActivity {
             localActivityNotFoundException.printStackTrace();
             back(null);
         }
+    }
+
+    private String resizeForUpload(String imagePath) {
+        File tempFile = new File(SDCardUtils.tempSendPictureDir(getApplicationContext())
+        , SDCardUtils.tempSendPictureName());
+        String tempFilePath = tempFile.getAbsolutePath();
+        long beginTime = System.currentTimeMillis();
+                Bitmap resizeImage2 = BitmapUtil.getSmallBitmap(imagePath, 100, 100);  //缩放到100像素
+                BitmapUtil.saveBitmap(resizeImage2, tempFilePath);
+        long duringTime = System.currentTimeMillis() - beginTime;
+        LogUtils.d(LOG_TAG, "1图片缩小处理耗时" + duringTime / 1000L + "." + duringTime % 1000L + ", newPath=" + tempFilePath);
+        return tempFilePath;
     }
 }

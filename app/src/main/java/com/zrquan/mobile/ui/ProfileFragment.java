@@ -1,6 +1,7 @@
 package com.zrquan.mobile.ui;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -8,9 +9,12 @@ import android.view.ViewGroup;
 
 import com.zrquan.mobile.R;
 import com.zrquan.mobile.ZrquanApplication;
+import com.zrquan.mobile.event.ProfileAvatarChangeEvent;
 import com.zrquan.mobile.ui.common.CommonFragment;
 import com.zrquan.mobile.ui.viewholder.UserProfileContentViewHolder;
 import com.zrquan.mobile.ui.viewholder.VisitorContentViewHolder;
+
+import de.greenrobot.event.EventBus;
 
 public class ProfileFragment extends CommonFragment{
 
@@ -40,5 +44,21 @@ public class ProfileFragment extends CommonFragment{
 
         setRetainInstance(true);
         return rootView;
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        EventBus.getDefault().register(this);
+    }
+
+    @Override
+    public void onStop() {
+        EventBus.getDefault().unregister(this);
+        super.onStop();
+    }
+
+    public void onEvent(ProfileAvatarChangeEvent event) {
+        mUserProfileContentViewHolder.reloadAvatar(event.avatarPath);
     }
 }
