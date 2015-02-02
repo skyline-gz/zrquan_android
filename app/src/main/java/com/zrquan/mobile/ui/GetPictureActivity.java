@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.provider.MediaStore;
 import android.text.TextUtils;
 
+import com.zrquan.mobile.support.util.BitmapUtil;
 import com.zrquan.mobile.support.util.LogUtils;
 import com.zrquan.mobile.support.util.SDCardUtils;
 import com.zrquan.mobile.ui.common.CommonActivity;
@@ -50,7 +51,7 @@ public class GetPictureActivity extends CommonActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         Cursor localCursor;
-        if (requestCode == 1) {
+        if (requestCode == REQUEST_CODE_CAMERA) {
             if (!TextUtils.isEmpty(this.mTempCameraPath)) {
                 File localFile1 = new File(this.mTempCameraPath);
                 if ((!localFile1.exists()) || (localFile1.length() == 0L)) {
@@ -59,33 +60,52 @@ public class GetPictureActivity extends CommonActivity {
                 }
                 long l1 = System.currentTimeMillis();
                 String str3 = this.mTempCameraPath;
-                File localFile2 = new File(this.mTempCameraPath);
-//                String str4 = ImageUtil.zoomOutAndSave4Send(str3, localFile2.getParent());
-//                long l2 = System.currentTimeMillis() - l1;
-//                StringBuilder localStringBuilder4 = new StringBuilder();
-//                LogUtils.d(LOG_TAG, "2图片缩小处理耗时" + l2 / 1000L + "." + l2 % 1000L + ", newPath=" + str4);
-//                if (this.mCrop) {
-//                    crop(str4);
-//                    return;
-//                }
-//                back(str4);
+                Bitmap resizeImage1 = BitmapUtil.getSmallBitmap(str3, 100, 100);  //缩放到100像素
+                BitmapUtil.saveBitmap(resizeImage1, str3);
+                long l2 = System.currentTimeMillis() - l1;
+                LogUtils.d(LOG_TAG, "2图片缩小处理耗时" + l2 / 1000L + "." + l2 % 1000L + ", newPath=" + str3);
+                if (this.mCrop) {
+                    crop(str3);
+                    return;
+                }
+                back(str3);
                 return;
             }
             finish();
             return;
         }
-        if (requestCode == 2 && (resultCode == -1) && (data != null)) {
+        if (requestCode == REQUEST_CODE_GALLERY && (resultCode == -1) && (data != null)) {
             Uri localUri = data.getData();
+            final Bitmap photo = data.getParcelableExtra("data");
+            LogUtils.d(LOG_TAG, localUri.toString());
             localCursor = getContentResolver().query(localUri, null, null, null, null);
             if ((localCursor == null) || (localCursor.getCount() < 1)) {
                 LogUtils.d(LOG_TAG, "Gallery cursor is null");
                 setResult(100);
-                if ((localCursor != null) && (!localCursor.isClosed()))
+                if ((localCursor != null) && (!localCursor.isClosed())) {
                     localCursor.close();
+                }
+            } else {
+                localCursor.moveToFirst();
+                String imagePath2 = localCursor.getString(1);
+                LogUtils.i(LOG_TAG, "path=" + imagePath2);
+                localCursor.close();
+                String str6 = SDCardUtils.tempSendPictureDir(getApplicationContext());
+                long l3 = System.currentTimeMillis();
+                Bitmap resizeImage2 = BitmapUtil.getSmallBitmap(imagePath2, 100, 100);  //缩放到100像素
+                BitmapUtil.saveBitmap(resizeImage2, str6);
+                long l4 = System.currentTimeMillis() - l3;
+                LogUtils.d(LOG_TAG, "1图片缩小处理耗时" + l4 / 1000L + "." + l4 % 1000L + ", newPath=" + str6);
+                if (this.mCrop) {
+                    crop(str6);
+                }
+                back(str6);
+                finish();
+                return;
             }
         }
 
-        if (requestCode == 3) {
+        if (requestCode == REQUEST_CODE_CROP) {
             String str1 = data.getDataString();
             LogUtils.i(LOG_TAG, "after crop, uriString=" + str1);
             if (TextUtils.isEmpty(str1)) {
