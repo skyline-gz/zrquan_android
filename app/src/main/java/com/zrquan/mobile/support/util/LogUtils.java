@@ -85,6 +85,16 @@ public class LogUtils {
     }
 
     /**
+     * Send an INFO log message.
+     *
+     * @param msg The message you would like logged.
+     */
+    public static void i(String tag, String msg) {
+        if (BuildConfig.DEBUG)
+            android.util.Log.i(tag, buildMessage(msg));
+    }
+
+    /**
      * Send a INFO log message and log the exception.
      *
      * @param msg The message you would like logged.
@@ -93,6 +103,17 @@ public class LogUtils {
     public static void i(String msg, Throwable thr) {
         if (BuildConfig.DEBUG)
             android.util.Log.i(TAG, buildMessage(msg), thr);
+    }
+
+    /**
+     * Send a INFO log message and log the exception.
+     *
+     * @param msg The message you would like logged.
+     * @param thr An exception to log
+     */
+    public static void i(String tag, String msg, Throwable thr) {
+        if (BuildConfig.DEBUG)
+            android.util.Log.i(tag, buildMessage(msg), thr);
     }
 
     /**
@@ -106,6 +127,16 @@ public class LogUtils {
     }
 
     /**
+     * Send an ERROR log message.
+     *
+     * @param msg The message you would like logged.
+     */
+    public static void e(String tag, String msg) {
+        if (BuildConfig.DEBUG)
+            android.util.Log.e(tag, buildMessage(msg));
+    }
+
+    /**
      * Send a WARN log message
      *
      * @param msg The message you would like logged.
@@ -113,6 +144,16 @@ public class LogUtils {
     public static void w(String msg) {
         if (BuildConfig.DEBUG)
             android.util.Log.w(TAG, buildMessage(msg));
+    }
+
+    /**
+     * Send a WARN log message
+     *
+     * @param msg The message you would like logged.
+     */
+    public static void w(String tag, String msg) {
+        if (BuildConfig.DEBUG)
+            android.util.Log.w(tag, buildMessage(msg));
     }
 
     /**

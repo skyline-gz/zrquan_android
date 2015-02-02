@@ -12,6 +12,7 @@ import android.widget.TableRow;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.zrquan.mobile.ui.GetPictureActivity;
 import com.zrquan.mobile.ui.common.CommonFragment;
 import com.zrquan.mobile.R;
 import com.zrquan.mobile.widget.scrollview.PullScrollView;
@@ -44,20 +45,20 @@ public class UserProfileContentViewHolder {
             public void onClick(DialogInterface paramAnonymousDialogInterface, int paramAnonymousInt) {
                 switch (paramAnonymousInt) {
                     case 0:
-                        Intent localIntent2 = new Intent("cn.zrquan.mobile.action.GET_PICTURE");
-                        localIntent2.putExtra("source", 1);
-                        localIntent2.putExtra("width", 100);
-                        localIntent2.putExtra("height", 100);
-                        localIntent2.putExtra("crop", true);
-                        context.getActivity().startActivityForResult(localIntent2, 1);
-                        break;
-                    case 1:
                         Intent localIntent1 = new Intent("cn.zrquan.mobile.action.GET_PICTURE");
-                        localIntent1.putExtra("source", 2);
+                        localIntent1.putExtra("source", GetPictureActivity.REQUEST_CODE_CAMERA);
                         localIntent1.putExtra("width", 100);
                         localIntent1.putExtra("height", 100);
                         localIntent1.putExtra("crop", true);
                         context.getActivity().startActivityForResult(localIntent1, 1);
+                        break;
+                    case 1:
+                        Intent localIntent2 = new Intent("cn.zrquan.mobile.action.GET_PICTURE");
+                        localIntent2.putExtra("source", GetPictureActivity.REQUEST_CODE_GALLERY);
+                        localIntent2.putExtra("width", 100);
+                        localIntent2.putExtra("height", 100);
+                        localIntent2.putExtra("crop", true);
+                        context.getActivity().startActivityForResult(localIntent2, 1);
                         break;
                     default:
                         paramAnonymousDialogInterface.dismiss();

@@ -23,12 +23,14 @@
         <activity android:label="设置Demo" android:name=".ui.demo.DemoSettingActivity"/>
         <activity android:label="登录" android:name=".ui.authentic.UserLoginActivity" android:windowSoftInputMode="stateHidden"/>
         <activity android:label="注册" android:name=".ui.authentic.UserRegisterActivity" android:windowSoftInputMode="stateHidden"/>
-        <activity
-            android:label="搜索"
-            android:name=".ui.search.SearchActivity"
-            android:theme="@style/PageIndicatorLightDefaults"
-            android:windowSoftInputMode="stateHidden"/>
+        <activity android:label="搜索" android:name=".ui.search.SearchActivity" android:theme="@style/PageIndicatorLightDefaults" android:windowSoftInputMode="stateHidden"/>
         <activity android:label="设置密码" android:name=".ui.authentic.UserRegisterSetPasswordActivity" android:windowSoftInputMode="stateHidden"/>
+        <activity android:label="获取头像" android:name="com.zrquan.mobile.ui.GetPictureActivity">
+            <intent-filter>
+                <action android:name="cn.zrquan.mobile.action.GET_PICTURE"/>
+                <category android:name="android.intent.category.DEFAULT"/>
+            </intent-filter>
+        </activity>
     </application>
 
 </manifest>
