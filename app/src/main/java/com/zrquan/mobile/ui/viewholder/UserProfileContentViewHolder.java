@@ -3,7 +3,6 @@ package com.zrquan.mobile.ui.viewholder;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.view.Gravity;
@@ -45,7 +44,7 @@ public class UserProfileContentViewHolder {
 
     @OnClick(R.id.riv_user_avatar)
     public void onUserAvatarClick() {
-        AlertDialog.Builder localBuilder = new AlertDialog.Builder(context.getActivity());
+        AlertDialog.Builder selectAvatarBuilder = new AlertDialog.Builder(context.getActivity());
         DialogInterface.OnClickListener local1 = new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface paramAnonymousDialogInterface, int paramAnonymousInt) {
                 switch (paramAnonymousInt) {
@@ -70,8 +69,10 @@ public class UserProfileContentViewHolder {
                 }
             }
         };
-        localBuilder.setItems(new String[]{"拍照", "从相册中选择"}, local1);
-        localBuilder.show();
+        selectAvatarBuilder.setItems(new String[]{"拍照", "从相册中选择"}, local1);
+        AlertDialog selectAvatarDialog = selectAvatarBuilder.create();
+        selectAvatarDialog.setCanceledOnTouchOutside(true);
+        selectAvatarDialog.show();
     }
 
     public void reloadAvatar(String filePath) {
