@@ -23,81 +23,34 @@ public class GetPictureActivity extends CommonActivity {
     public static final int REQUEST_CODE_CROP = 3;
     public static final int RESULT_NOT_FOUND = 100;
 
-    private boolean mCrop;
-    private int mHeight;
-    private int mSource;
+    //Indent 参数
+    private int mSource;      //获取图片的来源，REQUEST_CODE_CAMERA　或　REQUEST_CODE_GALLERY
+    private boolean mCrop;    //是否需要截图
+    private int mHeight;      //图片高度
+    private int mWidth;       //图片宽度
+    
     private String mTempCameraPath = null;
-    private String mTempCropedPath = null;
-    private int mWidth;
+    private String mTempCroppedPath = null;
 
-    private void back(String paramString) {
-        Intent localIntent = new Intent();
-        localIntent.putExtra("path", paramString);
-        setResult(-1, localIntent);
-        finish();
-    }
-
-    private void crop(String paramString) {
-        String str = SDCardUtils.tempSendPictureDir(getApplicationContext()) + "/" + System.currentTimeMillis() + ".png";
-        this.mTempCropedPath = str;
-        File localFile1 = new File(paramString);
-        Uri localUri = Uri.fromFile(localFile1);
-        Intent localIntent = new Intent("com.android.camera.action.CROP");
-        localIntent.setDataAndType(localUri, "image/*");
-        localIntent.putExtra("crop", "true");
-        localIntent.putExtra("aspectX", this.mWidth);
-        localIntent.putExtra("aspectY", this.mHeight);
-        localIntent.putExtra("outputX", this.mWidth);
-        localIntent.putExtra("outputY", this.mHeight);
-        localIntent.putExtra("scale", true);
-        localIntent.putExtra("noFaceDetection", true);
-        localIntent.putExtra("outputFormat", Bitmap.CompressFormat.PNG.toString());
-        File localFile2 = new File(str);
-        localIntent.putExtra("output", Uri.fromFile(localFile2));
-        localIntent.putExtra("return-data", false);
-        try {
-            startActivityForResult(localIntent, 3);
-        } catch (ActivityNotFoundException localActivityNotFoundException) {
-            LogUtils.e(LOG_TAG, "Crop Activity Not Found");
-            localActivityNotFoundException.printStackTrace();
-            back(null);
+    @Override
+    protected void onCreate(Bundle paramBundle) {
+        super.onCreate(paramBundle);
+        if (getActionBar() != null) {
+            getActionBar().hide();
+        }
+        getIntentData();
+        if (this.mSource == REQUEST_CODE_CAMERA) {
+            startCamera();
+        } else if (this.mSource == REQUEST_CODE_GALLERY) {
+            startGallery();
         }
     }
 
-    private void getIntentData() {
-        Intent localIntent = getIntent();
-        if (localIntent != null) {
-            this.mWidth = localIntent.getIntExtra("width", 0);
-            this.mHeight = localIntent.getIntExtra("height", 0);
-            this.mSource = localIntent.getIntExtra("source", 0);
-            this.mCrop = localIntent.getBooleanExtra("crop", false);
-        }
-    }
-
-    private void startCamera() {
-        if (SDCardUtils.sdCardAvailable()) {
-            Intent localIntent = new Intent("android.media.action.IMAGE_CAPTURE");
-            File localFile = new File(SDCardUtils.tempSendPictureDir(getApplicationContext())
-                    , SDCardUtils.tempSendPictureName());
-            this.mTempCameraPath = localFile.getAbsolutePath();
-            localIntent.putExtra("output", Uri.fromFile(localFile));
-            startActivityForResult(localIntent, 1);
-            return;
-        }
-        LogUtils.w(LOG_TAG, "存储卡不可用.");
-//        showToast(2131361985);
-    }
-
-    private void startGallery() {
-        Intent localIntent = new Intent("android.intent.action.PICK", null);
-        localIntent.setDataAndType(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, "image/*");
-        startActivityForResult(localIntent, 2);
-    }
-
-    protected void onActivityResult(int paramInt1, int paramInt2, Intent paramIntent) {
-        super.onActivityResult(paramInt1, paramInt2, paramIntent);
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
         Cursor localCursor;
-        if (paramInt1 == 1) {
+        if (requestCode == 1) {
             if (!TextUtils.isEmpty(this.mTempCameraPath)) {
                 File localFile1 = new File(this.mTempCameraPath);
                 if ((!localFile1.exists()) || (localFile1.length() == 0L)) {
@@ -121,8 +74,8 @@ public class GetPictureActivity extends CommonActivity {
             finish();
             return;
         }
-        if (paramInt1 == 2 && (paramInt2 == -1) && (paramIntent != null)) {
-            Uri localUri = paramIntent.getData();
+        if (requestCode == 2 && (resultCode == -1) && (data != null)) {
+            Uri localUri = data.getData();
             localCursor = getContentResolver().query(localUri, null, null, null, null);
             if ((localCursor == null) || (localCursor.getCount() < 1)) {
                 LogUtils.d(LOG_TAG, "Gallery cursor is null");
@@ -132,14 +85,13 @@ public class GetPictureActivity extends CommonActivity {
             }
         }
 
-        if (paramInt1 == 3) {
-            String str1 = paramIntent.getDataString();
-            StringBuilder localStringBuilder1 = new StringBuilder();
+        if (requestCode == 3) {
+            String str1 = data.getDataString();
             LogUtils.i(LOG_TAG, "after crop, uriString=" + str1);
             if (TextUtils.isEmpty(str1)) {
-                LogUtils.w(LOG_TAG, "uriString is null, usr saved path=" + this.mTempCropedPath);
+                LogUtils.w(LOG_TAG, "uriString is null, usr saved path=" + this.mTempCroppedPath);
             }
-            for (String str2 = this.mTempCropedPath; ; str2 = Uri.parse(str1).getPath()) {
+            for (String str2 = this.mTempCroppedPath; ; str2 = Uri.parse(str1).getPath()) {
                 LogUtils.i(LOG_TAG, "after crop, path=" + str2);
                 back(str2);
                 return;
@@ -147,16 +99,67 @@ public class GetPictureActivity extends CommonActivity {
         }
     }
 
-    protected void onCreate(Bundle paramBundle) {
-        super.onCreate(paramBundle);
-        if (getActionBar() != null) {
-            getActionBar().hide();
+    private void getIntentData() {
+        Intent localIntent = getIntent();
+        if (localIntent != null) {
+            this.mWidth = localIntent.getIntExtra("width", 0);
+            this.mHeight = localIntent.getIntExtra("height", 0);
+            this.mSource = localIntent.getIntExtra("source", 0);
+            this.mCrop = localIntent.getBooleanExtra("crop", false);
         }
-        getIntentData();
-        if (this.mSource == REQUEST_CODE_CAMERA) {
-            startCamera();
-        } else if (this.mSource == REQUEST_CODE_GALLERY) {
-            startGallery();
+    }
+
+    //返回获取的图片路径并退出本Activity
+    private void back(String imagePath) {
+        Intent intent = new Intent();
+        intent.putExtra("path", imagePath);
+        setResult(-1, intent);
+        finish();
+    }
+
+    private void startCamera() {
+        if (SDCardUtils.sdCardAvailable()) {
+            Intent intent = new Intent("android.media.action.IMAGE_CAPTURE");
+            File localFile = new File(SDCardUtils.tempSendPictureDir(getApplicationContext())
+                    , SDCardUtils.tempSendPictureName());
+            this.mTempCameraPath = localFile.getAbsolutePath();
+            intent.putExtra("output", Uri.fromFile(localFile));
+            startActivityForResult(intent, REQUEST_CODE_CAMERA);
+            return;
+        }
+        LogUtils.w(LOG_TAG, "存储卡不可用.");
+    }
+
+    private void startGallery() {
+        Intent intent = new Intent("android.intent.action.PICK", null);
+        intent.setDataAndType(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, "image/*");
+        startActivityForResult(intent, REQUEST_CODE_GALLERY);
+    }
+
+    private void crop(String paramString) {
+        String str = SDCardUtils.tempSendPictureDir(getApplicationContext()) + "/" + System.currentTimeMillis() + ".png";
+        this.mTempCroppedPath = str;
+        File localFile1 = new File(paramString);
+        Uri localUri = Uri.fromFile(localFile1);
+        Intent localIntent = new Intent("com.android.camera.action.CROP");
+        localIntent.setDataAndType(localUri, "image/*");
+        localIntent.putExtra("crop", "true");
+        localIntent.putExtra("aspectX", this.mWidth);
+        localIntent.putExtra("aspectY", this.mHeight);
+        localIntent.putExtra("outputX", this.mWidth);
+        localIntent.putExtra("outputY", this.mHeight);
+        localIntent.putExtra("scale", true);
+        localIntent.putExtra("noFaceDetection", true);
+        localIntent.putExtra("outputFormat", Bitmap.CompressFormat.PNG.toString());
+        File localFile2 = new File(str);
+        localIntent.putExtra("output", Uri.fromFile(localFile2));
+        localIntent.putExtra("return-data", false);
+        try {
+            startActivityForResult(localIntent, REQUEST_CODE_CROP);
+        } catch (ActivityNotFoundException localActivityNotFoundException) {
+            LogUtils.e(LOG_TAG, "Crop Activity Not Found");
+            localActivityNotFoundException.printStackTrace();
+            back(null);
         }
     }
 }
