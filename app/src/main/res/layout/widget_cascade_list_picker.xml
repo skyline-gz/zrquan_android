@@ -12,7 +12,7 @@
         android:layout_weight="1.0">
 
         <ListView
-            android:id="@+id/list_picker_left"
+            android:id="@+id/lv_picker_left"
             android:background="#fff1f1f1"
             android:layout_width="80.0dip"
             android:layout_height="fill_parent"
@@ -20,7 +20,7 @@
             android:dividerHeight="1.0dip" />
 
         <ListView
-            android:id="@+id/list_picker_ri"
+            android:id="@+id/lv_picker_right"
             android:background="@android:color/white"
             android:layout_width="0.0dip"
             android:layout_height="fill_parent"

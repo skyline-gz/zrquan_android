@@ -9,8 +9,8 @@
         android:id="@+id/ly_location_picker"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingTop="50dp"
-        android:paddingBottom="50dp"
+        android:paddingTop="20dp"
+        android:paddingBottom="20dp"
         android:layout_gravity="center"
         android:gravity="center" />
 

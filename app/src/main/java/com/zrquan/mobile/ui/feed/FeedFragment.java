@@ -1,9 +1,12 @@
 package com.zrquan.mobile.ui.feed;
 
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
+import android.graphics.Rect;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,6 +19,7 @@ import com.zrquan.mobile.ZrquanApplication;
 import com.zrquan.mobile.ui.authentic.UserLoginActivity;
 import com.zrquan.mobile.ui.authentic.UserRegisterActivity;
 import com.zrquan.mobile.ui.common.CommonFragment;
+import com.zrquan.mobile.ui.demo.DemoPopupWindow;
 import com.zrquan.mobile.ui.search.SearchActivity;
 
 import java.util.ArrayList;
@@ -25,9 +29,11 @@ import butterknife.InjectView;
 import butterknife.OnClick;
 
 public class FeedFragment extends CommonFragment {
-    private View rootView;  //当前Fragment持有的View实例
+
+    private Context context;
+    private View rootView;                          //当前Fragment持有的View实例
     private ArrayList<CommonFragment> fragmentList;
-    private int currentIndex;//当前页卡编号
+    private int currentIndex;                       //当前页卡编号
 
     @InjectView(R.id.iv_search)
     ImageView ivSearch;
@@ -52,6 +58,7 @@ public class FeedFragment extends CommonFragment {
         //Avoid recreating same view when perform tab switching
         //http://stackoverflow.com/questions/10716571/avoid-recreating-same-view-when-perform-tab-switching
         if (rootView == null) {
+            context = getActivity().getApplicationContext();
             rootView = inflater.inflate(R.layout.fragment_feed, container, false);
             ButterKnife.inject(this, rootView);
         } else {
@@ -82,6 +89,14 @@ public class FeedFragment extends CommonFragment {
         }
     }
 
+    @OnClick(R.id.iv_arrange_setting)
+    public void onArrangeSettingClick(View v) {
+        View popupContent = View.inflate(context, R.layout.pop_up_window_more_demo, null);
+        DemoPopupWindow demoPopupWindow = new DemoPopupWindow(context, popupContent, 150, 110);
+        Rect location = locateView(v);
+        demoPopupWindow.showAtLocation(v, Gravity.TOP|Gravity.LEFT, location.left, location.bottom);
+    }
+
     @OnClick(R.id.tv_login)
     public void onLoginClick(View v) {
         Intent myIntent = new Intent(getActivity(), UserLoginActivity.class);
@@ -101,6 +116,25 @@ public class FeedFragment extends CommonFragment {
         Intent myIntent = new Intent(getActivity(), SearchActivity.class);
         getActivity().startActivity(myIntent);
         getActivity().overridePendingTransition(R.anim.left2right_enter, R.anim.left2right_exit);
+    }
+
+    public static Rect locateView(View v) {
+        int[] loc_int = new int[2];
+        if (v == null) return null;
+        try
+        {
+            v.getLocationOnScreen(loc_int);
+        } catch (NullPointerException npe)
+        {
+            //Happens when the view doesn't exist on screen anymore.
+            return null;
+        }
+        Rect location = new Rect();
+        location.left = loc_int[0];
+        location.top = loc_int[1];
+        location.right = location.left + v.getWidth();
+        location.bottom = location.top + v.getHeight();
+        return location;
     }
 
     private class TxListener implements View.OnClickListener {
@@ -135,7 +169,7 @@ public class FeedFragment extends CommonFragment {
 
         @Override
         public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-
+            // TODO Auto-generated method stub
         }
 
         @Override
