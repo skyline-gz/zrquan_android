@@ -16,6 +16,7 @@ import android.widget.Toast;
 
 import com.zrquan.mobile.R;
 import com.zrquan.mobile.ZrquanApplication;
+import com.zrquan.mobile.support.util.ScreenUtils;
 import com.zrquan.mobile.ui.authentic.UserLoginActivity;
 import com.zrquan.mobile.ui.authentic.UserRegisterActivity;
 import com.zrquan.mobile.ui.common.CommonFragment;
@@ -92,8 +93,9 @@ public class FeedFragment extends CommonFragment {
     @OnClick(R.id.iv_arrange_setting)
     public void onArrangeSettingClick(View v) {
         View popupContent = View.inflate(context, R.layout.pop_up_window_more_demo, null);
-        DemoPopupWindow demoPopupWindow = new DemoPopupWindow(context, popupContent, 150, 110);
-        Rect location = locateView(v);
+        DemoPopupWindow demoPopupWindow = new DemoPopupWindow(context, popupContent,
+                (int)ScreenUtils.dpToPx(context, 150), (int)ScreenUtils.dpToPx(context, 110));
+        Rect location = ScreenUtils.locateView(v);
         demoPopupWindow.showAtLocation(v, Gravity.TOP|Gravity.LEFT, location.left, location.bottom);
     }
 
@@ -116,25 +118,6 @@ public class FeedFragment extends CommonFragment {
         Intent myIntent = new Intent(getActivity(), SearchActivity.class);
         getActivity().startActivity(myIntent);
         getActivity().overridePendingTransition(R.anim.left2right_enter, R.anim.left2right_exit);
-    }
-
-    public static Rect locateView(View v) {
-        int[] loc_int = new int[2];
-        if (v == null) return null;
-        try
-        {
-            v.getLocationOnScreen(loc_int);
-        } catch (NullPointerException npe)
-        {
-            //Happens when the view doesn't exist on screen anymore.
-            return null;
-        }
-        Rect location = new Rect();
-        location.left = loc_int[0];
-        location.top = loc_int[1];
-        location.right = location.left + v.getWidth();
-        location.bottom = location.top + v.getHeight();
-        return location;
     }
 
     private class TxListener implements View.OnClickListener {
