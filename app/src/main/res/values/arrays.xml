@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="emoji_labels">
+        <!--001 ~ 010-->
+        <item>[微笑]</item>
+        <item>[坏笑]</item>
+        <item>[哈哈]</item>
+        <item>[发财]</item>
+        <item>[捂嘴]</item>
+        <item>[害羞]</item>
+        <item>[流泪]</item>
+        <item>[可怜]</item>
+        <item>[鄙视]</item>
+        <item>[威武]</item>
+
+        <!--011 ~ 020-->
+        <item>[色]</item>
+        <item>[嘘]</item>
+        <item>[敲打]</item>
+        <item>[爱心]</item>
+        <item>[心碎]</item>
+        <item>[弱]</item>
+        <item>[发怒]</item>
+        <item>[OK]</item>
+        <item>[握手]</item>
+        <item>[赞]</item>
+
+        <!--021 ~ 030-->
+        <item>[耶]</item>
+        <item>[亲亲]</item>
+        <item>[卖萌]</item>
+        <item>[得意]</item>
+        <item>[冷汗]</item>
+        <item>[晕]</item>
+        <item>[吃惊]</item>
+        <item>[疑问]</item>
+        <item>[囧]</item>
+        <item>[瞌睡]</item>
+
+        <!--031 ~ 040-->
+        <item>[冷颤]</item>
+        <item>[呵呵]</item>
+        <item>[色眯眯]</item>
+        <item>[呆]</item>
+        <item>[羞]</item>
+        <item>[泪]</item>
+        <item>[怒]</item>
+        <item>[哭泣]</item>
+        <item>[惊吓]</item>
+        <item>[阴险]</item>
+
+        <!--041 ~ 050-->
+        <item>[大哭]</item>
+        <item>[飞吻]</item>
+        <item>[呲牙]</item>
+        <item>[亲]</item>
+        <item>[冒冷汗]</item>
+        <item>[眨眼]</item>
+        <item>[鬼脸]</item>
+        <item>[糟糕]</item>
+        <item>[调皮]</item>
+        <item>[沉思]</item>
+
+        <!--051 ~ 060-->
+        <item>[傲气]</item>
+        <item>[酣睡]</item>
+        <item>[伤心]</item>
+        <item>[流汗]</item>
+        <item>[哈欠]</item>
+        <item>[困]</item>
+        <item>[闭嘴]</item>
+        <item>[皱眉]</item>
+        <item>[吓]</item>
+        <item>[生病]</item>
+
+        <!--061 ~ 070-->
+        <item>[问号]</item>
+        <item>[生气]</item>
+        <item>[翔]</item>
+        <item>[脚印]</item>
+        <item>[示爱]</item>
+        <item>[一见钟情]</item>
+        <item>[心]</item>
+        <item>[心碎了]</item>
+        <item>[强]</item>
+        <item>[胜利]</item>
+
+        <!--071 ~ 080-->
+        <item>[拍掌]</item>
+        <item>[弱爆]</item>
+        <item>[good]</item>
+        <item>[拳头]</item>
+        <item>[肌肉]</item>
+        <item>[保佑]</item>
+        <item>[击掌]</item>
+        <item>[差劲]</item>
+        <item>[亲吻]</item>
+        <item>[情侣]</item>
+
+        <!--081 ~ 090-->
+        <item>[猪头]</item>
+        <item>[老虎]</item>
+        <item>[魔鬼]</item>
+        <item>[外星人]</item>
+        <item>[骷髅]</item>
+        <item>[天使]</item>
+        <item>[急诊]</item>
+        <item>[军人]</item>
+        <item>[太阳]</item>
+        <item>[火]</item>
+
+        <!--091 ~ 100-->
+        <item>[粉心]</item>
+        <item>[微微笑]</item>
+        <item>[红唇]</item>
+        <item>[指上]</item>
+        <item>[指下]</item>
+        <item>[指左]</item>
+        <item>[指右]</item>
+        <item>[凹凸曼]</item>
+        <item>[香皂]</item>
+        <item>[猪头]</item>
+
+        <!--101 ~ 110-->
+        <item>[鬼脸]</item>
+        <item>[小狗]</item>
+        <item>[小猫]</item>
+        <item>[100分]</item>
+        <item>[飞机]</item>
+        <item>[轮船]</item>
+        <item>[外星人]</item>
+        <item>[天使]</item>
+        <item>[香蕉]</item>
+        <item>[啤酒]</item>
+
+        <!--111 ~ 120-->
+        <item>[红酒]</item>
+        <item>[钞票]</item>
+        <item>[小熊]</item>
+        <item>[蜜蜂]</item>
+        <item>[甲虫]</item>
+        <item>[小鸟]</item>
+        <item>[蜗牛]</item>
+        <item>[蛇]</item>
+        <item>[水牛]</item>
+        <item>[鲸鱼]</item>
+    </string-array>
+</resources>
