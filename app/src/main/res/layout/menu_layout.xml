@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <View
+        android:background="@color/main_prompt_text_color"
+        android:layout_width="match_parent"
+        android:layout_height="2.0dp"
+        xmlns:android="http://schemas.android.com/apk/res/android" />
+
+    <LinearLayout
+        android:baselineAligned="false"
+        android:orientation="horizontal"
+        android:background="@drawable/tabbar_background"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <RelativeLayout
+            android:id="@id/rl_menu_nightmode"
+            android:paddingTop="14.0dip"
+            android:paddingBottom="14.0dip"
+            android:layout_width="0.0dip"
+            android:layout_height="fill_parent"
+            android:layout_weight="1.0">
+
+            <TextView
+                android:textSize="12.0sp"
+                android:textColor="@color/main_content_text_color"
+                android:gravity="center"
+                android:id="@id/tv_menu_nightmode"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/skin_menu_night"
+                android:drawableTop="@drawable/menu_icon_night"
+                android:drawablePadding="4.0dip"
+                android:layout_alignParentTop="true"
+                android:layout_centerHorizontal="true" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@id/rl_menu_setting"
+            android:paddingTop="14.0dip"
+            android:paddingBottom="14.0dip"
+            android:layout_width="0.0dip"
+            android:layout_height="fill_parent"
+            android:layout_weight="1.0">
+
+            <TextView
+                android:textSize="12.0sp"
+                android:textColor="@color/main_content_text_color"
+                android:gravity="center"
+                android:id="@id/tv_menu_setting"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/menu_settings"
+                android:drawableTop="@drawable/menu_icon_setting"
+                android:drawablePadding="4.0dip"
+                android:layout_alignParentTop="true"
+                android:layout_centerHorizontal="true" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@id/rl_menu_exit"
+            android:paddingTop="14.0dip"
+            android:paddingBottom="14.0dip"
+            android:layout_width="0.0dip"
+            android:layout_height="fill_parent"
+            android:layout_weight="1.0">
+
+            <TextView
+                android:textSize="12.0sp"
+                android:textColor="@color/main_content_text_color"
+                android:gravity="center"
+                android:id="@id/tv_menu_exit"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/exit"
+                android:drawableTop="@drawable/menu_icon_exit"
+                android:drawablePadding="4.0dip"
+                android:layout_alignParentTop="true"
+                android:layout_centerHorizontal="true" />
+        </RelativeLayout>
+    </LinearLayout>
+</LinearLayout>

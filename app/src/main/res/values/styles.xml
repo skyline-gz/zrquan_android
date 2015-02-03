@@ -43,6 +43,11 @@
         <item name="android:windowBackground">@drawable/splash</item>
     </style>
 
+    <style name="ChoiceDialogAnim" parent="@android:style/Animation">
+        <item name="android:windowEnterAnimation">@anim/dialog_enter_anim</item>
+        <item name="android:windowExitAnimation">@anim/dialog_exit_anim</item>
+    </style>
+
     <style name="SettingTitleText">
         <item name="android:textSize">14.0sp</item>
         <item name="android:gravity">left</item>

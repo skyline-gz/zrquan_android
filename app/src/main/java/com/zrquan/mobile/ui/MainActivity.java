@@ -1,9 +1,11 @@
 package com.zrquan.mobile.ui;
 
 import android.content.Context;
+import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.view.Gravity;
 import android.view.LayoutInflater;
+import android.view.Menu;
 import android.view.View;
 import android.view.WindowManager;
 import android.view.animation.Animation;
@@ -95,6 +97,12 @@ public class MainActivity extends CommonFragmentActivity {
         });
 
         initComposeWindow();
+    }
+
+    @Override
+    public boolean onMenuOpened(int paramInt, Menu paramMenu){
+        showOptionsMenu();
+        return false;
     }
 
     private void initComposeWindow() {
@@ -190,30 +198,18 @@ public class MainActivity extends CommonFragmentActivity {
         ivCancelBtn.startAnimation(r);
     }
 
-//    @Override
-//    public boolean onCreateOptionsMenu(Menu menu) {
-//        // Inflate the menu; this adds items to the action bar if it is present.
-//        getMenuInflater().inflate(R.menu.menu_main, menu);
-//        return true;
-//    }
-//
-//    @Override
-//    public boolean onOptionsItemSelected(MenuItem item) {
-//        // Handle action bar item clicks here. The action bar will
-//        // automatically handle clicks on the Home/Up button, so long
-//        // as you specify a parent activity in AndroidManifest.xml.
-//        int id = item.getItemId();
-//
-//        //noinspection SimplifiableIfStatement
-//        if (id == R.id.action_settings) {
-//            showToast();
-//            return true;
-//        } else if (id == R.id.action_card) {
-//            return true;
-//        }
-//
-//        return super.onOptionsItemSelected(item);
-//    }
+    private void showOptionsMenu() {
+        View menuView = View.inflate(context, R.layout.menu_layout, null);
+        PopupWindow mPopupWindow=new PopupWindow(menuView, WindowManager.LayoutParams.MATCH_PARENT
+                ,WindowManager.LayoutParams.WRAP_CONTENT);
+        mPopupWindow.setFocusable(true);
+        mPopupWindow.setClippingEnabled(true);
+        mPopupWindow.setBackgroundDrawable(new BitmapDrawable());
+        mPopupWindow.setOutsideTouchable(true);
+        mPopupWindow.update();
+        mPopupWindow.setAnimationStyle(R.style.ChoiceDialogAnim);
+        mPopupWindow.showAtLocation(findViewById(R.id.main_layout),Gravity.BOTTOM,0,0);
+    }
 
     /**
      * 设置底部选项卡

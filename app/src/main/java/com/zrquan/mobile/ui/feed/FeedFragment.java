@@ -94,7 +94,7 @@ public class FeedFragment extends CommonFragment {
     public void onArrangeSettingClick(View v) {
         View popupContent = View.inflate(context, R.layout.pop_up_window_more_demo, null);
         DemoPopupWindow demoPopupWindow = new DemoPopupWindow(context, popupContent,
-                (int)ScreenUtils.dpToPx(context, 150), (int)ScreenUtils.dpToPx(context, 110));
+                (int)ScreenUtils.dpToPx(context, 150), (int)ScreenUtils.dpToPx(context, 100));
         Rect location = ScreenUtils.locateView(v);
         demoPopupWindow.showAtLocation(v, Gravity.TOP|Gravity.LEFT, location.left, location.bottom);
     }
