@@ -7,13 +7,16 @@ import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.provider.MediaStore;
 import android.util.Base64;
+import android.util.Log;
+import android.view.View;
+import android.widget.ImageView;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 
-public class BitmapUtil {
+public class BitmapUtils {
 
     /**
      * convert Bitmap to byte array
@@ -228,5 +231,21 @@ public class BitmapUtil {
         Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         intent.putExtra(MediaStore.EXTRA_OUTPUT, uri);
         return intent;
+    }
+
+    public static void setImageResource(View view, int resId) {
+        if ((view == null) || (resId == 0)) {
+            return;
+        }
+        try {
+            if ((view instanceof ImageView)) {
+                ((ImageView) view).setImageResource(resId);
+            } else {
+                view.setBackgroundResource(resId);
+            }
+        } catch (Exception exception) {
+            LogUtils.e(String.valueOf(exception));
+        }
+
     }
 }

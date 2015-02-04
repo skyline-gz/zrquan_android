@@ -10,7 +10,7 @@ import android.provider.MediaStore;
 import android.text.TextUtils;
 
 import com.zrquan.mobile.event.ProfileAvatarChangeEvent;
-import com.zrquan.mobile.support.util.BitmapUtil;
+import com.zrquan.mobile.support.util.BitmapUtils;
 import com.zrquan.mobile.support.util.LogUtils;
 import com.zrquan.mobile.support.util.SDCardUtils;
 import com.zrquan.mobile.ui.common.CommonActivity;
@@ -174,8 +174,8 @@ public class GetPictureActivity extends CommonActivity {
         , SDCardUtils.tempSendPictureName());
         String tempFilePath = tempFile.getAbsolutePath();
         long beginTime = System.currentTimeMillis();
-                Bitmap resizeImage2 = BitmapUtil.getSmallBitmap(imagePath, 100, 100);  //缩放到100像素
-                BitmapUtil.saveBitmap(resizeImage2, tempFilePath);
+                Bitmap resizeImage2 = BitmapUtils.getSmallBitmap(imagePath, 100, 100);  //缩放到100像素
+                BitmapUtils.saveBitmap(resizeImage2, tempFilePath);
         long duringTime = System.currentTimeMillis() - beginTime;
         LogUtils.d(LOG_TAG, "1图片缩小处理耗时" + duringTime / 1000L + "." + duringTime % 1000L + ", newPath=" + tempFilePath);
         return tempFilePath;

@@ -1426,4 +1426,6 @@
     <dimen name="item_left_icon_small">29.0dip</dimen>
     <dimen name="default_circle_indicator_radius">3.5dip</dimen>
     <dimen name="default_circle_indicator_stroke_width">1.0dip</dimen>
+
+    <dimen name="emoji_in_panel_width">48.0dip</dimen>
 </resources>
