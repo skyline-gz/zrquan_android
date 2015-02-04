@@ -106,6 +106,14 @@ public class MainActivity extends CommonFragmentActivity {
         return false;
     }
 
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        if(mPopupWindow != null) {
+            dismissPopupAndRestoreTab();
+        }
+    }
+
     private void initComposeWindow() {
         View popupView = getLayoutInflater().inflate(R.layout.pop_up_window_compose, null);
 

@@ -5,6 +5,8 @@ import java.util.regex.Pattern;
 public class RegUtils {
     private RegUtils(){}
 
+    private Pattern atPattern = Pattern.compile("@[\\w|#]+\\b");
+    private Pattern emojiPattern = Pattern.compile("(\\[[\\w]+\\])");
     private Pattern emailPattern = Pattern.compile("(([a-zA-Z0-9_\\-\\.]+)@([a-zA-Z0-9_\\-\\.]+)*\\.([a-zA-Z0-9_\\-\\.])+)");
     private Pattern ipPattern = Pattern.compile("((http|ftp|https):\\/\\/((25[0-5]|2[0-4]\\d|((1\\d{2})|([1-9]?\\d)))\\.){3}(?:25[0-5]|2[0-4]\\d|((1\\d{2})|([1-9]?\\d))))");
 //    private Pattern phonePattern = Pattern.compile("(?<!\\d)((((\\+86)|(86))?(1[3|4|5|7|8])\\d{9})|^((\\d{7,8})|(\\d{4}|\\d{3})-(\\d{7,8})|(\\d{4}|\\d{3})-(\\d{7,8})-(\\d{4}|\\d{3}|\\d{2}|\\d{1})|(\\d{7,8})-(\\d{4}|\\d{3}|\\d{2}|\\d{1})$))(?!\\d)");
@@ -27,12 +29,21 @@ public class RegUtils {
     public Pattern getMobilePattern() {
         return this.mobilePattern;
     }
+
     public Pattern getPasswordPattern() {
         return this.passwordPattern;
     }
 
     public Pattern getUrlPattern() {
         return this.urlPattern;
+    }
+
+    public Pattern getAtPattern() {
+        return atPattern;
+    }
+
+    public Pattern getEmojiPattern() {
+        return emojiPattern;
     }
 
     //使用类级内部类保证　lazy loading 见http://www.cnblogs.com/java-my-life/archive/2012/03/31/2425631.html

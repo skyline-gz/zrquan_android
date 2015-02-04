@@ -23,22 +23,26 @@ public class EmojiAdapter extends BaseAdapter {
         this.labels = this.mContext.getResources().getStringArray(R.array.emoji_labels);
     }
 
+    @Override
     public int getCount() {
         if (this.labels != null)
             return this.labels.length;
         return 0;
     }
 
+    @Override
     public Object getItem(int paramInt) {
         if (paramInt < this.labels.length)
             return this.labels[paramInt];
         return null;
     }
 
+    @Override
     public long getItemId(int paramInt) {
         return 0L;
     }
 
+    @Override
     public View getView(int paramInt, View paramView, ViewGroup paramViewGroup) {
         ImageView imageView = (ImageView) paramView;
         if (imageView == null) {
@@ -48,6 +52,17 @@ public class EmojiAdapter extends BaseAdapter {
         }
         BitmapUtils.setImageResource(imageView, R.drawable.zemoji_e001 + paramInt);
         return imageView;
+    }
+
+    public int getLabelIndex(String text) {
+       int index = 0;
+       for (String label : labels) {
+           if(text.equals(label)) {
+               return index;
+           }
+           index ++;
+       }
+       return -1;
     }
 
 }
