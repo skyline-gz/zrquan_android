@@ -1,6 +1,7 @@
 package com.zrquan.mobile.ui;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.view.Gravity;
@@ -125,6 +126,9 @@ public class MainActivity extends CommonFragmentActivity {
         vDiscussBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Intent myIntent = new Intent(MainActivity.this, PublishActivity.class);
+                MainActivity.this.startActivity(myIntent);
+                MainActivity.this.overridePendingTransition(R.anim.dow2up_enter, R.anim.dow2up_enter);
                 Toast.makeText(context, "点击了讨论按钮", Toast.LENGTH_LONG).show();
             }
         });

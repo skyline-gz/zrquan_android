@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    android:orientation="vertical"
+    android:background="#fff6f6f6"
+    android:layout_width="fill_parent"
+    android:layout_height="230.0dip"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <GridView
+        android:gravity="center"
+        android:id="@+id/emoji_grid"
+        android:paddingTop="8.0dip"
+        android:paddingBottom="8.0dip"
+        android:layout_width="fill_parent"
+        android:layout_height="0.0dip"
+        android:listSelector="@null"
+        android:verticalSpacing="12.0dip"
+        android:stretchMode="columnWidth"
+        android:numColumns="7"
+        android:layout_weight="1.0"
+        android:fadeScrollbars="false" />
+
+    <LinearLayout
+        android:gravity="right"
+        android:orientation="horizontal"
+        android:paddingTop="5.0dip"
+        android:paddingRight="10.0dip"
+        android:paddingBottom="10.0dip"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content">
+
+        <View
+            android:textSize="16sp"
+            android:textColor="@android:color/white"
+            android:layout_gravity="center_vertical"
+            android:id="@+id/emoji_del_btn"
+            android:background="@drawable/emoji_del"
+            android:layout_width="27.0dip"
+            android:layout_height="23.0dip"
+            android:layout_marginRight="40.0dip" />
+
+        <Button
+            android:enabled="false"
+            android:textSize="15sp"
+            android:textColor="@color/font_enable_disable_btn"
+            android:id="@+id/emoji_send_btn"
+            android:background="@drawable/bg_enable_disable_btn"
+            android:layout_width="78.0dip"
+            android:layout_height="30.0dip"
+            android:text="发送" />
+    </LinearLayout>
+</LinearLayout>

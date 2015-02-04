@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--<com.taou.maimai.common.CheckKeyboardFrameLayout＞-->
+<FrameLayout
+    android:id="@+id/common_publish_check_keyboard"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:id="@+id/layout_root"
+        android:background="@android:color/white"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent">
+
+        <!--<include layout="@layout/activity_menu_bar" />-->
+        <include layout="@layout/visitor_titlebar" />
+
+        <!--<com.taou.maimai.common.EditText></com.taou.maimai.common.EditText>-->
+        <EditText
+            android:gravity="center|left|top"
+            android:id="@+id/common_publish_content_txt"
+            android:background="@android:color/transparent"
+            android:paddingLeft="15dip"
+            android:paddingTop="15dip"
+            android:paddingRight="10.0dip"
+            android:layout_width="fill_parent"
+            android:layout_height="0.0dip"
+            android:layout_weight="1.0"
+            android:inputType="textMultiLine" />
+
+        <RelativeLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:textSize="14dip"
+                android:textColor="#ffc22123"
+                android:gravity="center"
+                android:id="@+id/publish_feed_content_count_tips"
+                android:visibility="gone"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="18.0dip"
+                android:text="字数超限,可能呈现为图片"
+                android:layout_centerVertical="true" />
+
+            <LinearLayout
+                android:orientation="horizontal"
+                android:id="@+id/common_publish_content_count_layout"
+                android:padding="10.0dip"
+                android:visibility="gone"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true">
+
+                <TextView
+                    android:textSize="14sp"
+                    android:textColor="#ff858585"
+                    android:id="@+id/common_publish_content_count"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="0" />
+
+                <TextView
+                    android:textSize="14sp"
+                    android:textColor="#ff858585"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="/" />
+
+                <TextView
+                    android:textSize="14sp"
+                    android:textColor="#ff858585"
+                    android:id="@+id/common_publish_content_max_count"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="140" />
+            </LinearLayout>
+        </RelativeLayout>
+
+        <ScrollView
+            android:id="@+id/select_img_scrollview"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content">
+
+            <LinearLayout
+                android:orientation="vertical"
+                android:id="@+id/selected_img_wrapper"
+                android:paddingLeft="15.0dip"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10.0dip" />
+        </ScrollView>
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:id="@+id/common_publish_status_layout"
+            android:padding="10.0dip"
+            android:visibility="gone"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content" />
+
+        <include layout="@layout/common_border" />
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:id="@+id/common_publish_tool_bar"
+            android:background="#fff6f6f6"
+            android:padding="10.0dip"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:layout_gravity="center|right|top"
+                android:id="@+id/common_publish_pick_picture_btn"
+                android:layout_width="35.0dip"
+                android:layout_height="35.0dip"
+                android:src="@drawable/topic_p" />
+
+            <Button
+                android:textColor="@android:color/white"
+                android:layout_gravity="center_vertical"
+                android:id="@+id/common_publish_emoji_btn"
+                android:background="@drawable/topic_e"
+                android:layout_width="35.0dip"
+                android:layout_height="35.0dip"
+                android:layout_marginLeft="16.0dip" />
+
+            <Button
+                android:textColor="@android:color/white"
+                android:layout_gravity="center_vertical"
+                android:id="@+id/common_publish_topic_btn"
+                android:background="@drawable/at_btn_bg"
+                android:layout_width="35.0dip"
+                android:layout_height="35.0dip"
+                android:layout_marginLeft="12.0dip" />
+
+            <View
+                android:layout_width="0.0dip"
+                android:layout_height="fill_parent"
+                android:layout_weight="1.0" />
+
+            <Button
+                android:textSize="12sp"
+                android:textColor="#ff858585"
+                android:layout_gravity="center_vertical"
+                android:id="@+id/common_publish_anonymous_btn"
+                android:background="@drawable/anonymous_pub_btn_bg_true"
+                android:layout_width="69.0dip"
+                android:layout_height="30.0dip"
+                android:layout_marginLeft="10.0dip" />
+        </LinearLayout>
+
+        <include
+            android:id="@+id/common_publish_emoji_panel"
+            layout="@layout/emoji_panel" />
+    </LinearLayout>
+</FrameLayout>
