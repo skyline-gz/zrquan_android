@@ -129,6 +129,7 @@ public class MainActivity extends CommonFragmentActivity {
                 Intent myIntent = new Intent(MainActivity.this, PublishActivity.class);
                 MainActivity.this.startActivity(myIntent);
                 MainActivity.this.overridePendingTransition(R.anim.dow2up_enter, R.anim.dow2up_enter);
+                dismissPopupAndRestoreTab();
                 Toast.makeText(context, "点击了讨论按钮", Toast.LENGTH_LONG).show();
             }
         });
@@ -137,6 +138,7 @@ public class MainActivity extends CommonFragmentActivity {
         vQuestionBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                dismissPopupAndRestoreTab();
                 Toast.makeText(context, "点击了问答按钮", Toast.LENGTH_LONG).show();
             }
         });
