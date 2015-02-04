@@ -88,9 +88,13 @@ public class EmojiPanelViewHolder {
                     if (iconIndex != -1) {
                         int startIndex = matcher.start();
                         int endIndex = startIndex + matchedText.length();
-                        text.setSpan(new EmojiconSpan(context, R.drawable.zemoji_e001 + iconIndex,
-                                (int) EmojiPanelViewHolder.this.editText.getTextSize() - 1), startIndex, endIndex
-                                , Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+
+                        Object spansExit[] = text.getSpans(startIndex, endIndex, EmojiconSpan.class);
+                        if(spansExit.length == 0) {
+                            text.setSpan(new EmojiconSpan(context, R.drawable.zemoji_e001 + iconIndex,
+                                    (int) EmojiPanelViewHolder.this.editText.getTextSize() - 1), startIndex, endIndex
+                                    , Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+                        }
                     }
                 }
             }
