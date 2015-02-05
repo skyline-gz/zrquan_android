@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
 
+import com.viewpagerindicator.CirclePageIndicator;
 import com.zrquan.mobile.R;
 import com.zrquan.mobile.widget.gallery.GalleryViewPager;
 import com.zrquan.mobile.widget.gallery.TileBitmapDrawable;
@@ -27,6 +28,9 @@ public class GalleryViewPagerSampleActivity extends FragmentActivity {
 		final GalleryViewPager gallery = (GalleryViewPager) findViewById(R.id.gallery_view_pager_sample_gallery);
 		gallery.setAdapter(new GalleryAdapter());
 		gallery.setOffscreenPageLimit(1);
+
+        CirclePageIndicator indicatorGallery = (CirclePageIndicator) findViewById(R.id.indicator_gallery);
+        indicatorGallery.setViewPager(gallery);
 	}
 	
 	private final class GalleryAdapter extends FragmentStatePagerAdapter {

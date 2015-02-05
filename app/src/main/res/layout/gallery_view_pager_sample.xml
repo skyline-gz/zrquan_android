@@ -1,7 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.zrquan.mobile.widget.gallery.GalleryViewPager xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/gallery_view_pager_sample_gallery"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:background="@color/black"/>
+    android:layout_height="match_parent">
+
+    <com.zrquan.mobile.widget.gallery.GalleryViewPager
+        android:id="@+id/gallery_view_pager_sample_gallery"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/black"
+        android:orientation="vertical" />
+
+    <com.viewpagerindicator.CirclePageIndicator
+        android:id="@+id/indicator_gallery"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/gallery_view_pager_sample_gallery"
+        android:layout_centerHorizontal="true"
+        android:padding="30dp" />
+
+</RelativeLayout>
