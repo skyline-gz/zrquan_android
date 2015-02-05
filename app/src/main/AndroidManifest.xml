@@ -14,7 +14,7 @@
         android:theme="@style/AppTheme">
         <activity
             android:name=".ui.SplashActivity"
-            android:label="首页"
+            android:label="@string/app_name"
             android:theme="@style/StartUpTheme"
             android:windowSoftInputMode="adjustResize">
             <intent-filter>
