@@ -92,7 +92,7 @@ public class EmojiPanelViewHolder {
                         Object spansExit[] = text.getSpans(startIndex, endIndex, EmojiconSpan.class);
                         if(spansExit.length == 0) {
                             text.setSpan(new EmojiconSpan(context, R.drawable.zemoji_e001 + iconIndex,
-                                    (int) EmojiPanelViewHolder.this.editText.getTextSize() - 1), startIndex, endIndex
+                                    (int) ScreenUtils.dpToPx(context, 22f)), startIndex, endIndex
                                     , Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
                         }
                     }
@@ -106,9 +106,6 @@ public class EmojiPanelViewHolder {
         });
 
         editText.setText("测试文字1测试文字2测试文字3测试文字4测试文字5测试文字6测试文字7测试文字8测试文字9测试文字10测试文字11");
-        Spannable text = editText.getText();
-        text.setSpan(new EmojiconSpan(context, R.drawable.zemoji_e001, (int) editText.getTextSize() - 1), 10, 15
-                , Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
     }
 
     @OnClick(R.id.emoji_del_btn)
