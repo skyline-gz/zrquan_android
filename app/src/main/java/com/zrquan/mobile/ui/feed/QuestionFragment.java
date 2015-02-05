@@ -1,6 +1,7 @@
 package com.zrquan.mobile.ui.feed;
 
 import android.app.Dialog;
+import android.content.Intent;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.view.Gravity;
@@ -13,7 +14,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.zrquan.mobile.R;
+import com.zrquan.mobile.ui.authentic.UserRegisterSetPasswordActivity;
 import com.zrquan.mobile.ui.common.CommonFragment;
+import com.zrquan.mobile.ui.demo.GalleryViewPagerSampleActivity;
 import com.zrquan.mobile.widget.switchbutton.SwitchButton;
 
 //问答 动态
@@ -66,6 +69,16 @@ public class QuestionFragment extends CommonFragment {
                 @Override
                 public void onClick(View v) {
                     createDialog(R.layout.dialog_select_gender);
+                }
+            });
+
+            TextView tv_test_image_gallery = (TextView) rootView.findViewById(R.id.tv_test_image_gallery);
+            tv_test_image_gallery.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(QuestionFragment.this.getActivity(), GalleryViewPagerSampleActivity.class);
+                    startActivity(intent);
+                    QuestionFragment.this.getActivity().overridePendingTransition(R.anim.right2left_enter, R.anim.right2left_exit);
                 }
             });
         } else {
