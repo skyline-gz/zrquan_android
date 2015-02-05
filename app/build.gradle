@@ -40,7 +40,7 @@ dependencies {
     // Gson is a Java library that can be used to convert Java Objects into their JSON representation.
     // It can also be used to convert a JSON string to an equivalent Java object.
     compile 'com.google.code.gson:gson:2.3.1'
-    //google Guava project contains several of Google's core libraries that we rely on in our
+    // google Guava project contains several of Google's core libraries that we rely on in our
     // Java-based projects: collections, caching, primitives support, concurrency libraries,
     // common annotations, string processing, I/O, and so forth.
     compile 'com.google.guava:guava:18.0'
@@ -52,12 +52,14 @@ dependencies {
     // Android optimized event bus that simplifies communication between Activities,
     // Fragments, Threads, Services, etc. Less code, better quality.
     compile 'de.greenrobot:eventbus:2.4.0'
-    //Object Relational Mapping Lite (ORM Lite) provides some simple, lightweight functionality for
+    // Object Relational Mapping Lite (ORM Lite) provides some simple, lightweight functionality for
     // persisting Java objects to SQL databases while avoiding the complexity
     // and overhead of more standard ORM packages.
     compile 'com.j256.ormlite:ormlite-android:4.48'
-    //View "injection" library for Android which uses annotation processing to generate boilerplate code for you.
+    // View "injection" library for Android which uses annotation processing to generate boilerplate code for you.
     compile 'com.jakewharton:butterknife:6.0.0'
+    // Views and Drawable for animated GIFs in Android.
+    compile 'pl.droidsonroids.gif:android-gif-drawable:1.1.+'
     // viewpagerindicator 换页指示器
     compile(name: 'viewpagerindicator-2.4.1', ext: 'aar')
 }
