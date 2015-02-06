@@ -1,6 +1,6 @@
 package com.zrquan.mobile.event;
 
-import com.zrquan.mobile.modal.Account;
+import com.zrquan.mobile.model.Account;
 import com.zrquan.mobile.support.db.DatabaseHelper;
 
 public class StartUpEvent {

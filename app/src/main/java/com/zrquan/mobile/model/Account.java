@@ -1,4 +1,4 @@
-package com.zrquan.mobile.modal;
+package com.zrquan.mobile.model;
 
 import android.text.TextUtils;
 

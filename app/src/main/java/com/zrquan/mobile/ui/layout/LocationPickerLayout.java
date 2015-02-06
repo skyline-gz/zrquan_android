@@ -7,8 +7,8 @@ import android.widget.LinearLayout;
 
 import com.j256.ormlite.dao.Dao;
 import com.zrquan.mobile.ZrquanApplication;
-import com.zrquan.mobile.modal.Location;
-import com.zrquan.mobile.modal.Region;
+import com.zrquan.mobile.model.Location;
+import com.zrquan.mobile.model.Region;
 import com.zrquan.mobile.support.util.LogUtils;
 import com.zrquan.mobile.widget.picker.ScrollerNumberPicker;
 import com.zrquan.mobile.R;

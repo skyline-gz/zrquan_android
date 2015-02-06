@@ -21,6 +21,7 @@ import android.widget.Toast;
 import com.zrquan.mobile.R;
 import com.viewpagerindicator.CirclePageIndicator;
 
+import com.zrquan.mobile.controller.FeedController;
 import com.zrquan.mobile.ui.common.CommonFragment;
 import com.zrquan.mobile.widget.pulltorefresh.PullToRefreshBase;
 import com.zrquan.mobile.widget.pulltorefresh.PullToRefreshListView;
@@ -198,6 +199,7 @@ public class DiscussionFragment extends CommonFragment {
             // Simulates a background job.
             try {
                 Thread.sleep(3000);
+                FeedController.getDiscussionFeed("1", "2");
             } catch (InterruptedException e) {
             }
             return mStrings;

@@ -6,7 +6,7 @@ import com.zrquan.mobile.controller.AccountController;
 import com.zrquan.mobile.dao.AccountDao;
 import com.zrquan.mobile.event.StartUpEvent;
 import com.zrquan.mobile.event.VerifyAccountEvent;
-import com.zrquan.mobile.modal.Account;
+import com.zrquan.mobile.model.Account;
 import com.zrquan.mobile.support.db.DatabaseHelper;
 import com.zrquan.mobile.support.util.LogUtils;
 import com.zrquan.mobile.ui.common.AsyncTask;

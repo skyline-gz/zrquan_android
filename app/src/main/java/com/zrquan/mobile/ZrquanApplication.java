@@ -7,7 +7,7 @@ import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.VolleyLog;
 import com.android.volley.toolbox.Volley;
-import com.zrquan.mobile.modal.Account;
+import com.zrquan.mobile.model.Account;
 import com.zrquan.mobile.support.db.DatabaseHelper;
 
 public class ZrquanApplication extends Application {

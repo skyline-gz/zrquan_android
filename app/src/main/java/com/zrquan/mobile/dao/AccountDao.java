@@ -4,7 +4,7 @@ import android.content.Context;
 import android.text.TextUtils;
 
 import com.google.gson.Gson;
-import com.zrquan.mobile.modal.Account;
+import com.zrquan.mobile.model.Account;
 import com.zrquan.mobile.support.util.PreferencesUtils;
 
 public class AccountDao {
