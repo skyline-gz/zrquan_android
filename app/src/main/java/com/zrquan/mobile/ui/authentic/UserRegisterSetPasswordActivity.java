@@ -1,13 +1,15 @@
 package com.zrquan.mobile.ui.authentic;
 
 import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -22,6 +24,7 @@ import java.util.regex.Matcher;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
+import butterknife.OnCheckedChanged;
 import butterknife.OnClick;
 import butterknife.OnTextChanged;
 import de.greenrobot.event.EventBus;
@@ -40,14 +43,24 @@ public class UserRegisterSetPasswordActivity extends CommonActivity {
     TextView tvBackBtn;
     @InjectView(R.id.tv_content)
     TextView tvContent;
-    @InjectView(R.id.et_password)
-    EditText etPassword;
     @InjectView(R.id.et_verify_code)
     EditText etVerifyCode;
     @InjectView(R.id.btn_resend_verify_code)
     Button btnResendVerifyCode;
+    @InjectView(R.id.et_password)
+    EditText etPassword;
     @InjectView(R.id.regist_password_clear_btn)
     ImageView ivClearPasswordBtn;
+    @InjectView(R.id.rg_register_type)
+    RadioGroup rgRegisterType;
+    @InjectView(R.id.rb_worker)
+    RadioButton cbWorker;
+    @InjectView(R.id.rb_student)
+    RadioButton cbStudent;
+    @InjectView(R.id.ll_industry)
+    LinearLayout llIndustry;
+    @InjectView(R.id.ll_school)
+    LinearLayout llSchool;
     @InjectView(R.id.tv_tips)
     TextView tvInputTips;
 
@@ -71,6 +84,19 @@ public class UserRegisterSetPasswordActivity extends CommonActivity {
                 mResendVerifyCounterHandler.postDelayed(this, 1000);
             }
         };
+
+        rgRegisterType.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup group, int checkedId) {
+                if(checkedId == R.id.rb_worker) {
+                    llIndustry.setVisibility(View.VISIBLE);
+                    llSchool.setVisibility(View.GONE);
+                } else {
+                    llSchool.setVisibility(View.VISIBLE);
+                    llIndustry.setVisibility(View.GONE);
+                }
+            }
+        });
     }
 
     @Override
@@ -102,7 +128,7 @@ public class UserRegisterSetPasswordActivity extends CommonActivity {
     @OnClick(R.id.btn_resend_verify_code)
     public void onResendVerifyCodeClick(View view) {
         disableResendVerifyCode();
-        Toast.makeText(this, "我又发了一次验证码", Toast.LENGTH_LONG).show();
+        Toast.makeText(this, "又发送了验证码", Toast.LENGTH_LONG).show();
         mResendVerifyCounterHandler.postDelayed(mResendVerifyCounterTask, 1000);
         AccountController.sendVerifyCode(mPhoneNum);
     }

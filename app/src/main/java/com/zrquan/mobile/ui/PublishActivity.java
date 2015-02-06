@@ -40,6 +40,12 @@ public class PublishActivity extends CommonActivity{
         });
     }
 
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        overridePendingTransition(R.anim.up2down_enter, R.anim.up2down_exit);
+    }
+
     @OnClick(R.id.common_publish_emoji_btn)
     public void onBtnCommonPublishEmojiClick(View v) {
         emojiPanelViewHolder.show();
