@@ -7,6 +7,7 @@ import android.os.Handler;
 import com.zrquan.mobile.R;
 import com.zrquan.mobile.ZrquanApplication;
 import com.zrquan.mobile.event.StartUpEvent;
+import com.zrquan.mobile.event.VerifyAccountEvent;
 import com.zrquan.mobile.task.StartUpTask;
 import com.zrquan.mobile.ui.common.CommonActivity;
 
@@ -20,6 +21,8 @@ public class SplashActivity extends CommonActivity {
     private boolean bReadyWaiting = false;
     //标记是否StartUpTask已经完成
     private boolean bReadyBgTask = false;
+    //标记是否完成用户校验
+    private boolean bReadyVerifyAccount = false;
 
     /** Called when the activity is first created. */
     @Override
@@ -51,16 +54,29 @@ public class SplashActivity extends CommonActivity {
         super.onStop();
     }
 
+    //初始化数据库以及从SharedPreferences读取用户账户的完成后的处理
     public void onEvent(StartUpEvent startUpEvent) {
-        bReadyBgTask = true;
         ZrquanApplication.getInstance().setDatabaseHelper(startUpEvent.databaseHelper);
+        ZrquanApplication.getInstance().setAccount(startUpEvent.account);
+        bReadyBgTask = true;
+        checkAndstartMainActivity();
+    }
+
+    //从服务器校验用户完成后的处理
+    public void onEvent(VerifyAccountEvent verifyAccountEvent) {
+        if(verifyAccountEvent.code == VerifyAccountEvent.S_OK) {
+            ZrquanApplication.getInstance().getAccount().setVerified(true);
+        } else {
+            ZrquanApplication.getInstance().getAccount().setVerified(false);
+        }
+        bReadyVerifyAccount = true;
         checkAndstartMainActivity();
     }
 
     private void checkAndstartMainActivity() {
         synchronized (this) {
-            //只有两种任务均完成才跳转到主页面
-            if(bReadyBgTask && bReadyWaiting) {
+            //只有几个初始化任务均完成才跳转到主页面
+            if(bReadyBgTask && bReadyWaiting && bReadyVerifyAccount) {
                 Intent mainIntent = new Intent(SplashActivity.this, MainActivity.class);
                 SplashActivity.this.startActivity(mainIntent);
                 SplashActivity.this.finish();

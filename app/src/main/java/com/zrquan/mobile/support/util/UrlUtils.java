@@ -18,6 +18,10 @@ public class UrlUtils {
 
     private static final String TAG = "NetUtils";
 
+    public static String getUrl(String url) {
+        return HOST_HTTP + PATHS_SEPARATOR + (StringUtils.isEmpty(url) ? "" : url);
+    }
+
     /**
      * join url and params
      *

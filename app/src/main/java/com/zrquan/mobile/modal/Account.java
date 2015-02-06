@@ -1,16 +1,13 @@
 package com.zrquan.mobile.modal;
 
-import android.os.Parcel;
-import android.os.Parcelable;
+import android.text.TextUtils;
 
-public class Account implements Parcelable {
+public class Account{
 
+    private String phoneNum;
     private String accessToken;
-    private int navigationPosition;
 
-    public boolean isLogin() {
-        return true;
-    }
+    private Boolean verified;
 
     public String getAccessToken() {
         return accessToken;
@@ -20,31 +17,23 @@ public class Account implements Parcelable {
         this.accessToken = accessToken;
     }
 
-    @Override
-    public int describeContents() {
-        return 0;
+    public String getPhoneNum() {
+        return phoneNum;
     }
 
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        dest.writeString(accessToken);
-        dest.writeInt(navigationPosition);
+    public void setPhoneNum(String phoneNum) {
+        this.phoneNum = phoneNum;
     }
 
-    public static final Creator<Account> CREATOR =
-            new Creator<Account>() {
-                public Account createFromParcel(Parcel in) {
-                    Account account = new Account();
-                    account.accessToken = in.readString();
-                    account.navigationPosition = in.readInt();
+    public void setVerified(Boolean verified) {
+        this.verified = verified;
+    }
 
-                    boolean[] booleans = new boolean[1];
-                    in.readBooleanArray(booleans);
-                    return account;
-                }
+    public boolean isValid() {
+        return !TextUtils.isEmpty(this.accessToken) && !TextUtils.isEmpty(this.phoneNum);
+    }
 
-                public Account[] newArray(int size) {
-                    return new Account[size];
-                }
-            };
+    public boolean isLogin() {
+        return isValid() && verified;
+    }
 }
