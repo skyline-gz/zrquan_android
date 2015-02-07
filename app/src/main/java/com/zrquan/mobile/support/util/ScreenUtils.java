@@ -2,8 +2,12 @@ package com.zrquan.mobile.support.util;
 
 import android.app.Activity;
 import android.content.Context;
+import android.graphics.Point;
 import android.graphics.Rect;
+import android.os.Build;
+import android.view.Display;
 import android.view.View;
+import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 
 /**
@@ -42,6 +46,12 @@ public class ScreenUtils {
         return (int)(pxToDp(context, px) + 0.5f);
     }
 
+    /**
+     * 返回View的四条边的相对位置
+     *
+     * @param v
+     * @return
+     */
     public static Rect locateView(View v) {
         int[] loc_int = new int[2];
         if (v == null) return null;
@@ -59,6 +69,28 @@ public class ScreenUtils {
         location.right = location.left + v.getWidth();
         location.bottom = location.top + v.getHeight();
         return location;
+    }
+
+    //see http://stackoverflow.com/questions/1016896/get-screen-dimensions-in-pixels
+
+    /**
+     * 获得屏幕长宽
+     *
+     * @param context
+     * @return
+     */
+    public static Point getScreenSize(Context context) {
+        WindowManager wm = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
+        Display display = wm.getDefaultDisplay();
+        Point size = new Point();
+
+        if (Build.VERSION.SDK_INT > Build.VERSION_CODES.HONEYCOMB_MR2) {
+            display.getSize(size);
+        } else {
+            size.x = display.getWidth();
+            size.y = display.getHeight();
+        }
+        return size;
     }
 
     /**
