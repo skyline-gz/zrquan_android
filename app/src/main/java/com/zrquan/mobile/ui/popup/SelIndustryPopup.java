@@ -1,9 +1,11 @@
 package com.zrquan.mobile.ui.popup;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.PopupWindow;
 
@@ -12,6 +14,8 @@ import com.zrquan.mobile.R;
 import com.zrquan.mobile.ZrquanApplication;
 import com.zrquan.mobile.model.Industry;
 import com.zrquan.mobile.support.util.LogUtils;
+import com.zrquan.mobile.support.util.ViewUtils;
+import com.zrquan.mobile.ui.adapter.ChildIndustryAdapter;
 import com.zrquan.mobile.ui.adapter.ParentIndustryAdapter;
 
 import java.sql.SQLException;
@@ -22,7 +26,9 @@ import butterknife.InjectView;
 
 public class SelIndustryPopup extends PopupWindow {
     private Context context;
-    private List<Industry> industryList;
+    private List<Industry> mParentIndustryList;
+    private Dao<Industry, Integer> mIndustryDao;
+
     @InjectView(R.id.lv_picker_left)
     ListView lvPickerLeft;
     @InjectView(R.id.lv_picker_right)
@@ -34,24 +40,43 @@ public class SelIndustryPopup extends PopupWindow {
         init();
 
         try {
-                // get our dao
-            Dao<Industry, Integer> industryDao = ZrquanApplication.getInstance()
+            mIndustryDao = ZrquanApplication.getInstance()
                     .getDatabaseHelper().getDao(Industry.class);
-            // query for all of the data objects in the database
-//            industryList = industryDao.queryForAll();
 
-            List<Industry> parentIndustryList = industryDao.query(industryDao.queryBuilder().where()
+            mParentIndustryList = mIndustryDao.query(mIndustryDao.queryBuilder().where()
                     .isNull(Industry.PARENT_INDUSTRY_ID_FIELD_NAME)
                     .prepare());
 
-//            List<Industry> parentIndustryList = industryDao.queryForAll();
-
-
-            ParentIndustryAdapter parentIndustryAdapter = new ParentIndustryAdapter(context, parentIndustryList);
+            ParentIndustryAdapter parentIndustryAdapter = new ParentIndustryAdapter(context, mParentIndustryList);
             lvPickerLeft.setAdapter(parentIndustryAdapter);
+            ((ParentIndustryAdapter) lvPickerLeft.getAdapter()).setCurrentPosition(0);
             parentIndustryAdapter.notifyDataSetChanged();
+
+            //默认选取第一个
+            initChildIndustry(mParentIndustryList.get(0).getId());
+
+            lvPickerLeft.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                @Override
+                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                    initChildIndustry(mParentIndustryList.get(position).getId());
+                    ((ParentIndustryAdapter) lvPickerLeft.getAdapter()).setCurrentPosition(position);
+                    ((ParentIndustryAdapter) lvPickerLeft.getAdapter()).notifyDataSetChanged();
+                }
+            });
         } catch (SQLException e) {
-            LogUtils.d("Load Industry from db crash..", e);
+            LogUtils.d("Load parent industries from db crash..", e);
+        }
+    }
+
+    private void initChildIndustry(int parentIndustryId) {
+        try {
+            List<Industry> childIndustryList = mIndustryDao.query(mIndustryDao.queryBuilder().where()
+                    .eq(Industry.PARENT_INDUSTRY_ID_FIELD_NAME, parentIndustryId).prepare());
+            ChildIndustryAdapter childIndustryAdapter = new ChildIndustryAdapter(context, childIndustryList);
+            lvPickerRight.setAdapter(childIndustryAdapter);
+            childIndustryAdapter.notifyDataSetChanged();
+        } catch (SQLException e) {
+            LogUtils.d("Load child industries from db crash..", e);
         }
     }
 
