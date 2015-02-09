@@ -26,16 +26,17 @@ public class SelIndustryPopup extends PopupWindow {
     private Context context;
     private List<Industry> mParentIndustryList;
     private Dao<Industry, Integer> mIndustryDao;
-    private int currentSelParentIndustryPosition;
-    private int currentSelChildIndustryPosition;
-    private int currentVisitParentIndustryPosition;
+    private int currentSelParentIndustryPosition = -1;
+    private int currentSelChildIndustryPosition = -1;
+    private int currentVisitParentIndustryPosition = -1;
+    private OnSelectIndustry mOnSelectIndustry;
 
     @InjectView(R.id.lv_picker_left)
     ListView lvPickerLeft;
     @InjectView(R.id.lv_picker_right)
     ListView lvPickerRight;
 
-    public SelIndustryPopup (Context context, int width, int height) {
+    public SelIndustryPopup (Context context, int width, int height, int lastIndustryId) {
         super(width, height);
         this.context = context;
         init();
@@ -50,11 +51,19 @@ public class SelIndustryPopup extends PopupWindow {
 
             ParentIndustryAdapter parentIndustryAdapter = new ParentIndustryAdapter(context, mParentIndustryList);
             lvPickerLeft.setAdapter(parentIndustryAdapter);
-            ((ParentIndustryAdapter) lvPickerLeft.getAdapter()).setCurrentPosition(0);
-            parentIndustryAdapter.notifyDataSetChanged();
 
-            //默认选取第一个
-            initChildIndustry(0);
+            //暂时打开时默认显示计算机类别（不勾选任何industry）
+            //Todo:根据传入的lastIndustryId,初始化currentSelParentIndustryPosition和currentSelChildIndustryPosition
+            int initPosition = 0;
+//            if(lastIndustryId != -1) {
+//                Industry mLastIndustry = mIndustryDao.query(mIndustryDao.queryBuilder().where()
+//                        .eq(Industry.ID_FIELD_NAME, lastIndustryId).prepare()).get(0);
+//            }
+
+            ((ParentIndustryAdapter) lvPickerLeft.getAdapter()).setCurrentPosition(initPosition);
+            parentIndustryAdapter.notifyDataSetChanged();
+            initChildIndustry(initPosition);
+
 
             lvPickerLeft.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 @Override
@@ -74,11 +83,23 @@ public class SelIndustryPopup extends PopupWindow {
                     currentSelChildIndustryPosition = position;
                     ((ChildIndustryAdapter) lvPickerRight.getAdapter()).setCurrentPosition(position);
                     ((ChildIndustryAdapter) lvPickerRight.getAdapter()).notifyDataSetChanged();
+
+                    if(mOnSelectIndustry != null) {
+                        Industry parentIndustry =(Industry) lvPickerLeft.getAdapter().getItem(currentSelParentIndustryPosition);
+                        Industry childIndustry = (Industry) lvPickerRight.getAdapter().getItem(currentSelChildIndustryPosition);
+                        String displayText = parentIndustry.getName() + '/' + childIndustry.getName();
+                        mOnSelectIndustry.OnSelectIndustry(displayText, childIndustry.getId());
+                    }
+                    dismiss();
                 }
             });
         } catch (SQLException e) {
             LogUtils.d("Load parent industries from db crash..", e);
         }
+    }
+
+    public void setOnSelectIndustry(OnSelectIndustry onSelectIndustry) {
+        this.mOnSelectIndustry = onSelectIndustry;
     }
 
     private void initChildIndustry(int position) {
@@ -118,5 +139,9 @@ public class SelIndustryPopup extends PopupWindow {
         });
 
         ButterKnife.inject(this, popupView);
+    }
+
+    public static interface OnSelectIndustry {
+        public void OnSelectIndustry(String displayText, int childIndustryId);
     }
 }

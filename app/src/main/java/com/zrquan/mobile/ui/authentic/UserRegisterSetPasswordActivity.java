@@ -42,6 +42,7 @@ public class UserRegisterSetPasswordActivity extends CommonActivity {
     private int mResendVerifyCounter = 60;
     private String mPhoneNum;
     private SelIndustryPopup mSelIndustryPopup;
+    private int mSelectedIndustryId = -1;
 
     @InjectView(R.id.titleText)
     TextView tvTitle;
@@ -67,6 +68,8 @@ public class UserRegisterSetPasswordActivity extends CommonActivity {
     RadioButton cbStudent;
     @InjectView(R.id.ll_industry)
     LinearLayout llIndustry;
+    @InjectView(R.id.tv_industry)
+    TextView tvIndustry;
     @InjectView(R.id.ll_school)
     LinearLayout llSchool;
     @InjectView(R.id.tv_tips)
@@ -166,7 +169,14 @@ public class UserRegisterSetPasswordActivity extends CommonActivity {
         if (mSelIndustryPopup == null) {
             Point screenSize = ScreenUtils.getScreenSize(context);
             int popUpHeight = screenSize.y - location.top;
-            mSelIndustryPopup = new SelIndustryPopup(context, WindowManager.LayoutParams.MATCH_PARENT, popUpHeight);
+            mSelIndustryPopup = new SelIndustryPopup(context, WindowManager.LayoutParams.MATCH_PARENT, popUpHeight, mSelectedIndustryId);
+            mSelIndustryPopup.setOnSelectIndustry(new SelIndustryPopup.OnSelectIndustry() {
+                @Override
+                public void OnSelectIndustry(String displayText, int childIndustryId) {
+                    tvIndustry.setText(displayText);
+                    mSelectedIndustryId = childIndustryId;
+                }
+            });
         }
         mSelIndustryPopup.showAtLocation(findViewById(android.R.id.content), Gravity.NO_GRAVITY, 0, location.top);
     }
