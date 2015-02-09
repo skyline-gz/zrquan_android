@@ -26,9 +26,9 @@ public class SelIndustryPopup extends PopupWindow {
     private Context context;
     private List<Industry> mParentIndustryList;
     private Dao<Industry, Integer> mIndustryDao;
-    private int currentSelParentIndustryPosition = -1;
-    private int currentSelChildIndustryPosition = -1;
-    private int currentVisitParentIndustryPosition = -1;
+    private int currentSelParentIndustryPosition;
+    private int currentSelChildIndustryPosition;
+    private int currentVisitParentIndustryPosition;
     private OnSelectIndustry mOnSelectIndustry;
 
     @InjectView(R.id.lv_picker_left)

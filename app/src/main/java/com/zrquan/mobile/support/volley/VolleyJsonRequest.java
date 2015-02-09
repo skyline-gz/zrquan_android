@@ -7,6 +7,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 
+import com.android.volley.toolbox.RequestFuture;
 import com.zrquan.mobile.ZrquanApplication;
 import com.zrquan.mobile.support.util.LogUtils;
 
@@ -46,7 +47,7 @@ public class VolleyJsonRequest {
     }
 
     public static void request(String url, final Map<String, String> extHeaders, JSONObject params, final ResponseHandler responseHandler) {
-        JsonObjectRequest req = new JsonObjectRequest(url, params,
+        request(url, extHeaders, params,
                 new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
@@ -63,7 +64,12 @@ public class VolleyJsonRequest {
                         responseHandler.onErrorResponse(error);
                         LogUtils.d(Tag, "Volley Response Error:", error);
                     }
-                }) {
+                });
+    }
+
+    public static void request(String url, final Map<String, String> extHeaders, JSONObject params
+            ,  Response.Listener<JSONObject> listener, Response.ErrorListener errorListener) {
+        JsonObjectRequest req = new JsonObjectRequest(url, params, listener, errorListener) {
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
                 HashMap<String, String> headers = new HashMap<String, String>();

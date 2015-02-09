@@ -5,14 +5,22 @@ import android.widget.ArrayAdapter;
 import android.widget.Filter;
 import android.widget.Filterable;
 
+import com.zrquan.mobile.controller.AutoMatchController;
+import com.zrquan.mobile.support.util.LogUtils;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.ArrayList;
 
 public class AutoMatchAdapter extends ArrayAdapter implements Filterable {
-    private ArrayList mData ;
+    private ArrayList<String> mData;
 
+    //http://stackoverflow.com/questions/5023645/how-do-i-use-autocompletetextview-and-populate-it-with-data-from-a-web-api
     public AutoMatchAdapter(Context context, int textViewResourceId) {
         super(context, textViewResourceId);
-        mData = new ArrayList();
+        mData = new ArrayList<>();
     }
 
     @Override
@@ -32,19 +40,18 @@ public class AutoMatchAdapter extends ArrayAdapter implements Filterable {
             protected FilterResults performFiltering(CharSequence constraint) {
                 FilterResults filterResults = new Filter.FilterResults();
                 if(constraint != null) {
-                    // A class that queries a web API, parses the data and returns an ArrayList<Style>
-//                    StyleFetcher fetcher = new StyleFetcher();
-//                    try {
-//                        mData = fetcher.retrieveResults(constraint.toString());
-//                    }
-//                    catch(Exception e) {
-//                        LogUtils.d("myException", e.getMessage());
-//                    }
-                    // Now assign the values and count to the FilterResults object
-                    mData = new ArrayList();
-                    mData.add("你好");
-                    mData.add("我们");
-                    mData.add("他们");
+                    mData.clear();
+                    JSONObject response = AutoMatchController.match("School", constraint.toString());
+                    try {
+                        LogUtils.d("Response:" + response.toString(4));
+                        JSONArray matches = response.getJSONArray("matches");
+                        for(int i=0; i< matches.length(); i++) {
+                            JSONObject matchObj = matches.getJSONObject(i);
+                            mData.add(matchObj.getString("value"));
+                        }
+                    } catch (JSONException e) {
+                        LogUtils.d("ParseJsonError:", e);
+                    }
                     filterResults.values = mData;
                     filterResults.count = mData.size();
                 }
