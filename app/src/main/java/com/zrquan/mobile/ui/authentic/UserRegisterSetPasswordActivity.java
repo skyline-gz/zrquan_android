@@ -3,7 +3,6 @@ package com.zrquan.mobile.ui.authentic;
 import android.content.Context;
 import android.graphics.Point;
 import android.graphics.Rect;
-import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.Gravity;
@@ -25,6 +24,7 @@ import com.zrquan.mobile.event.AccountEvent;
 import com.zrquan.mobile.support.util.RegUtils;
 import com.zrquan.mobile.support.util.ScreenUtils;
 import com.zrquan.mobile.ui.common.CommonActivity;
+import com.zrquan.mobile.ui.popup.SelIndustryPopup;
 
 import java.util.regex.Matcher;
 
@@ -163,37 +163,19 @@ public class UserRegisterSetPasswordActivity extends CommonActivity {
 
     @OnClick(R.id.tv_industry)
     public void onIndustryLayoutClick(View v) {
-        if (mSelIndustryPopup == null) {
-            initSelIndustryPopup();
-        }
         Rect location = ScreenUtils.locateView(llVerifyCode);
-        mSelIndustryPopup.setAnimationStyle(R.style.ComposePopupAnimation);
+        if (mSelIndustryPopup == null) {
+            Point screenSize = ScreenUtils.getScreenSize(context);
+            int popUpHeight = screenSize.y - location.top;
+            mSelIndustryPopup = new SelIndustryPopup(context, WindowManager.LayoutParams.MATCH_PARENT, popUpHeight);
+        }
         mSelIndustryPopup.showAtLocation(findViewById(android.R.id.content), Gravity.NO_GRAVITY, 0, location.top);
-        mSelIndustryPopup.update();
     }
 
     @Override
     public void onBackPressed() {
         super.onBackPressed();
         doBack();
-    }
-
-    private void initSelIndustryPopup() {
-        View popupView = getLayoutInflater().inflate(R.layout.widget_cascade_list_picker, null);
-        Rect location = ScreenUtils.locateView(llVerifyCode);
-        Point screenSize = ScreenUtils.getScreenSize(context);
-        int popUpHeight = screenSize.y - location.top;
-        mSelIndustryPopup = new PopupWindow(popupView, WindowManager.LayoutParams.MATCH_PARENT, popUpHeight, true);
-        mSelIndustryPopup.setBackgroundDrawable(new BitmapDrawable());
-        mSelIndustryPopup.setTouchable(true);
-        mSelIndustryPopup.setOutsideTouchable(true);
-
-        popupView.findViewById(R.id.list_picker_edge).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                mSelIndustryPopup.dismiss();
-            }
-        });
     }
 
     private boolean checkPassword(String s) {

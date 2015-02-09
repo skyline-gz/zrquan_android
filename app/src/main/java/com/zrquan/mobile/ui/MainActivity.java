@@ -2,7 +2,7 @@ package com.zrquan.mobile.ui;
 
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -218,7 +218,7 @@ public class MainActivity extends CommonFragmentActivity {
                 ,WindowManager.LayoutParams.WRAP_CONTENT);
         mPopupWindow.setFocusable(true);
         mPopupWindow.setClippingEnabled(true);
-        mPopupWindow.setBackgroundDrawable(new BitmapDrawable());
+        mPopupWindow.setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
         mPopupWindow.setOutsideTouchable(true);
         mPopupWindow.update();
         mPopupWindow.setAnimationStyle(R.style.ChoiceDialogAnim);
