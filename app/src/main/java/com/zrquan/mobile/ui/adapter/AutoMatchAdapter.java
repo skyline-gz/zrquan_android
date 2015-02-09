@@ -59,7 +59,7 @@ public class AutoMatchAdapter extends ArrayAdapter implements Filterable {
             }
 
             @Override
-            protected void publishResults(CharSequence contraint, FilterResults results) {
+            protected void publishResults(CharSequence constraint, FilterResults results) {
                 if(results != null && results.count > 0) {
                     notifyDataSetChanged();
                 }
