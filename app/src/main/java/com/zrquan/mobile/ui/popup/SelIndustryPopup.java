@@ -1,7 +1,6 @@
 package com.zrquan.mobile.ui.popup;
 
 import android.content.Context;
-import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,7 +13,6 @@ import com.zrquan.mobile.R;
 import com.zrquan.mobile.ZrquanApplication;
 import com.zrquan.mobile.model.Industry;
 import com.zrquan.mobile.support.util.LogUtils;
-import com.zrquan.mobile.support.util.ViewUtils;
 import com.zrquan.mobile.ui.adapter.ChildIndustryAdapter;
 import com.zrquan.mobile.ui.adapter.ParentIndustryAdapter;
 
@@ -28,6 +26,9 @@ public class SelIndustryPopup extends PopupWindow {
     private Context context;
     private List<Industry> mParentIndustryList;
     private Dao<Industry, Integer> mIndustryDao;
+    private int currentSelParentIndustryPosition;
+    private int currentSelChildIndustryPosition;
+    private int currentVisitParentIndustryPosition;
 
     @InjectView(R.id.lv_picker_left)
     ListView lvPickerLeft;
@@ -53,14 +54,26 @@ public class SelIndustryPopup extends PopupWindow {
             parentIndustryAdapter.notifyDataSetChanged();
 
             //默认选取第一个
-            initChildIndustry(mParentIndustryList.get(0).getId());
+            initChildIndustry(0);
 
             lvPickerLeft.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 @Override
                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                    initChildIndustry(mParentIndustryList.get(position).getId());
+                    currentVisitParentIndustryPosition = position;
+                    initChildIndustry(position);
                     ((ParentIndustryAdapter) lvPickerLeft.getAdapter()).setCurrentPosition(position);
                     ((ParentIndustryAdapter) lvPickerLeft.getAdapter()).notifyDataSetChanged();
+                }
+            });
+
+
+            lvPickerRight.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                @Override
+                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                    currentSelParentIndustryPosition = currentVisitParentIndustryPosition;
+                    currentSelChildIndustryPosition = position;
+                    ((ChildIndustryAdapter) lvPickerRight.getAdapter()).setCurrentPosition(position);
+                    ((ChildIndustryAdapter) lvPickerRight.getAdapter()).notifyDataSetChanged();
                 }
             });
         } catch (SQLException e) {
@@ -68,11 +81,17 @@ public class SelIndustryPopup extends PopupWindow {
         }
     }
 
-    private void initChildIndustry(int parentIndustryId) {
+    private void initChildIndustry(int position) {
         try {
+            int parentIndustryId = mParentIndustryList.get(position).getId();
             List<Industry> childIndustryList = mIndustryDao.query(mIndustryDao.queryBuilder().where()
                     .eq(Industry.PARENT_INDUSTRY_ID_FIELD_NAME, parentIndustryId).prepare());
             ChildIndustryAdapter childIndustryAdapter = new ChildIndustryAdapter(context, childIndustryList);
+            if(currentSelParentIndustryPosition == position) {
+                childIndustryAdapter.setCurrentPosition(currentSelChildIndustryPosition);
+            } else {
+                childIndustryAdapter.setCurrentPosition(-1);
+            }
             lvPickerRight.setAdapter(childIndustryAdapter);
             childIndustryAdapter.notifyDataSetChanged();
         } catch (SQLException e) {

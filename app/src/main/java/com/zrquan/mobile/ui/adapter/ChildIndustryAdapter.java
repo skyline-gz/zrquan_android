@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.zrquan.mobile.R;
@@ -15,6 +16,15 @@ import java.util.List;
 public class ChildIndustryAdapter extends BaseAdapter{
     private Context context;
     private List<Industry> list;
+    private int mCurrentPosition;
+
+    public int getCurrentPosition() {
+        return mCurrentPosition;
+    }
+
+    public void setCurrentPosition(int mCurrentPosition) {
+        this.mCurrentPosition = mCurrentPosition;
+    }
 
     public ChildIndustryAdapter(Context context, List<Industry> list) {
         this.context = context;
@@ -50,11 +60,19 @@ public class ChildIndustryAdapter extends BaseAdapter{
             convertView =  LayoutInflater.from(context).inflate(R.layout.list_picker_level2_item, parent, false);
             tvHolder = new ViewHolder();
             tvHolder.textView = (TextView)convertView.findViewById(R.id.list_picker_level2_item_content);
+            tvHolder.imageView = (ImageView)convertView.findViewById(R.id.list_picker_level2_item_check);
             convertView.setTag(tvHolder);
         }else {
             // 使用缓存的view http://blog.csdn.net/li_wen_qi_/article/details/8539521
             tvHolder = (ViewHolder) convertView.getTag();
         }
+
+        if(position == mCurrentPosition) {
+            tvHolder.imageView.setSelected(true);
+        } else {
+            tvHolder.imageView.setSelected(false);
+        }
+
         Industry industry = this.list.get(position);
         tvHolder.textView.setText(industry.getName());
 
@@ -63,5 +81,6 @@ public class ChildIndustryAdapter extends BaseAdapter{
 
     private class ViewHolder {
         TextView textView;
+        ImageView imageView;
     }
 }
