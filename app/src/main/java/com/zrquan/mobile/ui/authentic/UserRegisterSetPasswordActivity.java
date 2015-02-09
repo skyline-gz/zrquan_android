@@ -12,7 +12,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.PopupWindow;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
@@ -42,7 +41,7 @@ public class UserRegisterSetPasswordActivity extends CommonActivity {
     private Runnable mResendVerifyCounterTask;
     private int mResendVerifyCounter = 60;
     private String mPhoneNum;
-    private PopupWindow mSelIndustryPopup;
+    private SelIndustryPopup mSelIndustryPopup;
 
     @InjectView(R.id.titleText)
     TextView tvTitle;
