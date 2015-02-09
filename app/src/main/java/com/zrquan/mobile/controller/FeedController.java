@@ -1,15 +1,20 @@
 package com.zrquan.mobile.controller;
 
 import com.android.volley.VolleyError;
-import com.zrquan.mobile.event.AccountEvent;
+import com.google.gson.FieldNamingPolicy;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.zrquan.mobile.event.DiscussionEvent;
+import com.zrquan.mobile.model.Discussion;
 import com.zrquan.mobile.support.util.LogUtils;
-import com.zrquan.mobile.support.util.UrlUtils;
 import com.zrquan.mobile.support.volley.VolleyJsonRequest;
 
-import org.json.JSONException;
+import org.json.JSONArray;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import de.greenrobot.event.EventBus;
@@ -21,9 +26,8 @@ public class FeedController {
         Map<String, String> params = new HashMap<>();
         params.put("userId", userId);
         params.put("page", page);
-//        final String url = UrlUtils.getUrlWithParams("users/send_verify_code", params);
         final String url =
-                "http://192.168.1.102:3000/home/hot_posts?userId=" + userId + "&page=" + page;
+                "http://192.168.1.104:3000/home/hot_posts?userId=" + userId + "&page=" + page;
 
         LogUtils.d(url);
         VolleyJsonRequest.get(url, new VolleyJsonRequest.ResponseHandler() {
@@ -32,20 +36,24 @@ public class FeedController {
                 try {
                     LogUtils.d("收到请求的回复了");
                     LogUtils.d("Response:" + response);
-                    System.out.println("Response:" + response);
-//                    JSONObject results = response.getJSONObject("results");
-//                    String verifyCode = results.getString("verify_code");
-//                    LogUtils.d("verify_code", verifyCode);
-//                    EventBus.getDefault().post(new AccountEvent(verifyCode));
+                    JSONArray results = response.getJSONArray("result");
+                    List<Discussion> discussionList = new ArrayList<Discussion>();
+                    Gson gson = new GsonBuilder()
+                            .setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES)
+                            .create();
+                    for (int i = 0; i < results.length(); i ++ ) {
+                        Discussion d = gson.fromJson(results.getJSONObject(i).toString(), Discussion.class);
+                        discussionList.add(d);
+                    }
+                    LogUtils.d("discussion list size:" + discussionList.size());
+                    EventBus.getDefault().post(new DiscussionEvent(discussionList));
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
             }
 
             @Override
-            public void onErrorResponse(VolleyError error) {
-
-            }
+            public void onErrorResponse(VolleyError error) {}
         });
     }
 }

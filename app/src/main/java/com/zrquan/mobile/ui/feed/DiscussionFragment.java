@@ -1,6 +1,7 @@
 package com.zrquan.mobile.ui.feed;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -18,15 +19,30 @@ import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 
+import com.android.volley.VolleyError;
+import com.google.gson.FieldNamingPolicy;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.zrquan.mobile.R;
 import com.viewpagerindicator.CirclePageIndicator;
 
+import com.zrquan.mobile.ZrquanApplication;
 import com.zrquan.mobile.controller.FeedController;
+import com.zrquan.mobile.event.AccountEvent;
+import com.zrquan.mobile.event.DiscussionEvent;
+import com.zrquan.mobile.model.Account;
+import com.zrquan.mobile.model.Discussion;
+import com.zrquan.mobile.support.util.LogUtils;
+import com.zrquan.mobile.support.volley.VolleyJsonRequest;
+import com.zrquan.mobile.ui.authentic.UserRegisterSetPasswordActivity;
 import com.zrquan.mobile.ui.common.CommonFragment;
 import com.zrquan.mobile.widget.pulltorefresh.PullToRefreshBase;
 import com.zrquan.mobile.widget.pulltorefresh.PullToRefreshListView;
 import com.zrquan.mobile.widget.viewpager.AutoScrollViewPager;
 import com.zrquan.mobile.widget.viewpager.ImagePagerAdapter;
+
+import org.json.JSONArray;
+import org.json.JSONObject;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -34,6 +50,8 @@ import java.util.Arrays;
 import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
+
+import de.greenrobot.event.EventBus;
 
 //轻讨论 动态
 public class DiscussionFragment extends CommonFragment {
@@ -59,6 +77,8 @@ public class DiscussionFragment extends CommonFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+
+        EventBus.getDefault().register(this);
 
         if (mPullListView == null) {
             context = getActivity().getApplicationContext();
@@ -106,13 +126,21 @@ public class DiscussionFragment extends CommonFragment {
                 @Override
                 public void onPullDownToRefresh(PullToRefreshBase<ListView> refreshView) {
                     mIsStart = true;
-                    new GetDataTask().execute();
+                    Account account = ZrquanApplication.getInstance().getAccount();
+                    if (account != null && account.getPhoneNum() != null) {
+                        FeedController.getDiscussionFeed("1", "2");
+                    } else {
+                        mAdapter.notifyDataSetChanged();
+                        mPullListView.onPullDownRefreshComplete();
+                    }
+//                    new GetDataTask().execute();
                 }
 
                 @Override
                 public void onPullUpToRefresh(PullToRefreshBase<ListView> refreshView) {
                     mIsStart = false;
-                    new GetDataTask().execute();
+                    FeedController.getDiscussionFeed("1", "2");
+//                    new GetDataTask().execute();
                 }
             });
             setLastUpdateTime();
@@ -192,47 +220,58 @@ public class DiscussionFragment extends CommonFragment {
         return v;
     }
 
-    private class GetDataTask extends AsyncTask<Void, Void, String[]> {
+    public void onEvent(DiscussionEvent event){
+        for (int i = 0; i < event.discussionList.size(); i++) {
+            mListItems.addFirst(event.discussionList.get(i).getContent());
+        }
+        mAdapter.notifyDataSetChanged();
+        mPullListView.onPullDownRefreshComplete();
+        mPullListView.onPullUpRefreshComplete();
+        mPullListView.setHasMoreData(true);
+        setLastUpdateTime();
+    }
+
+    private class GetDataTask extends AsyncTask<Void, Void, Void> {
 
         @Override
-        protected String[] doInBackground(Void... params) {
+        protected Void doInBackground(Void... params) {
             // Simulates a background job.
             try {
                 Thread.sleep(3000);
                 FeedController.getDiscussionFeed("1", "2");
             } catch (InterruptedException e) {
             }
-            return mStrings;
+            return null;
         }
 
-        @Override
-        protected void onPostExecute(String[] result) {
-            boolean hasMoreData = true;
-            if (mIsStart) {
-                mListItems.addFirst("Added after refresh...");
-            } else {
-                int start = mCurIndex;
-                int end = mCurIndex + mLoadDataCount;
-                if (end >= mStrings.length) {
-                    end = mStrings.length;
-                    hasMoreData = false;
-                }
-
-                for (int i = start; i < end; ++i) {
-                    mListItems.add(mStrings[i]);
-                }
-
-                mCurIndex = end;
-            }
-
-            mAdapter.notifyDataSetChanged();
-            mPullListView.onPullDownRefreshComplete();
-            mPullListView.onPullUpRefreshComplete();
-            mPullListView.setHasMoreData(hasMoreData);
-            setLastUpdateTime();
-
-            super.onPostExecute(result);
-        }
+//        @Override
+//        protected void onPostExecute(Void result) {
+//            boolean hasMoreData = true;
+//            if (mIsStart) {
+//                mListItems.addFirst("Added after refresh...");
+//            } else {
+//                int start = mCurIndex;
+//                int end = mCurIndex + mLoadDataCount;
+//                if (end >= mStrings.length) {
+//                    end = mStrings.length;
+//                    hasMoreData = false;
+//                }
+//
+//                for (int i = start; i < end; ++i) {
+//                    mListItems.add(mStrings[i]);
+//                }
+//
+//                mCurIndex = end;
+//            }
+//
+//            mAdapter.notifyDataSetChanged();
+//            mPullListView.onPullDownRefreshComplete();
+//            mPullListView.onPullUpRefreshComplete();
+//            mPullListView.setHasMoreData(hasMoreData);
+//            setLastUpdateTime();
+//
+//            super.onPostExecute(result);
+//        }
     }
 
     private void setLastUpdateTime() {
