@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:state_enabled="false" android:drawable="@drawable/purpose_disabled_icon" />
+    <item android:state_selected="true" android:drawable="@drawable/purpose_select_icon" />
+    <item android:drawable="@drawable/purpose_un_select_icon" />
+</selector>

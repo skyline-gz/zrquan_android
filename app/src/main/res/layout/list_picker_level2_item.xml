@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="56.0dip"
+    android:background="@android:color/white"
+    android:orientation="horizontal"
+    android:paddingLeft="24dp"
+    android:paddingRight="24dp">
+
+    <TextView
+        android:id="@+id/list_picker_level2_item_content"
+        android:layout_width="0.0dip"
+        android:layout_height="fill_parent"
+        android:layout_weight="1.0"
+        android:gravity="center"
+        android:textColor="#ff202020"
+        android:textSize="14sp" />
+
+    <ImageView
+        android:id="@+id/list_picker_level2_item_check"
+        android:layout_width="24.0dip"
+        android:layout_height="24.0dip"
+        android:layout_gravity="center_vertical"
+        android:layout_marginLeft="24dp"
+        android:background="@drawable/check_icon" />
+</LinearLayout>

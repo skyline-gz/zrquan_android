@@ -1,11 +1,13 @@
 package com.zrquan.mobile.ui.adapter;
 
 import android.content.Context;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
+import com.zrquan.mobile.R;
 import com.zrquan.mobile.model.Industry;
 
 import java.util.List;
@@ -40,13 +42,26 @@ public class ParentIndustryAdapter extends BaseAdapter{
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        TextView t = new TextView(context);
-//        if(convertView == null) {
-//
-//        }
+        ViewHolder tvHolder;
+        if(convertView == null) {
+            // http://stackoverflow.com/questions/9439401/set-listview-item-height
+            // set attachToRoot to false to avoid java.lang.UnsupportedOperationException:
+            // addView(View, LayoutParams) is not supported in AdapterView
+            convertView =  LayoutInflater.from(context).inflate(R.layout.list_picker_item, parent, false);
+            tvHolder = new ViewHolder();
+            tvHolder.textView = (TextView)convertView.findViewById(R.id.list_picker_item_content);
+            convertView.setTag(tvHolder);
+        }else {
+            // 使用缓存的view http://blog.csdn.net/li_wen_qi_/article/details/8539521
+            tvHolder = (ViewHolder) convertView.getTag();
+        }
         Industry industry = this.list.get(position);
-        t.setText(industry.getName());
+        tvHolder.textView.setText(industry.getName());
 
-        return t;
+        return convertView;
+    }
+
+    private class ViewHolder {
+        TextView textView;
     }
 }
