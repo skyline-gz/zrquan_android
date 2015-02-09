@@ -8,6 +8,7 @@ import android.os.Handler;
 import android.view.Gravity;
 import android.view.View;
 import android.view.WindowManager;
+import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -22,6 +23,7 @@ import com.zrquan.mobile.controller.AccountController;
 import com.zrquan.mobile.event.AccountEvent;
 import com.zrquan.mobile.support.util.RegUtils;
 import com.zrquan.mobile.support.util.ScreenUtils;
+import com.zrquan.mobile.ui.adapter.AutoMatchAdapter;
 import com.zrquan.mobile.ui.common.CommonActivity;
 import com.zrquan.mobile.ui.popup.SelIndustryPopup;
 
@@ -72,6 +74,8 @@ public class UserRegisterSetPasswordActivity extends CommonActivity {
     TextView tvIndustry;
     @InjectView(R.id.ll_school)
     LinearLayout llSchool;
+    @InjectView(R.id.tv_school)
+    AutoCompleteTextView tvSchool;
     @InjectView(R.id.tv_tips)
     TextView tvInputTips;
 
@@ -108,6 +112,8 @@ public class UserRegisterSetPasswordActivity extends CommonActivity {
                 }
             }
         });
+
+        tvSchool.setAdapter(new AutoMatchAdapter(this, android.R.layout.simple_dropdown_item_1line));
     }
 
     @Override
