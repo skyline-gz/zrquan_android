@@ -29,7 +29,6 @@ public class AccountController {
             @Override
             public void onResponse(JSONObject response) {
                 try {
-                    LogUtils.d("Response:" + response.toString(4));
                     String code = response.getString("code");
                     AccountEvent accountEvent = new AccountEvent();
                     accountEvent.setEventType(EventType.AE_NET_SEND_VERIFY_CODE);
@@ -64,7 +63,6 @@ public class AccountController {
             @Override
             public void onResponse(JSONObject response) {
                 try {
-                    LogUtils.d("Response:" + response.toString(4));
                     String code = response.getString("code");
                     if(code.equals(ServerCode.S_OK.name())) {
                         AccountEvent accountEvent = new AccountEvent();
@@ -85,6 +83,7 @@ public class AccountController {
         });
     }
 
+    //用户注册
     public static void registerAccount(String verifyCode, String phoneNum, String password, String trueName
             , int industryId, String latestSchoolName) {
         String url = UrlUtils.getUrl("users/registration");
@@ -105,13 +104,54 @@ public class AccountController {
             @Override
             public void onResponse(JSONObject response) {
                 try {
-                    LogUtils.d("Response:" + response.toString(4));
                     String code = response.getString("code");
                     AccountEvent accountEvent = new AccountEvent();
                     accountEvent.setEventType(EventType.AE_NET_REGISTER);
                     if (code.equals(ServerCode.S_OK.name())) {
                         accountEvent.setEventCode(EventCode.S_OK);
                         accountEvent.setServerCode(ServerCode.S_OK);
+                    } else {
+                        accountEvent.setEventCode(EventCode.FA_SERVER_ERROR);
+                        accountEvent.setServerCode(ServerCode.valueOf(code));
+                    }
+                    EventBus.getDefault().post(accountEvent);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            @Override
+            public void onErrorResponse(VolleyError error) {
+
+            }
+        });
+    }
+
+    //用户登陆
+    public static void loginAccount(String phoneNum, String password) {
+        String url = UrlUtils.getUrl("users/session");
+
+        JSONObject params = new JSONObject();
+        try {
+            params.put("mobile", phoneNum);
+            params.put("password", password);
+        } catch (JSONException e) {
+            LogUtils.d("ParseJsonError:", e);
+        }
+
+        VolleyJsonRequest.post(url, params, new VolleyJsonRequest.ResponseHandler() {
+            @Override
+            public void onResponse(JSONObject response) {
+                try {
+                    String code = response.getString("code");
+                    AccountEvent accountEvent = new AccountEvent();
+                    accountEvent.setEventType(EventType.AE_NET_LOGIN);
+                    if (code.equals(ServerCode.S_OK.name())) {
+                        accountEvent.setEventCode(EventCode.S_OK);
+                        accountEvent.setServerCode(ServerCode.S_OK);
+                        JSONObject results = response.getJSONObject("results");
+                        String token = results.getString("token");
+                        accountEvent.setToken(token);
                     } else {
                         accountEvent.setEventCode(EventCode.FA_SERVER_ERROR);
                         accountEvent.setServerCode(ServerCode.valueOf(code));
