@@ -4,26 +4,34 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.EditText;
 
 import com.zrquan.mobile.R;
 import com.zrquan.mobile.support.util.ScreenUtils;
+import com.zrquan.mobile.support.util.StringUtils;
 import com.zrquan.mobile.ui.common.CommonActivity;
 
 import butterknife.ButterKnife;
+import butterknife.InjectView;
 import butterknife.OnClick;
 
 public class UserLoginActivity extends CommonActivity {
-
-    public static final String TAG = "UserLoginActivity";
-
     private Context context;
+
+    @InjectView(R.id.et_mobile)
+    EditText etMobile;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        context = getApplicationContext();
         setContentView(R.layout.activity_user_login);
         ButterKnife.inject(this);
+        context = getApplicationContext();
+        Intent intent = getIntent();
+        String mobile = intent.getStringExtra("REGISTER_MOBILE");
+        if(!StringUtils.isEmpty(mobile)) {
+            etMobile.setText(mobile);
+        }
     }
 
     @OnClick(R.id.btn_back)

@@ -1,6 +1,7 @@
 package com.zrquan.mobile.ui.authentic;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Point;
 import android.graphics.Rect;
 import android.os.Bundle;
@@ -153,9 +154,16 @@ public class UserRegisterSetPasswordActivity extends CommonActivity {
         } else if(accountEvent.getEventType() == EventType.AE_NET_REGISTER) {
             if (accountEvent.getEventCode() == EventCode.S_OK) {
                 ToastUtils.show(context, "注册成功");
+                finish();
+                Intent intent = new Intent(this, UserLoginActivity.class);
+                intent.putExtra("REGISTER_MOBILE", mPhoneNum);
+                startActivity(intent);
+                overridePendingTransition(R.anim.right2left_enter, R.anim.right2left_exit);
             } else if(accountEvent.getEventCode() == EventCode.FA_SERVER_ERROR) {
                 if (accountEvent.getServerCode() == ServerCode.FA_USER_ALREADY_EXIT) {
                     ToastUtils.show(context, "该用户已经存在");
+                } else if (accountEvent.getServerCode() == ServerCode.FA_INVALID_VERIFY_CODE) {
+                    ToastUtils.show(context, "验证码不正确");
                 }
             }
         }

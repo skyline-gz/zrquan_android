@@ -9,15 +9,16 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.zrquan.mobile.R;
 import com.zrquan.mobile.controller.AccountController;
 import com.zrquan.mobile.event.AccountEvent;
 import com.zrquan.mobile.support.enums.EventCode;
 import com.zrquan.mobile.support.enums.EventType;
+import com.zrquan.mobile.support.enums.ServerCode;
 import com.zrquan.mobile.support.util.RegUtils;
 import com.zrquan.mobile.support.util.ScreenUtils;
+import com.zrquan.mobile.support.util.ToastUtils;
 import com.zrquan.mobile.ui.common.CommonActivity;
 
 import java.util.regex.Matcher;
@@ -29,7 +30,6 @@ import butterknife.OnTextChanged;
 import de.greenrobot.event.EventBus;
 
 public class UserRegisterActivity extends CommonActivity{
-    public static final String TAG = "UserRegisterActivity";
 
     private Context context;
     private ProgressDialog mProgressDialog;
@@ -64,14 +64,20 @@ public class UserRegisterActivity extends CommonActivity{
 
     public void onEvent(AccountEvent accountEvent){
         if(accountEvent.getEventType() == EventType.AE_NET_SEND_VERIFY_CODE) {
+            mProgressDialog.dismiss();
             if(accountEvent.getEventCode() == EventCode.S_OK) {
                 CharSequence ch = "短信验证码：" + accountEvent.getVerifyCode();
-                Toast.makeText(context, ch, Toast.LENGTH_LONG).show();
-                mProgressDialog.dismiss();
+                ToastUtils.show(context, ch);
                 Intent intent = new Intent(this, UserRegisterSetPasswordActivity.class);
                 intent.putExtra("REGISTER_MOBILE", etPhoneNum.getText().toString());
                 startActivity(intent);
                 overridePendingTransition(R.anim.right2left_enter, R.anim.right2left_exit);
+            } else if(accountEvent.getEventCode() == EventCode.FA_SERVER_ERROR) {
+                if (accountEvent.getServerCode() == ServerCode.FA_USER_ALREADY_EXIT) {
+                    tvInputTips.setText("该用户已经存在");
+                    tvInputTips.setTextColor(getResources().getColor(R.color.main_highlight_text_color));
+                    ToastUtils.show(context, "该用户已经存在");
+                }
             }
         }
     }

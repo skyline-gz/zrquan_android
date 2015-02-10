@@ -31,16 +31,19 @@ public class AccountController {
                 try {
                     LogUtils.d("Response:" + response.toString(4));
                     String code = response.getString("code");
+                    AccountEvent accountEvent = new AccountEvent();
+                    accountEvent.setEventType(EventType.AE_NET_SEND_VERIFY_CODE);
                     if(code.equals(ServerCode.S_OK.name())) {
-                        AccountEvent accountEvent = new AccountEvent();
-                        accountEvent.setEventType(EventType.AE_NET_SEND_VERIFY_CODE);
                         accountEvent.setEventCode(EventCode.S_OK);
                         accountEvent.setServerCode(ServerCode.S_OK);
                         JSONObject results = response.getJSONObject("results");
                         String verifyCode = results.getString("verify_code");
                         accountEvent.setVerifyCode(verifyCode);
-                        EventBus.getDefault().post(accountEvent);
+                    } else {
+                        accountEvent.setEventCode(EventCode.FA_SERVER_ERROR);
+                        accountEvent.setServerCode(ServerCode.valueOf(code));
                     }
+                    EventBus.getDefault().post(accountEvent);
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
@@ -109,11 +112,11 @@ public class AccountController {
                     if (code.equals(ServerCode.S_OK.name())) {
                         accountEvent.setEventCode(EventCode.S_OK);
                         accountEvent.setServerCode(ServerCode.S_OK);
-                        EventBus.getDefault().post(accountEvent);
                     } else {
                         accountEvent.setEventCode(EventCode.FA_SERVER_ERROR);
                         accountEvent.setServerCode(ServerCode.valueOf(code));
                     }
+                    EventBus.getDefault().post(accountEvent);
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }

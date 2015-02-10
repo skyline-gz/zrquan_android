@@ -80,8 +80,8 @@
                             android:textColor="@color/login_name"
                             android:textSize="15.0sp" />
 
-                        <AutoCompleteTextView
-                            android:id="@+id/etLoginUsername"
+                        <EditText
+                            android:id="@+id/et_mobile"
                             android:layout_width="fill_parent"
                             android:layout_height="48.0dip"
                             android:layout_marginLeft="28.0dip"
@@ -135,7 +135,7 @@
                             android:textSize="15.0sp" />
 
                         <EditText
-                            android:id="@+id/etPwd"
+                            android:id="@+id/et_password"
                             android:layout_width="fill_parent"
                             android:layout_height="48.0dip"
                             android:layout_marginLeft="28.0dip"
