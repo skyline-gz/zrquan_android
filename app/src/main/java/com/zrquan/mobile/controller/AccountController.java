@@ -2,7 +2,9 @@ package com.zrquan.mobile.controller;
 
 import com.android.volley.VolleyError;
 import com.zrquan.mobile.event.AccountEvent;
-import com.zrquan.mobile.event.VerifyAccountEvent;
+import com.zrquan.mobile.support.em.EventCode;
+import com.zrquan.mobile.support.em.EventType;
+import com.zrquan.mobile.support.em.ServerCode;
 import com.zrquan.mobile.support.util.LogUtils;
 import com.zrquan.mobile.support.util.UrlUtils;
 import com.zrquan.mobile.support.volley.VolleyJsonRequest;
@@ -28,10 +30,17 @@ public class AccountController {
             public void onResponse(JSONObject response) {
                 try {
                     LogUtils.d("Response:" + response.toString(4));
-                    JSONObject results = response.getJSONObject("results");
-                    String verifyCode = results.getString("verify_code");
-                    LogUtils.d("verify_code", verifyCode);
-                    EventBus.getDefault().post(new AccountEvent(verifyCode));
+                    String code = response.getString("code");
+                    if(code.equals(ServerCode.S_OK.name())) {
+                        AccountEvent accountEvent = new AccountEvent();
+                        accountEvent.setEventType(EventType.AE_NET_SEND_VERIFY_CODE);
+                        accountEvent.setEventCode(EventCode.S_OK);
+                        accountEvent.setServerCode(ServerCode.S_OK);
+                        JSONObject results = response.getJSONObject("results");
+                        String verifyCode = results.getString("verify_code");
+                        accountEvent.setVerifyCode(verifyCode);
+                        EventBus.getDefault().post(accountEvent);
+                    }
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
@@ -45,7 +54,7 @@ public class AccountController {
     }
 
     //根据AccessToken验证当前已登录用户
-    public static void verifyAccount(String accessToken) {
+    public static void verifyAccount(final String accessToken) {
         VolleyJsonRequest.setAccessToken(accessToken);
         String url = UrlUtils.getUrl("users/verify");
         VolleyJsonRequest.get(url, new VolleyJsonRequest.ResponseHandler() {
@@ -54,8 +63,53 @@ public class AccountController {
                 try {
                     LogUtils.d("Response:" + response.toString(4));
                     String code = response.getString("code");
-                    if(code.equals("S_OK")) {
-                        EventBus.getDefault().post(new VerifyAccountEvent(VerifyAccountEvent.S_OK));
+                    if(code.equals(ServerCode.S_OK.name())) {
+                        AccountEvent accountEvent = new AccountEvent();
+                        accountEvent.setEventType(EventType.AE_NET_VERIFY_JWT);
+                        accountEvent.setEventCode(EventCode.S_OK);
+                        accountEvent.setServerCode(ServerCode.S_OK);
+                        EventBus.getDefault().post(accountEvent);
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            @Override
+            public void onErrorResponse(VolleyError error) {
+
+            }
+        });
+    }
+
+    public static void registerAccount(String verifyCode, String phoneNum, String password, String trueName
+            , int industryId, String latestSchoolName) {
+        String url = UrlUtils.getUrl("users/registration");
+
+        JSONObject params = new JSONObject();
+        try {
+            params.put("verify_code", verifyCode);
+            params.put("mobile", phoneNum);
+            params.put("password", password);
+            params.put("name", trueName);
+            params.put("industry_id", industryId);
+            params.put("latest_school_name", latestSchoolName);
+        } catch (JSONException e) {
+            LogUtils.d("ParseJsonError:", e);
+        }
+
+        VolleyJsonRequest.post(url, params, new VolleyJsonRequest.ResponseHandler() {
+            @Override
+            public void onResponse(JSONObject response) {
+                try {
+                    LogUtils.d("Response:" + response.toString(4));
+                    String code = response.getString("code");
+                    if (code.equals(ServerCode.S_OK.name())) {
+                        AccountEvent accountEvent = new AccountEvent();
+                        accountEvent.setEventType(EventType.AE_NET_REGISTER);
+                        accountEvent.setEventCode(EventCode.S_OK);
+                        accountEvent.setServerCode(ServerCode.S_OK);
+                        EventBus.getDefault().post(accountEvent);
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();

@@ -14,6 +14,8 @@ import android.widget.Toast;
 import com.zrquan.mobile.R;
 import com.zrquan.mobile.controller.AccountController;
 import com.zrquan.mobile.event.AccountEvent;
+import com.zrquan.mobile.support.em.EventCode;
+import com.zrquan.mobile.support.em.EventType;
 import com.zrquan.mobile.support.util.RegUtils;
 import com.zrquan.mobile.support.util.ScreenUtils;
 import com.zrquan.mobile.ui.common.CommonActivity;
@@ -60,14 +62,18 @@ public class UserRegisterActivity extends CommonActivity{
         super.onStop();
     }
 
-    public void onEvent(AccountEvent event){
-        CharSequence ch = "短信验证码：" + event.verifyCode;
-        Toast.makeText(context, ch, Toast.LENGTH_LONG).show();
-        mProgressDialog.dismiss();
-        Intent intent = new Intent(this, UserRegisterSetPasswordActivity.class);
-        intent.putExtra("REGISTER_MOBILE", etPhoneNum.getText().toString());
-        startActivity(intent);
-        overridePendingTransition(R.anim.right2left_enter, R.anim.right2left_exit);
+    public void onEvent(AccountEvent accountEvent){
+        if(accountEvent.getEventType() == EventType.AE_NET_SEND_VERIFY_CODE) {
+            if(accountEvent.getEventCode() == EventCode.S_OK) {
+                CharSequence ch = "短信验证码：" + accountEvent.getVerifyCode();
+                Toast.makeText(context, ch, Toast.LENGTH_LONG).show();
+                mProgressDialog.dismiss();
+                Intent intent = new Intent(this, UserRegisterSetPasswordActivity.class);
+                intent.putExtra("REGISTER_MOBILE", etPhoneNum.getText().toString());
+                startActivity(intent);
+                overridePendingTransition(R.anim.right2left_enter, R.anim.right2left_exit);
+            }
+        }
     }
 
     @OnClick(R.id.tv_btn_back)

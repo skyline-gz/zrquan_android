@@ -28,13 +28,8 @@ import com.viewpagerindicator.CirclePageIndicator;
 
 import com.zrquan.mobile.ZrquanApplication;
 import com.zrquan.mobile.controller.FeedController;
-import com.zrquan.mobile.event.AccountEvent;
 import com.zrquan.mobile.event.DiscussionEvent;
 import com.zrquan.mobile.model.Account;
-import com.zrquan.mobile.model.Discussion;
-import com.zrquan.mobile.support.util.LogUtils;
-import com.zrquan.mobile.support.volley.VolleyJsonRequest;
-import com.zrquan.mobile.ui.authentic.UserRegisterSetPasswordActivity;
 import com.zrquan.mobile.ui.common.CommonFragment;
 import com.zrquan.mobile.widget.pulltorefresh.PullToRefreshBase;
 import com.zrquan.mobile.widget.pulltorefresh.PullToRefreshListView;

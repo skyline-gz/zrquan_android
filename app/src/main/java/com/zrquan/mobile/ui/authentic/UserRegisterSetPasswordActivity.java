@@ -21,6 +21,8 @@ import android.widget.Toast;
 import com.zrquan.mobile.R;
 import com.zrquan.mobile.controller.AccountController;
 import com.zrquan.mobile.event.AccountEvent;
+import com.zrquan.mobile.support.em.EventCode;
+import com.zrquan.mobile.support.em.EventType;
 import com.zrquan.mobile.support.util.RegUtils;
 import com.zrquan.mobile.support.util.ScreenUtils;
 import com.zrquan.mobile.ui.adapter.AutoMatchAdapter;
@@ -141,9 +143,17 @@ public class UserRegisterSetPasswordActivity extends CommonActivity {
         mResendVerifyCounterHandler.removeCallbacks(mResendVerifyCounterTask);
     }
 
-    public void onEvent(AccountEvent event){
-        CharSequence ch = "短信验证码：" + event.verifyCode;
-        Toast.makeText(context, ch, Toast.LENGTH_LONG).show();
+    public void onEvent(AccountEvent accountEvent){
+        if(accountEvent.getEventType() == EventType.AE_NET_SEND_VERIFY_CODE) {
+            if (accountEvent.getEventCode() == EventCode.S_OK) {
+                CharSequence ch = "短信验证码：" + accountEvent.getVerifyCode();
+                Toast.makeText(context, ch, Toast.LENGTH_LONG).show();
+            }
+        } else if(accountEvent.getEventType() == EventType.AE_NET_REGISTER) {
+            if (accountEvent.getEventCode() == EventCode.S_OK) {
+                Toast.makeText(context, "注册成功", Toast.LENGTH_LONG).show();
+            }
+        }
     }
 
     private void initNavigationBar() {
@@ -234,6 +244,14 @@ public class UserRegisterSetPasswordActivity extends CommonActivity {
         mSelIndustryPopup.showAtLocation(findViewById(android.R.id.content), Gravity.NO_GRAVITY, 0, location.top);
     }
 
+    @OnClick(R.id.btn_regist)
+    public void onBtnRegisterClick(View v){
+        if(validateInputAndShowError()){
+            AccountController.registerAccount(etVerifyCode.getText().toString(), mPhoneNum, etPassword.getText().toString(),
+                    etTrueName.getText().toString(), mSelectedIndustryId, tvSchool.getText().toString());
+        }
+    }
+
     @Override
     public void onBackPressed() {
         super.onBackPressed();
@@ -287,7 +305,7 @@ public class UserRegisterSetPasswordActivity extends CommonActivity {
                 return false;
             }
         } else {
-            Matcher matcher = RegUtils.getInstance().getTrueNamePattern().matcher(tvSchool.getText());
+            Matcher matcher = RegUtils.getInstance().getSchoolNamePattern().matcher(tvSchool.getText());
             if (!matcher.matches()) {
                 tvInputTips.setText("学校名称必须为汉字、字母、数字及下划线的组合");
                 return false;
