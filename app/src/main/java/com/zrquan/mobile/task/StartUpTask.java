@@ -8,8 +8,8 @@ import com.zrquan.mobile.event.AccountEvent;
 import com.zrquan.mobile.event.StartUpEvent;
 import com.zrquan.mobile.model.Account;
 import com.zrquan.mobile.support.db.DatabaseHelper;
-import com.zrquan.mobile.support.em.EventCode;
-import com.zrquan.mobile.support.em.EventType;
+import com.zrquan.mobile.support.enums.EventCode;
+import com.zrquan.mobile.support.enums.EventType;
 import com.zrquan.mobile.support.util.LogUtils;
 import com.zrquan.mobile.ui.common.AsyncTask;
 

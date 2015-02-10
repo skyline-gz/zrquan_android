@@ -2,9 +2,9 @@ package com.zrquan.mobile.controller;
 
 import com.android.volley.VolleyError;
 import com.zrquan.mobile.event.AccountEvent;
-import com.zrquan.mobile.support.em.EventCode;
-import com.zrquan.mobile.support.em.EventType;
-import com.zrquan.mobile.support.em.ServerCode;
+import com.zrquan.mobile.support.enums.EventCode;
+import com.zrquan.mobile.support.enums.EventType;
+import com.zrquan.mobile.support.enums.ServerCode;
 import com.zrquan.mobile.support.util.LogUtils;
 import com.zrquan.mobile.support.util.UrlUtils;
 import com.zrquan.mobile.support.volley.VolleyJsonRequest;
@@ -104,12 +104,15 @@ public class AccountController {
                 try {
                     LogUtils.d("Response:" + response.toString(4));
                     String code = response.getString("code");
+                    AccountEvent accountEvent = new AccountEvent();
+                    accountEvent.setEventType(EventType.AE_NET_REGISTER);
                     if (code.equals(ServerCode.S_OK.name())) {
-                        AccountEvent accountEvent = new AccountEvent();
-                        accountEvent.setEventType(EventType.AE_NET_REGISTER);
                         accountEvent.setEventCode(EventCode.S_OK);
                         accountEvent.setServerCode(ServerCode.S_OK);
                         EventBus.getDefault().post(accountEvent);
+                    } else {
+                        accountEvent.setEventCode(EventCode.FA_SERVER_ERROR);
+                        accountEvent.setServerCode(ServerCode.valueOf(code));
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();

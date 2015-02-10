@@ -1,4 +1,4 @@
-package com.zrquan.mobile.support.em;
+package com.zrquan.mobile.support.enums;
 
 public enum EventCode {
     //事件操作成功，如果NET相关的事件类型，则指服务器返回code为"S_OK"

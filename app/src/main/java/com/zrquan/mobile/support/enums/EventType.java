@@ -1,4 +1,4 @@
-package com.zrquan.mobile.support.em;
+package com.zrquan.mobile.support.enums;
 
 public enum EventType {
     //AccountEvent

@@ -16,15 +16,16 @@ import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.zrquan.mobile.R;
 import com.zrquan.mobile.controller.AccountController;
 import com.zrquan.mobile.event.AccountEvent;
-import com.zrquan.mobile.support.em.EventCode;
-import com.zrquan.mobile.support.em.EventType;
+import com.zrquan.mobile.support.enums.EventCode;
+import com.zrquan.mobile.support.enums.EventType;
+import com.zrquan.mobile.support.enums.ServerCode;
 import com.zrquan.mobile.support.util.RegUtils;
 import com.zrquan.mobile.support.util.ScreenUtils;
+import com.zrquan.mobile.support.util.ToastUtils;
 import com.zrquan.mobile.ui.adapter.AutoMatchAdapter;
 import com.zrquan.mobile.ui.common.CommonActivity;
 import com.zrquan.mobile.ui.popup.SelIndustryPopup;
@@ -147,11 +148,15 @@ public class UserRegisterSetPasswordActivity extends CommonActivity {
         if(accountEvent.getEventType() == EventType.AE_NET_SEND_VERIFY_CODE) {
             if (accountEvent.getEventCode() == EventCode.S_OK) {
                 CharSequence ch = "短信验证码：" + accountEvent.getVerifyCode();
-                Toast.makeText(context, ch, Toast.LENGTH_LONG).show();
+                ToastUtils.show(context, ch);
             }
         } else if(accountEvent.getEventType() == EventType.AE_NET_REGISTER) {
             if (accountEvent.getEventCode() == EventCode.S_OK) {
-                Toast.makeText(context, "注册成功", Toast.LENGTH_LONG).show();
+                ToastUtils.show(context, "注册成功");
+            } else if(accountEvent.getEventCode() == EventCode.FA_SERVER_ERROR) {
+                if (accountEvent.getServerCode() == ServerCode.FA_USER_ALREADY_EXIT) {
+                    ToastUtils.show(context, "该用户已经存在");
+                }
             }
         }
     }
@@ -170,7 +175,7 @@ public class UserRegisterSetPasswordActivity extends CommonActivity {
     @OnClick(R.id.btn_resend_verify_code)
     public void onResendVerifyCodeClick(View view) {
         disableResendVerifyCode();
-        Toast.makeText(this, "又发送了验证码", Toast.LENGTH_LONG).show();
+        ToastUtils.show(context, "发送了验证码");
         mResendVerifyCounterHandler.postDelayed(mResendVerifyCounterTask, 1000);
         AccountController.sendVerifyCode(mPhoneNum);
     }

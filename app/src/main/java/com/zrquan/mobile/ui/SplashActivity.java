@@ -8,8 +8,8 @@ import com.zrquan.mobile.R;
 import com.zrquan.mobile.ZrquanApplication;
 import com.zrquan.mobile.event.AccountEvent;
 import com.zrquan.mobile.event.StartUpEvent;
-import com.zrquan.mobile.support.em.EventCode;
-import com.zrquan.mobile.support.em.EventType;
+import com.zrquan.mobile.support.enums.EventCode;
+import com.zrquan.mobile.support.enums.EventType;
 import com.zrquan.mobile.task.StartUpTask;
 import com.zrquan.mobile.ui.common.CommonActivity;
 

@@ -1,4 +1,4 @@
-package com.zrquan.mobile.support.em;
+package com.zrquan.mobile.support.enums;
 
 //与return_code.rb定义一致
 public enum ServerCode {
