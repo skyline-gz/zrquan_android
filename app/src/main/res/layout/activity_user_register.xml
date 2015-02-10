@@ -51,6 +51,7 @@
                         android:background="@null"
                         android:hint="@string/new_regist_phone_num"
                         android:inputType="phone"
+                        android:maxLength="11"
                         android:paddingLeft="@dimen/new_regist_user_padding_left"
                         android:singleLine="true"
                         android:textColor="@color/search_input_text"
