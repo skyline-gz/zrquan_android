@@ -60,10 +60,12 @@ public class UserRegisterSetPasswordActivity extends CommonActivity {
     Button btnResendVerifyCode;
     @InjectView(R.id.et_password)
     EditText etPassword;
-    @InjectView(R.id.regist_password_clear_btn)
-    ImageView ivClearPasswordBtn;
+    @InjectView(R.id.iv_password_clear)
+    ImageView ivPasswordClear;
     @InjectView(R.id.et_true_name)
     EditText etTrueName;
+    @InjectView(R.id.iv_true_name_clear)
+    ImageView ivTrueNameClear;
     @InjectView(R.id.rg_register_type)
     RadioGroup rgRegisterType;
     @InjectView(R.id.rb_worker)
@@ -78,6 +80,8 @@ public class UserRegisterSetPasswordActivity extends CommonActivity {
     LinearLayout llSchool;
     @InjectView(R.id.tv_school)
     AutoCompleteTextView tvSchool;
+    @InjectView(R.id.iv_school_clear)
+    ImageView ivSchoolClear;
     @InjectView(R.id.tv_tips)
     TextView tvInputTips;
     @InjectView(R.id.btn_regist)
@@ -166,28 +170,48 @@ public class UserRegisterSetPasswordActivity extends CommonActivity {
         doBack();
     }
 
-    @OnClick(R.id.regist_password_clear_btn)
-    public void regist_password_clear_btn(View v) {
+    @OnClick(R.id.iv_password_clear)
+    public void onPasswordClearClick(View v) {
         etPassword.setText("");
     }
 
     @OnTextChanged(R.id.et_password)
     public void onPasswordTextChanged(CharSequence s, int start, int before, int count) {
         if (s.toString().trim().length() > 0) {
-            ivClearPasswordBtn.setVisibility(View.VISIBLE);
+            ivPasswordClear.setVisibility(View.VISIBLE);
         } else {
-            ivClearPasswordBtn.setVisibility(View.GONE);
+            ivPasswordClear.setVisibility(View.GONE);
         }
         validateInputAndShowError();
     }
 
+    @OnClick(R.id.iv_true_name_clear)
+    public void onTrueNameClearClick(View v) {
+        etTrueName.setText("");
+    }
+
     @OnTextChanged(R.id.et_true_name)
     public void onTrueNameTextChanged(CharSequence s, int start, int before, int count) {
+        if (s.toString().trim().length() > 0) {
+            ivTrueNameClear.setVisibility(View.VISIBLE);
+        } else {
+            ivTrueNameClear.setVisibility(View.GONE);
+        }
         validateInputAndShowError();
+    }
+
+    @OnClick(R.id.iv_school_clear)
+    public void onSchoolClearClick(View v) {
+        tvSchool.setText("");
     }
 
     @OnTextChanged(R.id.tv_school)
     public void onSchoolTextChanged(CharSequence s, int start, int before, int count) {
+        if (s.toString().trim().length() > 0) {
+            ivSchoolClear.setVisibility(View.VISIBLE);
+        } else {
+            ivSchoolClear.setVisibility(View.GONE);
+        }
         validateInputAndShowError();
     }
 
