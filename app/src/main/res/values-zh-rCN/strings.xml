@@ -1703,7 +1703,7 @@ http://weibo.com"</string>
     <string name="visitor_square_default_2">图片</string>
     <string name="visitor_square_default_3">星座</string>
     <string name="visitor_square_default_4">娱乐</string>
-    <string name="pwd_tips">密码为8~16位数字或字母</string>
+    <string name="pwd_tips">密码为8~20位数字或字母</string>
     <string name="nickname_tips">4~30个字符，支持中英文，数字</string>
     <string name="discovery_interest_notify">请至少选择三个你感兴趣的分类</string>
     <string name="discovery_interest_tips">请至少勾选3个兴趣分类。</string>

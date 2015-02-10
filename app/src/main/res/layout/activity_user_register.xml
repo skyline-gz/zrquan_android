@@ -92,13 +92,13 @@
 
                 <Button
                     android:id="@id/btRegist"
-                    android:enabled="false"
                     android:layout_width="fill_parent"
                     android:layout_height="@dimen/new_regist_height_bt"
                     android:layout_centerHorizontal="true"
                     android:background="@drawable/login_button_big_orange_bg"
                     android:text="@string/account_regist"
-                    android:textColor="@color/main_button_disabled_text_color_for_light_color_button"
+                    android:textColor="@color/font_button_enable_disable"
+                    android:enabled="false"
                     android:textSize="17.0sp" />
             </RelativeLayout>
             <RelativeLayout

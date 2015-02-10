@@ -62,12 +62,14 @@ public class UserRegisterSetPasswordActivity extends CommonActivity {
     EditText etPassword;
     @InjectView(R.id.regist_password_clear_btn)
     ImageView ivClearPasswordBtn;
+    @InjectView(R.id.et_true_name)
+    EditText etTrueName;
     @InjectView(R.id.rg_register_type)
     RadioGroup rgRegisterType;
     @InjectView(R.id.rb_worker)
-    RadioButton cbWorker;
+    RadioButton rbWorker;
     @InjectView(R.id.rb_student)
-    RadioButton cbStudent;
+    RadioButton rbStudent;
     @InjectView(R.id.ll_industry)
     LinearLayout llIndustry;
     @InjectView(R.id.tv_industry)
@@ -78,6 +80,9 @@ public class UserRegisterSetPasswordActivity extends CommonActivity {
     AutoCompleteTextView tvSchool;
     @InjectView(R.id.tv_tips)
     TextView tvInputTips;
+    @InjectView(R.id.btn_regist)
+    Button btnRegist;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -110,6 +115,7 @@ public class UserRegisterSetPasswordActivity extends CommonActivity {
                     llSchool.setVisibility(View.VISIBLE);
                     llIndustry.setVisibility(View.GONE);
                 }
+                validateInputAndShowError();
             }
         });
 
@@ -142,6 +148,11 @@ public class UserRegisterSetPasswordActivity extends CommonActivity {
         tvBackBtn.setVisibility(View.VISIBLE);
     }
 
+    @OnTextChanged(R.id.et_verify_code)
+    public void onVerifyCodeTextChanged(CharSequence s, int start, int before, int count) {
+        validateInputAndShowError();
+    }
+
     @OnClick(R.id.btn_resend_verify_code)
     public void onResendVerifyCodeClick(View view) {
         disableResendVerifyCode();
@@ -167,6 +178,17 @@ public class UserRegisterSetPasswordActivity extends CommonActivity {
         } else {
             ivClearPasswordBtn.setVisibility(View.GONE);
         }
+        validateInputAndShowError();
+    }
+
+    @OnTextChanged(R.id.et_true_name)
+    public void onTrueNameTextChanged(CharSequence s, int start, int before, int count) {
+        validateInputAndShowError();
+    }
+
+    @OnTextChanged(R.id.tv_school)
+    public void onSchoolTextChanged(CharSequence s, int start, int before, int count) {
+        validateInputAndShowError();
     }
 
     @OnClick(R.id.tv_industry)
@@ -181,6 +203,7 @@ public class UserRegisterSetPasswordActivity extends CommonActivity {
                 public void OnSelectIndustry(String displayText, int childIndustryId) {
                     tvIndustry.setText(displayText);
                     mSelectedIndustryId = childIndustryId;
+                    validateInputAndShowError();
                 }
             });
         }
@@ -193,24 +216,65 @@ public class UserRegisterSetPasswordActivity extends CommonActivity {
         doBack();
     }
 
-    private boolean checkPassword(String s) {
-        Matcher matcher = RegUtils.getInstance().getPasswordPattern().matcher(s);
-        if (!matcher.matches()) {
-            tvInputTips.setText(R.string.pwd_tips);
-            tvInputTips.setTextColor(getResources().getColor(R.color.main_highlight_text_color));
+    private boolean validateInputAndShowError() {
+        if(checkVerifyCode() && checkPassword() && checkTrueName() && checkAddictionInfo()) {
+            tvInputTips.setText("");
+            tvInputTips.setVisibility(View.GONE);
+            btnRegist.setEnabled(true);
+            return true;
+        } else {
+            tvInputTips.setVisibility(View.VISIBLE);
+            btnRegist.setEnabled(false);
             return false;
         }
-//        else {
-//            tvInputTips.setText(R.string.pwd_tips);
-//            tvInputTips.setTextColor(getResources().getColor(R.color.main_content_subtitle_text_color));
-//        }
+    }
+
+    private boolean checkVerifyCode() {
+        Matcher matcher = RegUtils.getInstance().getVerifyCodePattern().matcher(etVerifyCode.getText());
+        if (!matcher.matches()) {
+            tvInputTips.setText("验证码必须为六位数字");
+            return false;
+        }
+        return true;
+    }
+
+    private boolean checkPassword() {
+        Matcher matcher = RegUtils.getInstance().getPasswordPattern().matcher(etPassword.getText());
+        if (!matcher.matches()) {
+            tvInputTips.setText(R.string.pwd_tips);
+            return false;
+        }
+        return true;
+    }
+
+    private boolean checkTrueName() {
+        Matcher matcher = RegUtils.getInstance().getTrueNamePattern().matcher(etTrueName.getText());
+        if (!matcher.matches()) {
+            tvInputTips.setText("真实姓名必须为汉字、字母、数字及下划线的组合");
+            return false;
+        }
+        return true;
+    }
+
+    private boolean checkAddictionInfo() {
+        if(rbWorker.isChecked()) {
+            if(mSelectedIndustryId == -1) {
+                tvInputTips.setText("请选择所在行业");
+                return false;
+            }
+        } else {
+            Matcher matcher = RegUtils.getInstance().getTrueNamePattern().matcher(tvSchool.getText());
+            if (!matcher.matches()) {
+                tvInputTips.setText("学校名称必须为汉字、字母、数字及下划线的组合");
+                return false;
+            }
+        }
         return true;
     }
 
     private void enableResendVerifyCode() {
         btnResendVerifyCode.setEnabled(true);
         btnResendVerifyCode.setText(R.string.new_regist_resent_verification_content);
-        btnResendVerifyCode.setTextColor(getResources().getColor(R.color.main_button_shadow_text_color_for_light_color_button));
         mResendVerifyCounterHandler.removeCallbacks(mResendVerifyCounterTask);
     }
 
@@ -220,7 +284,6 @@ public class UserRegisterSetPasswordActivity extends CommonActivity {
         String msg = getResources().getString(R.string.new_regist_resent_verification_code_bt)
                 .replace("%s", Integer.toString(mResendVerifyCounter));
         btnResendVerifyCode.setText(msg);
-        btnResendVerifyCode.setTextColor(getResources().getColor(R.color.main_button_disabled_text_color_for_light_color_button));
     }
 
     private void countDownResendTime() {

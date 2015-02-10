@@ -114,10 +114,8 @@ public class UserRegisterActivity extends CommonActivity{
     private void checkRegisterParams() {
         if(checkPhoneNum(etPhoneNum.getText().toString())) {
             btRegist.setEnabled(true);
-            btRegist.setTextColor(getResources().getColor(R.color.main_button_shadow_text_color_for_light_color_button));
         } else {
             btRegist.setEnabled(false);
-            btRegist.setTextColor(getResources().getColor(R.color.main_button_disabled_text_color_for_light_color_button));
         }
     }
 
