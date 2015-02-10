@@ -154,6 +154,7 @@ public class DiscussionFragment extends CommonFragment {
         // see http://stackoverflow.com/questions/3014089/maintain-save-restore-scroll-position-when-returning-to-a-listview/3035521#3035521
         // Save ListView state
         mListViewState = mListView.onSaveInstanceState();
+        EventBus.getDefault().unregister(this);
     }
 
     private View getBannerView(LayoutInflater inflater, ViewGroup container) {

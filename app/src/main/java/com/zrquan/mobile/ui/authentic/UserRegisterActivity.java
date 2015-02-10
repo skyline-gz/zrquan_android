@@ -74,8 +74,6 @@ public class UserRegisterActivity extends CommonActivity{
                 overridePendingTransition(R.anim.right2left_enter, R.anim.right2left_exit);
             } else if(accountEvent.getEventCode() == EventCode.FA_SERVER_ERROR) {
                 if (accountEvent.getServerCode() == ServerCode.FA_USER_ALREADY_EXIT) {
-                    tvInputTips.setText("该用户已经存在");
-                    tvInputTips.setTextColor(getResources().getColor(R.color.main_highlight_text_color));
                     ToastUtils.show(context, "该用户已经存在");
                 }
             }
