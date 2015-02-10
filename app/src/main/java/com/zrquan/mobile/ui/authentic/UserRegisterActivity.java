@@ -13,6 +13,7 @@ import android.widget.TextView;
 import com.zrquan.mobile.R;
 import com.zrquan.mobile.controller.AccountController;
 import com.zrquan.mobile.event.AccountEvent;
+import com.zrquan.mobile.event.ActivityFinishEvent;
 import com.zrquan.mobile.support.enums.EventCode;
 import com.zrquan.mobile.support.enums.EventType;
 import com.zrquan.mobile.support.enums.ServerCode;
@@ -77,6 +78,12 @@ public class UserRegisterActivity extends CommonActivity{
                     ToastUtils.show(context, "该用户已经存在");
                 }
             }
+        }
+    }
+
+    public void onEvent(ActivityFinishEvent activityFinishEvent) {
+        if(activityFinishEvent.getTagName().equals(LOG_TAG)) {
+            finish();
         }
     }
 

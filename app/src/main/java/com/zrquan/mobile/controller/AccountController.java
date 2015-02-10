@@ -1,7 +1,12 @@
 package com.zrquan.mobile.controller;
 
+import android.content.Context;
+
 import com.android.volley.VolleyError;
+import com.zrquan.mobile.ZrquanApplication;
+import com.zrquan.mobile.dao.AccountDao;
 import com.zrquan.mobile.event.AccountEvent;
+import com.zrquan.mobile.model.Account;
 import com.zrquan.mobile.support.enums.EventCode;
 import com.zrquan.mobile.support.enums.EventType;
 import com.zrquan.mobile.support.enums.ServerCode;
@@ -167,5 +172,14 @@ public class AccountController {
 
             }
         });
+    }
+
+    //用户注销账户
+    public static void logoutAccount(Context context) {
+        Account account = ZrquanApplication.getInstance().getAccount();
+        account.setVerified(false);
+        account.setAccessToken("");
+        ZrquanApplication.getInstance().setAccount(account);
+        new AccountDao().saveAccount(context, account);
     }
 }

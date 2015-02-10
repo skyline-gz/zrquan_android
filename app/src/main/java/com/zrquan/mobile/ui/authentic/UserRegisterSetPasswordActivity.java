@@ -21,6 +21,7 @@ import android.widget.TextView;
 import com.zrquan.mobile.R;
 import com.zrquan.mobile.controller.AccountController;
 import com.zrquan.mobile.event.AccountEvent;
+import com.zrquan.mobile.event.ActivityFinishEvent;
 import com.zrquan.mobile.support.enums.EventCode;
 import com.zrquan.mobile.support.enums.EventType;
 import com.zrquan.mobile.support.enums.ServerCode;
@@ -153,6 +154,11 @@ public class UserRegisterSetPasswordActivity extends CommonActivity {
             }
         } else if(accountEvent.getEventType() == EventType.AE_NET_REGISTER) {
             if (accountEvent.getEventCode() == EventCode.S_OK) {
+                //关闭注册第一步的Activity
+                ActivityFinishEvent activityFinishEvent = new ActivityFinishEvent();
+                activityFinishEvent.setTagName(UserRegisterActivity.class.getName());
+                EventBus.getDefault().post(activityFinishEvent);
+                //切换到登陆Activity
                 ToastUtils.show(context, "注册成功");
                 finish();
                 Intent intent = new Intent(this, UserLoginActivity.class);

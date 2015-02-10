@@ -1,6 +1,7 @@
 package com.zrquan.mobile.ui.feed;
 
 import android.app.Dialog;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
@@ -14,6 +15,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.zrquan.mobile.R;
+import com.zrquan.mobile.controller.AccountController;
+import com.zrquan.mobile.support.util.ToastUtils;
+import com.zrquan.mobile.ui.MainActivity;
 import com.zrquan.mobile.ui.authentic.UserRegisterSetPasswordActivity;
 import com.zrquan.mobile.ui.common.CommonFragment;
 import com.zrquan.mobile.ui.demo.GalleryViewPagerSampleActivity;
@@ -22,6 +26,7 @@ import com.zrquan.mobile.widget.switchbutton.SwitchButton;
 //问答 动态
 public class QuestionFragment extends CommonFragment {
 
+    private Context context;
     private View rootView;
 
     @Override
@@ -30,6 +35,8 @@ public class QuestionFragment extends CommonFragment {
 
         if (rootView == null) {
             rootView = inflater.inflate(R.layout.fragment_question, null);
+            context = getActivity().getApplicationContext();
+
             SwitchButton sbDefault = (SwitchButton) rootView.findViewById(R.id.sb_default);
 
             sbDefault.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
@@ -79,6 +86,20 @@ public class QuestionFragment extends CommonFragment {
                     Intent intent = new Intent(QuestionFragment.this.getActivity(), GalleryViewPagerSampleActivity.class);
                     startActivity(intent);
                     QuestionFragment.this.getActivity().overridePendingTransition(R.anim.right2left_enter, R.anim.right2left_exit);
+                }
+            });
+
+            TextView tv_test_logout_account = (TextView) rootView.findViewById(R.id.tv_test_logout_account);
+            tv_test_logout_account.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    AccountController.logoutAccount(context);
+                    Intent intent = new Intent(QuestionFragment.this.getActivity(), MainActivity.class);
+                    //http://stackoverflow.com/questions/16217917/close-an-specific-activity-android
+                    intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                    startActivity(intent);
+                    QuestionFragment.this.getActivity().overridePendingTransition(R.anim.right2left_enter, R.anim.right2left_exit);
+                    ToastUtils.show(context, "成功注销账户");
                 }
             });
         } else {
