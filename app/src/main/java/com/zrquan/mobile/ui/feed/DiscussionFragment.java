@@ -30,6 +30,7 @@ import com.zrquan.mobile.ZrquanApplication;
 import com.zrquan.mobile.controller.FeedController;
 import com.zrquan.mobile.event.DiscussionEvent;
 import com.zrquan.mobile.model.Account;
+import com.zrquan.mobile.support.util.ScreenUtils;
 import com.zrquan.mobile.ui.common.CommonFragment;
 import com.zrquan.mobile.widget.pulltorefresh.PullToRefreshBase;
 import com.zrquan.mobile.widget.pulltorefresh.PullToRefreshListView;
@@ -102,8 +103,7 @@ public class DiscussionFragment extends CommonFragment {
             mListView.addHeaderView(bannerView);
             mListView.setAdapter(mAdapter);
             mListView.setDivider(null);
-            float px = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 6, getResources().getDisplayMetrics());
-            mListView.setDividerHeight((int) px);
+            mListView.setDividerHeight((int) ScreenUtils.dpToPx(context, 6.0f));
             mListView.setSelector(android.R.color.transparent);
             mListView.setCacheColorHint(Color.TRANSPARENT);
 
@@ -144,6 +144,8 @@ public class DiscussionFragment extends CommonFragment {
             // Restore previous state (including selected item index and scroll position)
             mListView.onRestoreInstanceState(mListViewState);
         }
+
+        vpBanner.startAutoScroll();
 
         return mPullListView;
     }
@@ -206,7 +208,7 @@ public class DiscussionFragment extends CommonFragment {
         vpBanner.setInterval(2000);
         //是否允许切换到最后一个banner时，切换到另一个fragment
         //viewPager.setSlideBorderMode(AutoScrollViewPager.SLIDE_BORDER_MODE_TO_PARENT);
-        vpBanner.startAutoScroll();
+
         return v;
     }
 
