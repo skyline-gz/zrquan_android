@@ -9,5 +9,6 @@ public enum EventType {
     AE_NET_SEND_VERIFY_CODE,    //获取验证码
     AE_NET_VERIFY_JWT,          //验证JWT Token
     AE_NET_REGISTER,            //用户注册
-    AE_NET_LOGIN                //用户登陆
+    AE_NET_LOGIN,               //用户登陆
+    AE_NET_RESET_PASSWORD       //用户重设密码
 }

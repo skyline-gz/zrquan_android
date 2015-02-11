@@ -170,7 +170,7 @@ public class UserRegisterSetPasswordActivity extends CommonActivity {
                 ToastUtils.show(context, "注册成功");
                 finish();
                 Intent intent = new Intent(this, UserLoginActivity.class);
-                intent.putExtra("REGISTER_MOBILE", mPhoneNum);
+                intent.putExtra(IntentExtra.MOBILE.name(), mPhoneNum);
                 startActivity(intent);
                 overridePendingTransition(R.anim.right2left_enter, R.anim.right2left_exit);
             } else if(accountEvent.getEventCode() == EventCode.FA_SERVER_ERROR) {

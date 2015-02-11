@@ -24,11 +24,18 @@ import de.greenrobot.event.EventBus;
 
 public class AccountController {
 
-    //发送验证码
     public static void sendVerifyCode(String phoneNum) {
+        sendVerifyCode(phoneNum, false);
+    }
+
+    //发送验证码
+    public static void sendVerifyCode(String phoneNum, boolean ignoreMobileCheck) {
         // pass second argument as "null" for GET requests
         Map<String, String> params = new HashMap<>();
         params.put("mobile", phoneNum);
+        if(ignoreMobileCheck) {
+            params.put("ignore_mobile_check", "true");
+        }
         String url = UrlUtils.getUrlWithParams("users/send_verify_code", params);
         VolleyJsonRequest.get(url, new VolleyJsonRequest.ResponseHandler() {
             @Override
@@ -133,12 +140,12 @@ public class AccountController {
     }
 
     //用户登陆
-    public static void loginAccount(String phoneNum, String password) {
+    public static void loginAccount(String mobile, String password) {
         String url = UrlUtils.getUrl("users/session");
 
         JSONObject params = new JSONObject();
         try {
-            params.put("mobile", phoneNum);
+            params.put("mobile", mobile);
             params.put("password", password);
         } catch (JSONException e) {
             LogUtils.d("ParseJsonError:", e);
@@ -181,5 +188,44 @@ public class AccountController {
         account.setAccessToken("");
         ZrquanApplication.getInstance().setAccount(account);
         new AccountDao().saveAccount(context, account);
+    }
+
+    public static void resetPassword(String mobile, String newPassword, String verifyCode) {
+        String url = UrlUtils.getUrl("users/reset_password");
+
+        JSONObject params = new JSONObject();
+        try {
+            params.put("mobile", mobile);
+            params.put("new_password", newPassword);
+            params.put("verify_code", verifyCode);
+        } catch (JSONException e) {
+            LogUtils.d("ParseJsonError:", e);
+        }
+
+        VolleyJsonRequest.post(url, params, new VolleyJsonRequest.ResponseHandler() {
+            @Override
+            public void onResponse(JSONObject response) {
+                try {
+                    String code = response.getString("code");
+                    AccountEvent accountEvent = new AccountEvent();
+                    accountEvent.setEventType(EventType.AE_NET_RESET_PASSWORD);
+                    if (code.equals(ServerCode.S_OK.name())) {
+                        accountEvent.setEventCode(EventCode.S_OK);
+                        accountEvent.setServerCode(ServerCode.S_OK);
+                    } else {
+                        accountEvent.setEventCode(EventCode.FA_SERVER_ERROR);
+                        accountEvent.setServerCode(ServerCode.valueOf(code));
+                    }
+                    EventBus.getDefault().post(accountEvent);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            @Override
+            public void onErrorResponse(VolleyError error) {
+
+            }
+        });
     }
 }

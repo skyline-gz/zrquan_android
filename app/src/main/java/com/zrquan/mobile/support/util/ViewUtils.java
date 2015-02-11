@@ -2,6 +2,7 @@ package com.zrquan.mobile.support.util;
 
 import android.view.View;
 import android.widget.ListView;
+import android.widget.TextView;
 
 public class ViewUtils {
 
@@ -16,5 +17,9 @@ public class ViewUtils {
             int childIndex = pos - firstListItemPosition;
             return listView.getChildAt(childIndex);
         }
+    }
+
+    public static boolean checkTextEmpty(TextView view) {
+        return view.getText().toString().trim().length() == 0;
     }
 }

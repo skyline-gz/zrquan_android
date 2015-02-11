@@ -4,6 +4,7 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -23,6 +24,7 @@ import com.zrquan.mobile.support.enums.ServerCode;
 import com.zrquan.mobile.support.util.ScreenUtils;
 import com.zrquan.mobile.support.util.StringUtils;
 import com.zrquan.mobile.support.util.ToastUtils;
+import com.zrquan.mobile.support.util.ViewUtils;
 import com.zrquan.mobile.ui.MainActivity;
 import com.zrquan.mobile.ui.common.CommonActivity;
 
@@ -62,7 +64,7 @@ public class UserLoginActivity extends CommonActivity {
         ButterKnife.inject(this);
         context = getApplicationContext();
         Intent intent = getIntent();
-        String mobile = intent.getStringExtra("REGISTER_MOBILE");
+        String mobile = intent.getStringExtra(IntentExtra.MOBILE.name());
         if(!StringUtils.isEmpty(mobile)) {
             etMobile.setText(mobile);
         }
@@ -139,7 +141,9 @@ public class UserLoginActivity extends CommonActivity {
     public void onForgetPasswordClick(View view) {
         String mobile = etMobile.getText().toString();
         Intent intent = new Intent(this, UserResetPasswordActivity.class);
-        intent.putExtra(IntentExtra.MOBILE.name(), mobile);
+        if(!TextUtils.isEmpty(mobile)) {
+            intent.putExtra(IntentExtra.MOBILE.name(), mobile);
+        }
         startActivity(intent);
         overridePendingTransition(R.anim.right2left_enter, R.anim.right2left_exit);
     }
@@ -183,10 +187,10 @@ public class UserLoginActivity extends CommonActivity {
     }
 
     private void checkLoginBtnEnable() {
-        if(etMobile.getText().toString().trim().length() > 0 && etPassword.getText().toString().trim().length() > 0) {
-            btnLogin.setEnabled(true);
-        } else {
+        if(ViewUtils.checkTextEmpty(etMobile) || ViewUtils.checkTextEmpty(etPassword)) {
             btnLogin.setEnabled(false);
+        } else {
+            btnLogin.setEnabled(true);
         }
     }
 
