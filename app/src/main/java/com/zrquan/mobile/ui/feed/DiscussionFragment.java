@@ -155,6 +155,7 @@ public class DiscussionFragment extends CommonFragment {
         // Save ListView state
         mListViewState = mListView.onSaveInstanceState();
         EventBus.getDefault().unregister(this);
+        vpBanner.stopAutoScroll();
     }
 
     private View getBannerView(LayoutInflater inflater, ViewGroup container) {
@@ -203,16 +204,9 @@ public class DiscussionFragment extends CommonFragment {
         });
 
         vpBanner.setInterval(2000);
-//        viewPager.setSlideBorderMode(AutoScrollViewPager.SLIDE_BORDER_MODE_TO_PARENT);
-
-        Bundle bundle = getArguments();
-//        if (bundle != null) {
-//            index = bundle.getInt(AutoScrollViewPagerInnerDemo.EXTRA_INDEX);
-//            if (index == AutoScrollViewPagerInnerDemo.DEFAULT_INDEX) {
-        //Todo:切换页面时，停止播放
+        //是否允许切换到最后一个banner时，切换到另一个fragment
+        //viewPager.setSlideBorderMode(AutoScrollViewPager.SLIDE_BORDER_MODE_TO_PARENT);
         vpBanner.startAutoScroll();
-//            }
-//        }
         return v;
     }
 
@@ -225,6 +219,14 @@ public class DiscussionFragment extends CommonFragment {
         mPullListView.onPullUpRefreshComplete();
         mPullListView.setHasMoreData(true);
         setLastUpdateTime();
+    }
+
+    public void onEvent(ScrollBannerEvent scrollBannerEvent) {
+        if(scrollBannerEvent.enableScroll) {
+            vpBanner.startAutoScroll();
+        } else {
+            vpBanner.stopAutoScroll();
+        }
     }
 
     private class GetDataTask extends AsyncTask<Void, Void, Void> {
@@ -415,4 +417,12 @@ public class DiscussionFragment extends CommonFragment {
             "Xanadu", "Xynotyro", "Yarg Cornish", "Yarra Valley Pyramid", "Yorkshire Blue",
             "Zamorano", "Zanetti Grana Padano", "Zanetti Parmigiano Reggiano"
     };
+
+    //此事件仅在切换feedFragment的Viewpager时使用，用于暂停，开启滚动
+    public static class ScrollBannerEvent {
+        public boolean enableScroll = false;
+        public ScrollBannerEvent (boolean enableScroll){
+            this.enableScroll = enableScroll;
+        }
+    }
 }
