@@ -18,6 +18,7 @@ import com.zrquan.mobile.event.AccountEvent;
 import com.zrquan.mobile.model.Account;
 import com.zrquan.mobile.support.enums.EventCode;
 import com.zrquan.mobile.support.enums.EventType;
+import com.zrquan.mobile.support.enums.IntentExtra;
 import com.zrquan.mobile.support.enums.ServerCode;
 import com.zrquan.mobile.support.util.ScreenUtils;
 import com.zrquan.mobile.support.util.StringUtils;
@@ -51,6 +52,8 @@ public class UserLoginActivity extends CommonActivity {
 
     @InjectView(R.id.btn_login)
     Button btnLogin;
+    @InjectView(R.id.tv_forget_password)
+    TextView tvForgetPassword;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -118,8 +121,8 @@ public class UserLoginActivity extends CommonActivity {
 
     @OnClick(R.id.btn_login_register)
     public void onBtnRegisterClick(View view) {
-        Intent myIntent = new Intent(this, UserRegisterActivity.class);
-        startActivity(myIntent);
+        Intent intent = new Intent(this, UserRegisterActivity.class);
+        startActivity(intent);
         overridePendingTransition(R.anim.right2left_enter, R.anim.right2left_exit);
     }
 
@@ -130,6 +133,15 @@ public class UserLoginActivity extends CommonActivity {
         mProgressDialog.setMessage("正在登陆...");
         mProgressDialog.show();
         AccountController.loginAccount(etMobile.getText().toString(), etPassword.getText().toString());
+    }
+
+    @OnClick(R.id.tv_forget_password)
+    public void onForgetPasswordClick(View view) {
+        String mobile = etMobile.getText().toString();
+        Intent intent = new Intent(this, UserResetPasswordActivity.class);
+        intent.putExtra(IntentExtra.MOBILE.name(), mobile);
+        startActivity(intent);
+        overridePendingTransition(R.anim.right2left_enter, R.anim.right2left_exit);
     }
 
     public void onEvent(AccountEvent accountEvent) {

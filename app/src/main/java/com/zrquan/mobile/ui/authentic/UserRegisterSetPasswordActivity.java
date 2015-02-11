@@ -24,6 +24,7 @@ import com.zrquan.mobile.event.AccountEvent;
 import com.zrquan.mobile.event.ActivityFinishEvent;
 import com.zrquan.mobile.support.enums.EventCode;
 import com.zrquan.mobile.support.enums.EventType;
+import com.zrquan.mobile.support.enums.IntentExtra;
 import com.zrquan.mobile.support.enums.ServerCode;
 import com.zrquan.mobile.support.util.RegUtils;
 import com.zrquan.mobile.support.util.ScreenUtils;
@@ -51,10 +52,11 @@ public class UserRegisterSetPasswordActivity extends CommonActivity {
     private SelIndustryPopup mSelIndustryPopup;
     private int mSelectedIndustryId = -1;
 
-    @InjectView(R.id.titleText)
+    @InjectView(R.id.tv_title)
     TextView tvTitle;
-    @InjectView(R.id.tv_btn_back)
-    TextView tvBackBtn;
+    @InjectView(R.id.tv_back)
+    TextView tvBack;
+
     @InjectView(R.id.tv_content)
     TextView tvContent;
     @InjectView(R.id.ll_verify_code)
@@ -63,30 +65,36 @@ public class UserRegisterSetPasswordActivity extends CommonActivity {
     EditText etVerifyCode;
     @InjectView(R.id.btn_resend_verify_code)
     Button btnResendVerifyCode;
+
     @InjectView(R.id.et_password)
     EditText etPassword;
     @InjectView(R.id.iv_password_clear)
     ImageView ivPasswordClear;
+
     @InjectView(R.id.et_true_name)
     EditText etTrueName;
     @InjectView(R.id.iv_true_name_clear)
     ImageView ivTrueNameClear;
+
     @InjectView(R.id.rg_register_type)
     RadioGroup rgRegisterType;
     @InjectView(R.id.rb_worker)
     RadioButton rbWorker;
     @InjectView(R.id.rb_student)
     RadioButton rbStudent;
+
     @InjectView(R.id.ll_industry)
     LinearLayout llIndustry;
     @InjectView(R.id.tv_industry)
     TextView tvIndustry;
+
     @InjectView(R.id.ll_school)
     LinearLayout llSchool;
     @InjectView(R.id.tv_school)
     AutoCompleteTextView tvSchool;
     @InjectView(R.id.iv_school_clear)
     ImageView ivSchoolClear;
+
     @InjectView(R.id.tv_tips)
     TextView tvInputTips;
     @InjectView(R.id.btn_regist)
@@ -100,7 +108,7 @@ public class UserRegisterSetPasswordActivity extends CommonActivity {
         setContentView(R.layout.activity_user_register_set_password);
         ButterKnife.inject(this);
         initNavigationBar();
-        String mobile = getIntent().getStringExtra("REGISTER_MOBILE");
+        String mobile = getIntent().getStringExtra(IntentExtra.MOBILE.name());
         tvContent.setText(tvContent.getText().toString().replace("%s", mobile));
         mPhoneNum = mobile;
         disableResendVerifyCode();
@@ -178,7 +186,7 @@ public class UserRegisterSetPasswordActivity extends CommonActivity {
     private void initNavigationBar() {
         tvTitle.setText(R.string.account_register_set_password);
         tvTitle.setVisibility(View.VISIBLE);
-        tvBackBtn.setVisibility(View.VISIBLE);
+        tvBack.setVisibility(View.VISIBLE);
     }
 
     @OnTextChanged(R.id.et_verify_code)
@@ -194,7 +202,7 @@ public class UserRegisterSetPasswordActivity extends CommonActivity {
         AccountController.sendVerifyCode(mPhoneNum);
     }
 
-    @OnClick(R.id.tv_btn_back)
+    @OnClick(R.id.tv_back)
     public void onBtnBackClick(View view) {
         doBack();
     }
