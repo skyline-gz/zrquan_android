@@ -60,6 +60,7 @@ public class DiscussionFragment extends CommonFragment {
     private CirclePageIndicator indicatorBanner;
     private ImageView ivCancelBanner;
     private RelativeLayout rlBanner;
+    private List<Discussion> discussionList;
 
     private ListView mListView;
     private Parcelable mListViewState;                   //用于保存ListView状态
@@ -127,19 +128,21 @@ public class DiscussionFragment extends CommonFragment {
                 public void onPullDownToRefresh(PullToRefreshBase<ListView> refreshView) {
                     mIsStart = true;
                     Account account = ZrquanApplication.getInstance().getAccount();
-                    if (account != null && account.getPhoneNum() != null) {
-                        FeedController.getDiscussionFeed("1", "2");
-                    } else {
-                        mAdapter.notifyDataSetChanged();
-                        mPullListView.onPullDownRefreshComplete();
-                    }
+//                    if (account != null && account.getPhoneNum() != null) {
+//                        FeedController.getDiscussionFeed(account.getId(), 2);
+//                        FeedController.getDiscussionFeed(1, 2);
+                        FeedController.getTestFeed(5, 2);
+//                    } else {
+//                        mAdapter.notifyDataSetChanged();
+//                        mPullListView.onPullDownRefreshComplete();
+//                    }
 //                    new GetDataTask().execute();
                 }
 
                 @Override
                 public void onPullUpToRefresh(PullToRefreshBase<ListView> refreshView) {
                     mIsStart = false;
-                    FeedController.getDiscussionFeed("1", "2");
+//                    FeedController.getDiscussionFeed(1, 2);
 //                    new GetDataTask().execute();
                 }
             });
@@ -221,12 +224,18 @@ public class DiscussionFragment extends CommonFragment {
     }
 
     public void onEvent(DiscussionEvent event){
-        for (int i = 0; i < event.discussionList.size(); i++) {
-            mListItems.addFirst(event.discussionList.get(i).getContent());
+        mListItems.clear();
+        this.discussionList = event.discussionList;
+
+        for (int i = 0; i < 20; i++) {
+            Discussion discussion = this.discussionList.get(i);
+            mListItems.addLast(discussion.getContent() +
+                    discussion.getUserName() + discussion.getThemeName());
         }
         mAdapter.notifyDataSetChanged();
         mPullListView.onPullDownRefreshComplete();
-        mPullListView.onPullUpRefreshComplete();
+//        mPullListView.onPullUpRefreshComplete();
+
         mPullListView.setHasMoreData(true);
         setLastUpdateTime();
     }
@@ -238,7 +247,7 @@ public class DiscussionFragment extends CommonFragment {
             // Simulates a background job.
             try {
                 Thread.sleep(3000);
-                FeedController.getDiscussionFeed("1", "2");
+                FeedController.getDiscussionFeed(1, 2);
             } catch (InterruptedException e) {
             }
             return null;
