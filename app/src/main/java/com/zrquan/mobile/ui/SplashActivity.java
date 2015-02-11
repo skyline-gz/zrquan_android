@@ -6,8 +6,10 @@ import android.os.Handler;
 
 import com.zrquan.mobile.R;
 import com.zrquan.mobile.ZrquanApplication;
+import com.zrquan.mobile.event.AccountEvent;
 import com.zrquan.mobile.event.StartUpEvent;
-import com.zrquan.mobile.event.VerifyAccountEvent;
+import com.zrquan.mobile.support.enums.EventCode;
+import com.zrquan.mobile.support.enums.EventType;
 import com.zrquan.mobile.task.StartUpTask;
 import com.zrquan.mobile.ui.common.CommonActivity;
 
@@ -63,14 +65,16 @@ public class SplashActivity extends CommonActivity {
     }
 
     //从服务器校验用户完成后的处理
-    public void onEvent(VerifyAccountEvent verifyAccountEvent) {
-        if(verifyAccountEvent.code == VerifyAccountEvent.S_OK) {
-            ZrquanApplication.getInstance().getAccount().setVerified(true);
-        } else {
-            ZrquanApplication.getInstance().getAccount().setVerified(false);
+    public void onEvent(AccountEvent accountEvent) {
+        if(accountEvent.getEventType() == EventType.AE_NET_VERIFY_JWT) {
+            if(accountEvent.getEventCode() == EventCode.S_OK) {
+                ZrquanApplication.getInstance().getAccount().setVerified(true);
+            } else {
+                ZrquanApplication.getInstance().getAccount().setVerified(false);
+            }
+            bReadyVerifyAccount = true;
+            checkAndstartMainActivity();
         }
-        bReadyVerifyAccount = true;
-        checkAndstartMainActivity();
     }
 
     private void checkAndstartMainActivity() {

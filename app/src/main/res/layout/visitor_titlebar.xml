@@ -9,7 +9,7 @@
     android:paddingTop="8dp">
 
     <TextView
-        android:id="@+id/titleText"
+        android:id="@+id/tv_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
@@ -20,7 +20,7 @@
         android:textSize="18dp" />
 
     <TextView
-        android:id="@+id/tv_btn_register"
+        android:id="@+id/tv_login"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
@@ -33,7 +33,7 @@
         android:textSize="15dp" />
 
     <TextView
-        android:id="@+id/tv_btn_login"
+        android:id="@+id/tv_register"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
@@ -46,7 +46,7 @@
         android:textSize="15dp" />
 
     <TextView
-        android:id="@+id/tv_btn_back"
+        android:id="@+id/tv_back"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"

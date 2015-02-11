@@ -49,6 +49,10 @@
             android:label="设置密码"
             android:windowSoftInputMode="stateHidden" />
         <activity
+            android:name=".ui.authentic.UserResetPasswordActivity"
+            android:label="重置密码"
+            android:windowSoftInputMode="stateHidden" />
+        <activity
             android:name=".ui.demo.GalleryViewPagerSampleActivity"
             android:label="查看图片"
             android:windowSoftInputMode="stateHidden" />

@@ -18,12 +18,12 @@ public class VisitorContentViewHolder{
     private View mVisitorContentView;
     private CommonFragment context;
 
-    @InjectView(R.id.titleText)
+    @InjectView(R.id.tv_title)
     TextView tvTitle;
-    @InjectView(R.id.tv_btn_register)
-    TextView tvNavBtnRegister;
-    @InjectView(R.id.tv_btn_login)
-    TextView tvNavBtnLogin;
+    @InjectView(R.id.tv_login)
+    TextView tvLogin;
+    @InjectView(R.id.tv_register)
+    TextView tvRegister;
 
     public VisitorContentViewHolder(CommonFragment context, View view) {
         ButterKnife.inject(this, view);
@@ -38,8 +38,8 @@ public class VisitorContentViewHolder{
     public void initVisitorNavigationBar(int Resource) {
         tvTitle.setText(Resource);
         tvTitle.setVisibility(View.VISIBLE);
-        tvNavBtnRegister.setVisibility(View.GONE);
-        tvNavBtnLogin.setVisibility(View.GONE);
+        tvRegister.setVisibility(View.GONE);
+        tvLogin.setVisibility(View.GONE);
     }
 
     @OnClick(R.id.tv_btn_content_register)

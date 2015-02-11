@@ -72,7 +72,7 @@
                         android:layout_weight="1.0">
 
                         <TextView
-                            android:id="@+id/tvUsrname"
+                            android:id="@+id/tv_user_icon"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="18.0dip"
@@ -80,8 +80,8 @@
                             android:textColor="@color/login_name"
                             android:textSize="15.0sp" />
 
-                        <AutoCompleteTextView
-                            android:id="@+id/etLoginUsername"
+                        <EditText
+                            android:id="@+id/et_mobile"
                             android:layout_width="fill_parent"
                             android:layout_height="48.0dip"
                             android:layout_marginLeft="28.0dip"
@@ -105,7 +105,7 @@
                         android:gravity="center_vertical">
 
                         <ImageView
-                            android:id="@+id/login_user_tips_btn"
+                            android:id="@+id/iv_mobile_clear"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:padding="8.0dip"
@@ -126,7 +126,7 @@
                         android:layout_weight="1.0">
 
                         <TextView
-                            android:id="@+id/tvPwd"
+                            android:id="@+id/tv_password_icon"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="18.0dip"
@@ -135,7 +135,7 @@
                             android:textSize="15.0sp" />
 
                         <EditText
-                            android:id="@+id/etPwd"
+                            android:id="@+id/et_password"
                             android:layout_width="fill_parent"
                             android:layout_height="48.0dip"
                             android:layout_marginLeft="28.0dip"
@@ -158,7 +158,7 @@
                         android:paddingRight="12.0dip">
 
                         <ImageView
-                            android:id="@+id/login_password_tips_btn"
+                            android:id="@+id/iv_password_clear"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:padding="8.0dip"
@@ -169,7 +169,7 @@
             </LinearLayout>
 
             <Button
-                android:id="@+id/bnLogin"
+                android:id="@+id/btn_login"
                 android:layout_width="fill_parent"
                 android:layout_height="44.0dp"
                 android:layout_below="@id/input_layout"
@@ -179,15 +179,16 @@
                 android:layout_marginTop="22.0dip"
                 android:background="@drawable/login_button_big_orange_bg"
                 android:text="登陆"
-                android:textColor="@color/main_button_disabled_text_color_for_light_color_button"
+                android:enabled="false"
+                android:textColor="@color/font_button_enable_disable"
                 android:textSize="17.0sp" />
 
             <TextView
-                android:id="@+id/login_blocking"
+                android:id="@+id/tv_forget_password"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
-                android:layout_below="@+id/bnLogin"
+                android:layout_below="@+id/btn_login"
                 android:layout_marginRight="10.0dip"
                 android:layout_marginTop="15.0dip"
                 android:text="忘记密码？"

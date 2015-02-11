@@ -28,13 +28,9 @@ import com.viewpagerindicator.CirclePageIndicator;
 
 import com.zrquan.mobile.ZrquanApplication;
 import com.zrquan.mobile.controller.FeedController;
-import com.zrquan.mobile.event.AccountEvent;
 import com.zrquan.mobile.event.DiscussionEvent;
 import com.zrquan.mobile.model.Account;
-import com.zrquan.mobile.model.Discussion;
-import com.zrquan.mobile.support.util.LogUtils;
-import com.zrquan.mobile.support.volley.VolleyJsonRequest;
-import com.zrquan.mobile.ui.authentic.UserRegisterSetPasswordActivity;
+import com.zrquan.mobile.support.util.ScreenUtils;
 import com.zrquan.mobile.ui.common.CommonFragment;
 import com.zrquan.mobile.widget.pulltorefresh.PullToRefreshBase;
 import com.zrquan.mobile.widget.pulltorefresh.PullToRefreshListView;
@@ -108,8 +104,7 @@ public class DiscussionFragment extends CommonFragment {
             mListView.addHeaderView(bannerView);
             mListView.setAdapter(mAdapter);
             mListView.setDivider(null);
-            float px = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 6, getResources().getDisplayMetrics());
-            mListView.setDividerHeight((int) px);
+            mListView.setDividerHeight((int) ScreenUtils.dpToPx(context, 6.0f));
             mListView.setSelector(android.R.color.transparent);
             mListView.setCacheColorHint(Color.TRANSPARENT);
 
@@ -153,6 +148,8 @@ public class DiscussionFragment extends CommonFragment {
             mListView.onRestoreInstanceState(mListViewState);
         }
 
+        vpBanner.startAutoScroll();
+
         return mPullListView;
     }
 
@@ -162,6 +159,8 @@ public class DiscussionFragment extends CommonFragment {
         // see http://stackoverflow.com/questions/3014089/maintain-save-restore-scroll-position-when-returning-to-a-listview/3035521#3035521
         // Save ListView state
         mListViewState = mListView.onSaveInstanceState();
+        EventBus.getDefault().unregister(this);
+        vpBanner.stopAutoScroll();
     }
 
     private View getBannerView(LayoutInflater inflater, ViewGroup container) {
@@ -210,16 +209,9 @@ public class DiscussionFragment extends CommonFragment {
         });
 
         vpBanner.setInterval(2000);
-//        viewPager.setSlideBorderMode(AutoScrollViewPager.SLIDE_BORDER_MODE_TO_PARENT);
+        //是否允许切换到最后一个banner时，切换到另一个fragment
+        //viewPager.setSlideBorderMode(AutoScrollViewPager.SLIDE_BORDER_MODE_TO_PARENT);
 
-        Bundle bundle = getArguments();
-//        if (bundle != null) {
-//            index = bundle.getInt(AutoScrollViewPagerInnerDemo.EXTRA_INDEX);
-//            if (index == AutoScrollViewPagerInnerDemo.DEFAULT_INDEX) {
-        //Todo:切换页面时，停止播放
-        vpBanner.startAutoScroll();
-//            }
-//        }
         return v;
     }
 
@@ -238,6 +230,14 @@ public class DiscussionFragment extends CommonFragment {
 
         mPullListView.setHasMoreData(true);
         setLastUpdateTime();
+    }
+
+    public void onEvent(ScrollBannerEvent scrollBannerEvent) {
+        if(scrollBannerEvent.enableScroll) {
+            vpBanner.startAutoScroll();
+        } else {
+            vpBanner.stopAutoScroll();
+        }
     }
 
     private class GetDataTask extends AsyncTask<Void, Void, Void> {
@@ -428,4 +428,12 @@ public class DiscussionFragment extends CommonFragment {
             "Xanadu", "Xynotyro", "Yarg Cornish", "Yarra Valley Pyramid", "Yorkshire Blue",
             "Zamorano", "Zanetti Grana Padano", "Zanetti Parmigiano Reggiano"
     };
+
+    //此事件仅在切换feedFragment的Viewpager时使用，用于暂停，开启滚动
+    public static class ScrollBannerEvent {
+        public boolean enableScroll = false;
+        public ScrollBannerEvent (boolean enableScroll){
+            this.enableScroll = enableScroll;
+        }
+    }
 }

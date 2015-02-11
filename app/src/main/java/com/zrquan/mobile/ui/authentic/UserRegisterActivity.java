@@ -9,13 +9,18 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.zrquan.mobile.R;
 import com.zrquan.mobile.controller.AccountController;
 import com.zrquan.mobile.event.AccountEvent;
+import com.zrquan.mobile.event.ActivityFinishEvent;
+import com.zrquan.mobile.support.enums.EventCode;
+import com.zrquan.mobile.support.enums.EventType;
+import com.zrquan.mobile.support.enums.IntentExtra;
+import com.zrquan.mobile.support.enums.ServerCode;
 import com.zrquan.mobile.support.util.RegUtils;
 import com.zrquan.mobile.support.util.ScreenUtils;
+import com.zrquan.mobile.support.util.ToastUtils;
 import com.zrquan.mobile.ui.common.CommonActivity;
 
 import java.util.regex.Matcher;
@@ -27,17 +32,24 @@ import butterknife.OnTextChanged;
 import de.greenrobot.event.EventBus;
 
 public class UserRegisterActivity extends CommonActivity{
-    public static final String TAG = "UserRegisterActivity";
 
     private Context context;
     private ProgressDialog mProgressDialog;
 
-    @InjectView(R.id.titleText) TextView tvTitle;
-    @InjectView(R.id.tv_btn_back) TextView tvBackBtn;
-    @InjectView(R.id.tv_tips) TextView tvInputTips;
-    @InjectView(R.id.btRegist) Button btRegist;
-    @InjectView(R.id.phoneNum) EditText etPhoneNum;
-    @InjectView(R.id.regist_phone_num_clear_btn) ImageView ivClearPhoneNumBtn;
+    @InjectView(R.id.tv_title)
+    TextView tvTitle;
+    @InjectView(R.id.tv_back)
+    TextView tvBack;
+
+    @InjectView(R.id.phoneNum)
+    EditText etPhoneNum;
+    @InjectView(R.id.regist_phone_num_clear_btn)
+    ImageView ivClearPhoneNumBtn;
+
+    @InjectView(R.id.tv_tips)
+    TextView tvInputTips;
+    @InjectView(R.id.btRegist)
+    Button btRegist;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,17 +72,31 @@ public class UserRegisterActivity extends CommonActivity{
         super.onStop();
     }
 
-    public void onEvent(AccountEvent event){
-        CharSequence ch = "短信验证码：" + event.verifyCode;
-        Toast.makeText(context, ch, Toast.LENGTH_LONG).show();
-        mProgressDialog.dismiss();
-        Intent intent = new Intent(this, UserRegisterSetPasswordActivity.class);
-        intent.putExtra("REGISTER_MOBILE", etPhoneNum.getText().toString());
-        startActivity(intent);
-        overridePendingTransition(R.anim.right2left_enter, R.anim.right2left_exit);
+    public void onEvent(AccountEvent accountEvent){
+        if(accountEvent.getEventType() == EventType.AE_NET_SEND_VERIFY_CODE) {
+            mProgressDialog.dismiss();
+            if(accountEvent.getEventCode() == EventCode.S_OK) {
+                CharSequence ch = "短信验证码：" + accountEvent.getVerifyCode();
+                ToastUtils.show(context, ch);
+                Intent intent = new Intent(this, UserRegisterSetPasswordActivity.class);
+                intent.putExtra(IntentExtra.MOBILE.name(), etPhoneNum.getText().toString());
+                startActivity(intent);
+                overridePendingTransition(R.anim.right2left_enter, R.anim.right2left_exit);
+            } else if(accountEvent.getEventCode() == EventCode.FA_SERVER_ERROR) {
+                if (accountEvent.getServerCode() == ServerCode.FA_USER_ALREADY_EXIT) {
+                    ToastUtils.show(context, "该用户已经存在");
+                }
+            }
+        }
     }
 
-    @OnClick(R.id.tv_btn_back)
+    public void onEvent(ActivityFinishEvent activityFinishEvent) {
+        if(activityFinishEvent.getTagName().equals(LOG_TAG)) {
+            finish();
+        }
+    }
+
+    @OnClick(R.id.tv_back)
     public void onBtnBackClick(View view) {
         doBack();
     }
@@ -84,7 +110,7 @@ public class UserRegisterActivity extends CommonActivity{
     private void initNavigationBar() {
         tvTitle.setText(R.string.account_regist);
         tvTitle.setVisibility(View.VISIBLE);
-        tvBackBtn.setVisibility(View.VISIBLE);
+        tvBack.setVisibility(View.VISIBLE);
     }
 
     @OnClick(R.id.btRegist)
@@ -114,10 +140,8 @@ public class UserRegisterActivity extends CommonActivity{
     private void checkRegisterParams() {
         if(checkPhoneNum(etPhoneNum.getText().toString())) {
             btRegist.setEnabled(true);
-            btRegist.setTextColor(getResources().getColor(R.color.main_button_shadow_text_color_for_light_color_button));
         } else {
             btRegist.setEnabled(false);
-            btRegist.setTextColor(getResources().getColor(R.color.main_button_disabled_text_color_for_light_color_button));
         }
     }
 

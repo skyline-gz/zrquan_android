@@ -22,7 +22,7 @@ public class Account{
         return accessToken;
     }
 
-    public void setAccessToken(String access_token) {
+    public void setAccessToken(String accessToken) {
         this.accessToken = accessToken;
     }
 

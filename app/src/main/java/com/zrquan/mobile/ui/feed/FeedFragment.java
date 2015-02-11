@@ -28,6 +28,7 @@ import java.util.ArrayList;
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 import butterknife.OnClick;
+import de.greenrobot.event.EventBus;
 
 public class FeedFragment extends CommonFragment {
 
@@ -165,9 +166,11 @@ public class FeedFragment extends CommonFragment {
             switch (position) {
                 case 0:
                     selectTabDiscussion();
+                    EventBus.getDefault().post(new DiscussionFragment.ScrollBannerEvent(true));
                     break;
                 case 1:
                     selectTabQuestion();
+                    EventBus.getDefault().post(new DiscussionFragment.ScrollBannerEvent(false));
                     break;
                 default:
                     break;
