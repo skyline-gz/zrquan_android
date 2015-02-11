@@ -2,6 +2,7 @@ package com.zrquan.mobile.support.util;
 
 import android.content.Context;
 import android.content.res.AssetManager;
+import android.webkit.MimeTypeMap;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -70,15 +71,15 @@ public class FileUtils {
     public static StringBuilder readFile(String filePath, String charsetName, Boolean isAssets, Context context) {
         StringBuilder fileContent = new StringBuilder("");
         BufferedReader reader = null;
-        if(charsetName == null) {
+        if (charsetName == null) {
             charsetName = "UTF-8";
         }
         try {
             InputStreamReader inputStreamReader;
             InputStream inputStream;
-            if(isAssets) {
+            if (isAssets) {
                 //isAssets为true时，必须提供 context参数
-                if(context == null) {
+                if (context == null) {
                     return null;
                 }
                 AssetManager assetManager = context.getAssets();
@@ -226,9 +227,9 @@ public class FileUtils {
     /**
      * write file
      *
-     * @param file   the file to be opened for writing.
-     * @param stream the input stream
-     * @param append if <code>true</code>, then bytes will be written to the end of the file rather than the beginning
+     * @param filePath the filePath to be opened for writing.
+     * @param stream   the input stream
+     * @param append   if <code>true</code>, then bytes will be written to the end of the file rather than the beginning
      * @return return true
      * @throws RuntimeException if an error occurs while operator FileOutputStream
      */
@@ -492,7 +493,7 @@ public class FileUtils {
      * <ul>
      * <li>if {@link FileUtils#getFolderName(String)} return null, return false</li>
      * <li>if target directory already exists, return true</li>
-     * <li>return {@link java.io.File#makeFolder}</li>
+     * <li>return {@link java.io.File#mkdir()}</li>
      * </ul>
      */
     public static boolean makeDirs(String filePath) {
@@ -502,7 +503,7 @@ public class FileUtils {
         }
 
         File folder = new File(folderName);
-        return (folder.exists() && folder.isDirectory()) ? true : folder.mkdirs();
+        return (folder.exists() && folder.isDirectory()) || folder.mkdirs();
     }
 
     /**
@@ -533,7 +534,7 @@ public class FileUtils {
      * Indicates if this file represents a directory on the underlying file system.
      *
      * @param directoryPath
-     * @return
+     * @return boolean
      */
     public static boolean isFolderExist(String directoryPath) {
         if (StringUtils.isBlank(directoryPath)) {
@@ -553,7 +554,7 @@ public class FileUtils {
      * <ul>
      *
      * @param path
-     * @return
+     * @return boolean
      */
     public static boolean deleteFile(String path) {
         if (StringUtils.isBlank(path)) {
@@ -597,5 +598,17 @@ public class FileUtils {
 
         File file = new File(path);
         return (file.exists() && file.isFile() ? file.length() : -1);
+    }
+
+    // http://stackoverflow.com/questions/8589645/how-to-determine-mime-type-of-file-in-android
+    // url = file path or whatever suitable URL you want.
+    public static String getMimeType(String url) {
+        String type = null;
+        String extension = MimeTypeMap.getFileExtensionFromUrl(url);
+        if (extension != null) {
+            MimeTypeMap mime = MimeTypeMap.getSingleton();
+            type = mime.getMimeTypeFromExtension(extension);
+        }
+        return type;
     }
 }

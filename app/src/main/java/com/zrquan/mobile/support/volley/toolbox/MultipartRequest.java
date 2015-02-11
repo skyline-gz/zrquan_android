@@ -7,26 +7,29 @@ import java.util.Map;
 
 import org.apache.http.HttpEntity;
 import org.apache.http.entity.mime.MultipartEntityBuilder;
-import android.util.Log;
+
 import com.android.volley.AuthFailureError;
 import com.android.volley.NetworkResponse;
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyLog;
+import com.zrquan.mobile.support.util.LogUtils;
 
 public class MultipartRequest<T> extends Request <T> {
+    private final static String LOG_TAG = "MultipartRequest";
+
     private Response.Listener<T> mListener;
 
-    private Map<String, String> mStringMap;
-    private Map<String, File> mFileMap;
+    private Map<String, String> mStringPartMap;
+    private Map<String, File> mFilePartMap;
     private HttpEntity mHttpEntity;
 
-    public MultipartRequest(String url, Response.Listener<T> listener, Response.ErrorListener errorListener,
-                            Map<String, String> stringMap, Map<String, File> fileMap) {
+    public MultipartRequest(String url, Map<String, String> stringPartMap, Map<String, File> filePartMap,
+                            Response.Listener<T> listener, Response.ErrorListener errorListener) {
         super(Method.POST, url, errorListener);
         mListener = listener;
-        mFileMap = fileMap;
-        mStringMap = stringMap;
+        mStringPartMap = stringPartMap;
+        mFilePartMap = filePartMap;
         buildMultipartEntity();
     }
 
@@ -41,7 +44,7 @@ public class MultipartRequest<T> extends Request <T> {
         try {
             mHttpEntity.writeTo(bos);
             String entityContentAsString = new String(bos.toByteArray());
-            Log.e("volley", entityContentAsString);
+            LogUtils.d(LOG_TAG, entityContentAsString);
         } catch (IOException e) {
             VolleyLog.e("IOException writing to ByteArrayOutputStream");
         }
@@ -60,10 +63,10 @@ public class MultipartRequest<T> extends Request <T> {
 
     private void buildMultipartEntity() {
         MultipartEntityBuilder multipartEntityBuilder = MultipartEntityBuilder.create();
-        for (Map.Entry<String, String> stringEntry : mStringMap.entrySet()) {
+        for (Map.Entry<String, String> stringEntry : mStringPartMap.entrySet()) {
             multipartEntityBuilder.addTextBody(stringEntry.getKey(), stringEntry.getValue());
         }
-        for (Map.Entry<String, File> fileEntry : mFileMap.entrySet()) {
+        for (Map.Entry<String, File> fileEntry : mFilePartMap.entrySet()) {
             multipartEntityBuilder.addBinaryBody(fileEntry.getKey(), fileEntry.getValue());
         }
         mHttpEntity = multipartEntityBuilder.build();

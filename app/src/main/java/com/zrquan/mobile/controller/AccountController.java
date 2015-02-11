@@ -33,7 +33,7 @@ public class AccountController {
         // pass second argument as "null" for GET requests
         Map<String, String> params = new HashMap<>();
         params.put("mobile", phoneNum);
-        if(ignoreMobileCheck) {
+        if (ignoreMobileCheck) {
             params.put("ignore_mobile_check", "true");
         }
         String url = UrlUtils.getUrlWithParams("users/send_verify_code", params);
@@ -44,7 +44,7 @@ public class AccountController {
                     String code = response.getString("code");
                     AccountEvent accountEvent = new AccountEvent();
                     accountEvent.setEventType(EventType.AE_NET_SEND_VERIFY_CODE);
-                    if(code.equals(ServerCode.S_OK.name())) {
+                    if (code.equals(ServerCode.S_OK.name())) {
                         accountEvent.setEventCode(EventCode.S_OK);
                         accountEvent.setServerCode(ServerCode.S_OK);
                         JSONObject results = response.getJSONObject("results");
@@ -76,7 +76,7 @@ public class AccountController {
             public void onResponse(JSONObject response) {
                 try {
                     String code = response.getString("code");
-                    if(code.equals(ServerCode.S_OK.name())) {
+                    if (code.equals(ServerCode.S_OK.name())) {
                         AccountEvent accountEvent = new AccountEvent();
                         accountEvent.setEventType(EventType.AE_NET_VERIFY_JWT);
                         accountEvent.setEventCode(EventCode.S_OK);
@@ -181,7 +181,7 @@ public class AccountController {
         });
     }
 
-    //用户注销账户
+    //注销账户
     public static void logoutAccount(Context context) {
         Account account = ZrquanApplication.getInstance().getAccount();
         account.setVerified(false);
@@ -190,6 +190,7 @@ public class AccountController {
         new AccountDao().saveAccount(context, account);
     }
 
+    //重设密码
     public static void resetPassword(String mobile, String newPassword, String verifyCode) {
         String url = UrlUtils.getUrl("users/reset_password");
 
