@@ -4,17 +4,17 @@ import android.text.TextUtils;
 
 public class Account{
 
-    private int id;
+    private Integer id;
     private String phoneNum;
     private String accessToken;
 
     private Boolean verified;
 
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 

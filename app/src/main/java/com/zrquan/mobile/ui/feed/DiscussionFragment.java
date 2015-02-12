@@ -1,12 +1,10 @@
 package com.zrquan.mobile.ui.feed;
 
 import android.content.Context;
-import android.content.Intent;
 import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Parcelable;
-import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,26 +17,21 @@ import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 
-import com.android.volley.VolleyError;
-import com.google.gson.FieldNamingPolicy;
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 import com.zrquan.mobile.R;
 import com.viewpagerindicator.CirclePageIndicator;
 
 import com.zrquan.mobile.ZrquanApplication;
-import com.zrquan.mobile.controller.FeedController;
-import com.zrquan.mobile.event.DiscussionEvent;
+import com.zrquan.mobile.controller.DiscussionController;
+import com.zrquan.mobile.event.DiscussionPullDownEvent;
+import com.zrquan.mobile.event.DiscussionPullUpEvent;
 import com.zrquan.mobile.model.Account;
+import com.zrquan.mobile.model.Discussion;
 import com.zrquan.mobile.support.util.ScreenUtils;
 import com.zrquan.mobile.ui.common.CommonFragment;
 import com.zrquan.mobile.widget.pulltorefresh.PullToRefreshBase;
 import com.zrquan.mobile.widget.pulltorefresh.PullToRefreshListView;
 import com.zrquan.mobile.widget.viewpager.AutoScrollViewPager;
 import com.zrquan.mobile.widget.viewpager.ImagePagerAdapter;
-
-import org.json.JSONArray;
-import org.json.JSONObject;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -56,7 +49,9 @@ public class DiscussionFragment extends CommonFragment {
     private CirclePageIndicator indicatorBanner;
     private ImageView ivCancelBanner;
     private RelativeLayout rlBanner;
-    private List<Discussion> discussionList;
+
+    private Integer[] discussionIds;
+    private int pullUpCounter = 0;
 
     private ListView mListView;
     private Parcelable mListViewState;                   //用于保存ListView状态
@@ -123,22 +118,26 @@ public class DiscussionFragment extends CommonFragment {
                 public void onPullDownToRefresh(PullToRefreshBase<ListView> refreshView) {
                     mIsStart = true;
                     Account account = ZrquanApplication.getInstance().getAccount();
-//                    if (account != null && account.getPhoneNum() != null) {
-//                        FeedController.getDiscussionFeed(account.getId(), 2);
-//                        FeedController.getDiscussionFeed(1, 2);
-                        FeedController.getTestFeed(5, 2);
-//                    } else {
-//                        mAdapter.notifyDataSetChanged();
-//                        mPullListView.onPullDownRefreshComplete();
-//                    }
-//                    new GetDataTask().execute();
+                    if (account != null && account.getId() != null) {
+                        DiscussionController.getIdsAndInitialList(account.getId());
+                        DiscussionController.getIdsAndInitialList(10);
+                    } else {
+                        mAdapter.notifyDataSetChanged();
+                        mPullListView.onPullDownRefreshComplete();
+                    }
+                    new GetDataTask().execute();
                 }
 
                 @Override
                 public void onPullUpToRefresh(PullToRefreshBase<ListView> refreshView) {
                     mIsStart = false;
-//                    FeedController.getDiscussionFeed(1, 2);
-//                    new GetDataTask().execute();
+                    pullUpCounter++;
+                    Account account = ZrquanApplication.getInstance().getAccount();
+                    if (account != null && account.getId() != null) {
+                        Integer[] partialIds = Arrays.copyOfRange(
+                                discussionIds, pullUpCounter * 20, pullUpCounter * 20 + 20);
+                        DiscussionController.getPartialList(partialIds);
+                    }
                 }
             });
             setLastUpdateTime();
@@ -215,18 +214,33 @@ public class DiscussionFragment extends CommonFragment {
         return v;
     }
 
-    public void onEvent(DiscussionEvent event){
+    public void onEvent(DiscussionPullDownEvent event){
         mListItems.clear();
-        this.discussionList = event.discussionList;
+        pullUpCounter = 0;      //重置 pullUpCounter
+        discussionIds = event.getDiscussionIds();
 
-        for (int i = 0; i < 20; i++) {
-            Discussion discussion = this.discussionList.get(i);
-            mListItems.addLast(discussion.getContent() +
-                    discussion.getUserName() + discussion.getThemeName());
+        List<Discussion> dList = event.getInitialDiscussionList();
+        for (int i = 0; i < dList.size(); i++) {
+            Discussion discussion = dList.get(i);
+            mListItems.addLast(discussion.getPostContent() +
+                    discussion.getPostUserName() + discussion.getThemeName());
         }
         mAdapter.notifyDataSetChanged();
         mPullListView.onPullDownRefreshComplete();
-//        mPullListView.onPullUpRefreshComplete();
+
+        mPullListView.setHasMoreData(true);
+        setLastUpdateTime();
+    }
+
+    public void onEvent(DiscussionPullUpEvent event){
+        List<Discussion> dList = event.getPartialList();
+        for (int i = 0; i < dList.size(); i++) {
+            Discussion discussion = dList.get(i);
+            mListItems.addLast(discussion.getPostContent() +
+                    discussion.getPostUserName() + discussion.getThemeName());
+        }
+        mAdapter.notifyDataSetChanged();
+        mPullListView.onPullUpRefreshComplete();
 
         mPullListView.setHasMoreData(true);
         setLastUpdateTime();
@@ -247,7 +261,7 @@ public class DiscussionFragment extends CommonFragment {
             // Simulates a background job.
             try {
                 Thread.sleep(3000);
-                FeedController.getDiscussionFeed(1, 2);
+                DiscussionController.getIdsAndInitialList(1);
             } catch (InterruptedException e) {
             }
             return null;

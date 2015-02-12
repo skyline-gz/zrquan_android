@@ -88,6 +88,10 @@ public class UrlUtils {
         return params.toString();
     }
 
+    public static String joinParams(String key, String value) {
+        return key + EQUAL_SIGN + value;
+    }
+
     /**
      * join params with encoded value
      *
