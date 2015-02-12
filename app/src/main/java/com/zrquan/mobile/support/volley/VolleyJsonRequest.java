@@ -5,12 +5,13 @@ import android.text.TextUtils;
 import com.android.volley.AuthFailureError;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
-import com.android.volley.toolbox.JsonObjectRequest;
+
+import com.google.gson.GsonBuilder;
+import com.google.gson.JsonObject;
 
 import com.zrquan.mobile.ZrquanApplication;
 import com.zrquan.mobile.support.util.LogUtils;
-
-import org.json.JSONObject;
+import com.zrquan.mobile.support.volley.toolbox.JsonObjectRequest;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -26,22 +27,23 @@ public class VolleyJsonRequest extends VolleyRequestBase {
         request(url, extHeaders, null, responseHandler);
     }
 
-    public static void post(String url, JSONObject params, final ResponseHandler responseHandler) {
+    public static void post(String url, JsonObject params, final ResponseHandler responseHandler) {
         request(url, null, params, responseHandler);
     }
 
-    public static void post(String url, final Map<String, String> extHeaders, JSONObject params, final ResponseHandler responseHandler) {
+    public static void post(String url, final Map<String, String> extHeaders, JsonObject params, final ResponseHandler responseHandler) {
         request(url, extHeaders, params, responseHandler);
     }
 
-    public static void request(String url, final Map<String, String> extHeaders, JSONObject params, final ResponseHandler responseHandler) {
+    public static void request(String url, final Map<String, String> extHeaders, JsonObject params, final ResponseHandler responseHandler) {
         request(url, extHeaders, params,
-                new Response.Listener<JSONObject>() {
+                new Response.Listener<JsonObject>() {
                     @Override
-                    public void onResponse(JSONObject response) {
+                    public void onResponse(JsonObject response) {
                         try {
-                            LogUtils.d("\n" + response.toString(4));
-                            responseHandler.onResponse(response);
+                            //for pretty json output
+                            String jsonString = new GsonBuilder().setPrettyPrinting().create().toJson(response);
+                            LogUtils.d("\nResponse:" + jsonString);
                         } catch (Exception e) {
                             LogUtils.d(LOG_Tag, e);
                         }
@@ -56,8 +58,8 @@ public class VolleyJsonRequest extends VolleyRequestBase {
                 });
     }
 
-    public static void request(String url, final Map<String, String> extHeaders, JSONObject params
-            ,  Response.Listener<JSONObject> listener, Response.ErrorListener errorListener) {
+    public static void request(String url, final Map<String, String> extHeaders, JsonObject params
+            , Response.Listener<JsonObject> listener, Response.ErrorListener errorListener) {
         JsonObjectRequest req = new JsonObjectRequest(url, params, listener, errorListener) {
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {

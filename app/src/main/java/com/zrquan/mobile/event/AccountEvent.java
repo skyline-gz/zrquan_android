@@ -1,6 +1,6 @@
 package com.zrquan.mobile.event;
 
-import org.json.JSONObject;
+import com.google.gson.JsonObject;
 
 public class AccountEvent extends BaseEvent{
 
@@ -8,7 +8,7 @@ public class AccountEvent extends BaseEvent{
 
     private String token;
 
-    private JSONObject userInfo;
+    private JsonObject userInfo;
 
     public String getVerifyCode() {
         return verifyCode;
@@ -26,11 +26,11 @@ public class AccountEvent extends BaseEvent{
         this.token = token;
     }
 
-    public JSONObject getUserInfo() {
+    public JsonObject getUserInfo() {
         return userInfo;
     }
 
-    public void setUserInfo(JSONObject userInfo) {
+    public void setUserInfo(JsonObject userInfo) {
         this.userInfo = userInfo;
     }
 }
