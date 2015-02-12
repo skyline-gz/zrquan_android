@@ -6,50 +6,95 @@ import java.sql.Date;
  * Created by James_Ouyang on 2015/2/6.
  */
 public class Discussion {
-    private String content;
-    private int anonymousFlag;
-    private Date createdAt;
-    private int agreeScore;
+    private String postContent;
+    private int postAnonymousFlag;
+    private Date postCreatedAt;
+    private int postAgreeScore;
     private int commentCount;
     private int commentAgree;
-    private String userName;
-    private String latestCompanyName;
-    private String latestPosition;
-    private String latestSchoolName;
-    private String latestMajor;
-    private String avatar;
+    private String postUserName;
+    private String postUserProp1;
+    private String postUserProp2;
+    private String postUserAvatar;
     private String themeName;
+    private String commentContent;
+    private Date commentCreatedAt;
+    private int commentAgreeScore;
+    private String commentUserName;
+    private String commentUserProp1;
+    private String commentUserProp2;
+    private String commentUserAvatar;
 
-    public String getContent() {
-        return content;
+    public int getCommentAgreeScore() {
+        return commentAgreeScore;
     }
 
-    public void setContent(String content) {
-        this.content = content;
+    public void setCommentAgreeScore(int commentAgreeScore) {
+        this.commentAgreeScore = commentAgreeScore;
     }
 
-    public int getAnonymousFlag() {
-        return anonymousFlag;
+    public String getCommentUserName() {
+        return commentUserName;
     }
 
-    public void setAnonymousFlag(int anonymousFlag) {
-        this.anonymousFlag = anonymousFlag;
+    public void setCommentUserName(String commentUserName) {
+        this.commentUserName = commentUserName;
     }
 
-    public Date getCreatedAt() {
-        return createdAt;
+    public String getCommentUserProp1() {
+        return commentUserProp1;
     }
 
-    public void setCreatedAt(Date createdAt) {
-        this.createdAt = createdAt;
+    public void setCommentUserProp1(String commentUserProp1) {
+        this.commentUserProp1 = commentUserProp1;
     }
 
-    public int getAgreeScore() {
-        return agreeScore;
+    public String getCommentUserProp2() {
+        return commentUserProp2;
     }
 
-    public void setAgreeScore(int agreeScore) {
-        this.agreeScore = agreeScore;
+    public void setCommentUserProp2(String commentUserProp2) {
+        this.commentUserProp2 = commentUserProp2;
+    }
+
+    public String getCommentUserAvatar() {
+        return commentUserAvatar;
+    }
+
+    public void setCommentUserAvatar(String commentUserAvatar) {
+        this.commentUserAvatar = commentUserAvatar;
+    }
+
+    public String getPostContent() {
+        return postContent;
+    }
+
+    public void setPostContent(String postContent) {
+        this.postContent = postContent;
+    }
+
+    public int getPostAnonymousFlag() {
+        return postAnonymousFlag;
+    }
+
+    public void setPostAnonymousFlag(int postAnonymousFlag) {
+        this.postAnonymousFlag = postAnonymousFlag;
+    }
+
+    public Date getPostCreatedAt() {
+        return postCreatedAt;
+    }
+
+    public void setPostCreatedAt(Date postCreatedAt) {
+        this.postCreatedAt = postCreatedAt;
+    }
+
+    public int getPostAgreeScore() {
+        return postAgreeScore;
+    }
+
+    public void setPostAgreeScore(int postAgreeScore) {
+        this.postAgreeScore = postAgreeScore;
     }
 
     public int getCommentCount() {
@@ -68,52 +113,36 @@ public class Discussion {
         this.commentAgree = commentAgree;
     }
 
-    public String getUserName() {
-        return userName;
+    public String getPostUserName() {
+        return postUserName;
     }
 
-    public void setUserName(String userName) {
-        this.userName = userName;
+    public void setPostUserName(String postUserName) {
+        this.postUserName = postUserName;
     }
 
-    public String getLatestCompanyName() {
-        return latestCompanyName;
+    public String getPostUserProp1() {
+        return postUserProp1;
     }
 
-    public void setLatestCompanyName(String latestCompanyName) {
-        this.latestCompanyName = latestCompanyName;
+    public void setPostUserProp1(String postUserProp1) {
+        this.postUserProp1 = postUserProp1;
     }
 
-    public String getLatestPosition() {
-        return latestPosition;
+    public String getPostUserProp2() {
+        return postUserProp2;
     }
 
-    public void setLatestPosition(String latestPosition) {
-        this.latestPosition = latestPosition;
+    public void setPostUserProp2(String postUserProp2) {
+        this.postUserProp2 = postUserProp2;
     }
 
-    public String getLatestSchoolName() {
-        return latestSchoolName;
+    public String getPostUserAvatar() {
+        return postUserAvatar;
     }
 
-    public void setLatestSchoolName(String latestSchoolName) {
-        this.latestSchoolName = latestSchoolName;
-    }
-
-    public String getLatestMajor() {
-        return latestMajor;
-    }
-
-    public void setLatestMajor(String latestMajor) {
-        this.latestMajor = latestMajor;
-    }
-
-    public String getAvatar() {
-        return avatar;
-    }
-
-    public void setAvatar(String avatar) {
-        this.avatar = avatar;
+    public void setPostUserAvatar(String postUserAvatar) {
+        this.postUserAvatar = postUserAvatar;
     }
 
     public String getThemeName() {
@@ -122,5 +151,21 @@ public class Discussion {
 
     public void setThemeName(String themeName) {
         this.themeName = themeName;
+    }
+
+    public String getCommentContent() {
+        return commentContent;
+    }
+
+    public void setCommentContent(String commentContent) {
+        this.commentContent = commentContent;
+    }
+
+    public Date getCommentCreatedAt() {
+        return commentCreatedAt;
+    }
+
+    public void setCommentCreatedAt(Date commentCreatedAt) {
+        this.commentCreatedAt = commentCreatedAt;
     }
 }

@@ -4,13 +4,19 @@ import android.text.TextUtils;
 
 public class Account{
 
-    private String mobile;
+    private Integer id;
+    private String phoneNum;
     private String accessToken;
+
     private Boolean verified;
-    private String avatar;
-    private int gender;
-    private int id;
-    private String name;
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
 
     public String getAccessToken() {
         return accessToken;
@@ -20,52 +26,20 @@ public class Account{
         this.accessToken = accessToken;
     }
 
-    public String getMobile() {
-        return mobile;
+    public String getPhoneNum() {
+        return phoneNum;
     }
 
-    public void setMobile(String mobile) {
-        this.mobile = mobile;
+    public void setPhoneNum(String phoneNum) {
+        this.phoneNum = phoneNum;
     }
 
     public void setVerified(Boolean verified) {
         this.verified = verified;
     }
 
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public int getGender() {
-        return gender;
-    }
-
-    public void setGender(int gender) {
-        this.gender = gender;
-    }
-
-    public String getAvatar() {
-        return avatar;
-    }
-
-    public void setAvatar(String avatar) {
-        this.avatar = avatar;
-    }
-
     public boolean isValid() {
-        return !TextUtils.isEmpty(this.accessToken) && !TextUtils.isEmpty(this.mobile);
+        return !TextUtils.isEmpty(this.accessToken) && !TextUtils.isEmpty(this.phoneNum);
     }
 
     public boolean isLogin() {
