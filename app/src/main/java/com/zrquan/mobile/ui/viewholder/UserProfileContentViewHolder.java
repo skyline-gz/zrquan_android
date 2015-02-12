@@ -3,6 +3,7 @@ package com.zrquan.mobile.ui.viewholder;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.view.Gravity;
@@ -75,8 +76,9 @@ public class UserProfileContentViewHolder {
         selectAvatarDialog.show();
     }
 
-    public void reloadAvatar(String filePath) {
-        riv_user_avatar.setImageBitmap(BitmapFactory.decodeFile(filePath, null));
+    public void reloadAvatar(Bitmap bitmap) {
+//        riv_user_avatar.setImageBitmap(BitmapFactory.decodeFile(filePath, null));
+        riv_user_avatar.setImageBitmap(bitmap);
     }
 
 

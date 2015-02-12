@@ -1,15 +1,20 @@
 package com.zrquan.mobile.ui;
 
 import android.content.Context;
-import android.content.Intent;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.nostra13.universalimageloader.core.ImageLoader;
+import com.nostra13.universalimageloader.core.listener.SimpleImageLoadingListener;
+
 import com.zrquan.mobile.R;
 import com.zrquan.mobile.ZrquanApplication;
-import com.zrquan.mobile.event.ProfileAvatarChangeEvent;
+import com.zrquan.mobile.event.ProfileEvent;
+import com.zrquan.mobile.support.enums.EventType;
+import com.zrquan.mobile.support.util.ToastUtils;
 import com.zrquan.mobile.ui.common.CommonFragment;
 import com.zrquan.mobile.ui.viewholder.UserProfileContentViewHolder;
 import com.zrquan.mobile.ui.viewholder.VisitorContentViewHolder;
@@ -58,7 +63,16 @@ public class ProfileFragment extends CommonFragment{
         super.onStop();
     }
 
-    public void onEvent(ProfileAvatarChangeEvent event) {
-        mUserProfileContentViewHolder.reloadAvatar(event.avatarPath);
+    public void onEvent(ProfileEvent profileEvent) {
+        if(profileEvent.getEventType() == EventType.PE_NET_RELOAD_AVATAR_BEGIN){
+            ToastUtils.show(context, "上传头像成功");
+            ImageLoader.getInstance().loadImage(profileEvent.getAvatarPath() , new SimpleImageLoadingListener() {
+                @Override
+                public void onLoadingComplete(String imageUri, View view, Bitmap loadedImage) {
+                    super.onLoadingComplete(imageUri, view, loadedImage);
+                    mUserProfileContentViewHolder.reloadAvatar(loadedImage);
+                }
+            });
+        }
     }
 }

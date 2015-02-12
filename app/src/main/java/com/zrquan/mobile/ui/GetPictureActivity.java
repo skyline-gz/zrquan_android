@@ -1,6 +1,8 @@
 package com.zrquan.mobile.ui;
 
+import android.app.ProgressDialog;
 import android.content.ActivityNotFoundException;
+import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
@@ -9,7 +11,10 @@ import android.os.Bundle;
 import android.provider.MediaStore;
 import android.text.TextUtils;
 
-import com.zrquan.mobile.event.ProfileAvatarChangeEvent;
+import com.zrquan.mobile.controller.ProfileController;
+import com.zrquan.mobile.event.ProfileEvent;
+import com.zrquan.mobile.support.enums.EventCode;
+import com.zrquan.mobile.support.enums.EventType;
 import com.zrquan.mobile.support.util.BitmapUtils;
 import com.zrquan.mobile.support.util.LogUtils;
 import com.zrquan.mobile.support.util.SDCardUtils;
@@ -32,13 +37,17 @@ public class GetPictureActivity extends CommonActivity {
     private boolean mCrop;    //是否需要截图
     private int mHeight;      //图片高度
     private int mWidth;       //图片宽度
-    
-    private String mTempCameraPath = null;
-    private String mTempCroppedPath = null;
+
+    private Context context;
+    private ProgressDialog mProgressDialog;
+
+    private String mTempCameraPath;
+    private String mTempCroppedPath;
 
     @Override
     protected void onCreate(Bundle paramBundle) {
         super.onCreate(paramBundle);
+        context = getApplicationContext();
         if (getActionBar() != null) {
             getActionBar().hide();
         }
@@ -48,6 +57,29 @@ public class GetPictureActivity extends CommonActivity {
         } else if (this.mSource == REQUEST_CODE_GALLERY) {
             startGallery();
         }
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        EventBus.getDefault().register(this);
+    }
+
+    @Override
+    public void onStop() {
+        EventBus.getDefault().unregister(this);
+        super.onStop();
+    }
+
+    public void onEvent(ProfileEvent profileEvent) {
+        if(profileEvent.getEventType() == EventType.PE_NET_UPLOAD_AVATAR_END){
+            if(profileEvent.getEventCode() == EventCode.S_OK) {
+                profileEvent.setEventType(EventType.PE_NET_RELOAD_AVATAR_BEGIN);
+                EventBus.getDefault().post(profileEvent);
+            }
+        }
+        mProgressDialog.dismiss();
+        finish();
     }
 
     @Override
@@ -73,7 +105,6 @@ public class GetPictureActivity extends CommonActivity {
 
         if (requestCode == REQUEST_CODE_GALLERY && resultCode == RESULT_OK && (data != null)) {
             Uri localUri = data.getData();
-            final Bitmap photo = data.getParcelableExtra("data");
             LogUtils.d(LOG_TAG, localUri.toString());
             Cursor cursor = getContentResolver().query(localUri, null, null, null, null);
             if ((cursor == null) || (cursor.getCount() < 1)) {
@@ -102,8 +133,6 @@ public class GetPictureActivity extends CommonActivity {
         if (requestCode == REQUEST_CODE_CROP && resultCode == RESULT_OK ) {
             back(this.mTempCroppedPath);
         }
-
-        finish();
     }
 
     private void getIntentData() {
@@ -118,8 +147,15 @@ public class GetPictureActivity extends CommonActivity {
 
     //返回获取的图片路径并退出本Activity
     private void back(String imagePath) {
-        EventBus.getDefault().post(new ProfileAvatarChangeEvent(imagePath));
-        finish();
+        if(imagePath == null) {
+            finish();
+            return;
+        }
+        mProgressDialog = new ProgressDialog(this);
+        mProgressDialog.setCancelable(false);
+        mProgressDialog.setMessage("服务器正在处理，请稍后...");
+        mProgressDialog.show();
+        ProfileController.uploadAvatar(imagePath);
     }
 
     private void startCamera() {
@@ -132,7 +168,7 @@ public class GetPictureActivity extends CommonActivity {
             startActivityForResult(intent, REQUEST_CODE_CAMERA);
             return;
         }
-        LogUtils.w(LOG_TAG, "存储卡不可用.");
+        LogUtils.w(LOG_TAG, "存储卡不可用");
     }
 
     private void startGallery() {

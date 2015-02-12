@@ -5,37 +5,23 @@ import android.text.TextUtils;
 import com.android.volley.AuthFailureError;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
-import com.android.volley.toolbox.JsonObjectRequest;
-
 import com.zrquan.mobile.ZrquanApplication;
 import com.zrquan.mobile.support.util.LogUtils;
+import com.zrquan.mobile.support.volley.toolbox.MultipartRequest;
 
 import org.json.JSONObject;
 
+import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
 
-public class VolleyJsonRequest extends VolleyRequestBase {
-    protected static String LOG_Tag = "VolleyJsonRequest";
+public class VolleyMultipartRequest extends VolleyRequestBase {
+    protected static String LOG_Tag = "VolleyMultipartRequest";
 
-    public static void get(String url, final ResponseHandler responseHandler) {
-        request(url, null, null, responseHandler);
-    }
+    public static void request(String url, final Map<String, String> extHeaders
+            , Map<String, String> stringPartMap, Map<String, File> filePartMap, final ResponseHandler responseHandler) {
 
-    public static void get(String url, final Map<String, String> extHeaders, final ResponseHandler responseHandler) {
-        request(url, extHeaders, null, responseHandler);
-    }
-
-    public static void post(String url, JSONObject params, final ResponseHandler responseHandler) {
-        request(url, null, params, responseHandler);
-    }
-
-    public static void post(String url, final Map<String, String> extHeaders, JSONObject params, final ResponseHandler responseHandler) {
-        request(url, extHeaders, params, responseHandler);
-    }
-
-    public static void request(String url, final Map<String, String> extHeaders, JSONObject params, final ResponseHandler responseHandler) {
-        request(url, extHeaders, params,
+        request(url, extHeaders, stringPartMap, filePartMap,
                 new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
@@ -56,13 +42,15 @@ public class VolleyJsonRequest extends VolleyRequestBase {
                 });
     }
 
-    public static void request(String url, final Map<String, String> extHeaders, JSONObject params
-            ,  Response.Listener<JSONObject> listener, Response.ErrorListener errorListener) {
-        JsonObjectRequest req = new JsonObjectRequest(url, params, listener, errorListener) {
+    public static void request(String url, final Map<String, String> extHeaders
+            , Map<String, String> stringPartMap, Map<String, File> filePartMap
+            , Response.Listener<JSONObject> listener, Response.ErrorListener errorListener) {
+
+        MultipartRequest req = new MultipartRequest(url, stringPartMap
+                , filePartMap, listener, errorListener) {
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
                 HashMap<String, String> headers = new HashMap<>();
-                headers.put("Content-Type", "application/json");
                 if (!TextUtils.isEmpty(accessToken)) {
                     headers.put(ACCESS_TOKEN_HEADER_KEY, accessToken);
                 }
