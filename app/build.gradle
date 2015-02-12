@@ -49,6 +49,11 @@ dependencies {
     // common annotations, string processing, I/O, and so forth.
     compile 'com.google.guava:guava:18.0'
     // for fully multipart form/data request entity support
+    // see http://stackoverflow.com/a/24783291/4412256
+    // httpmime-4.2.6.jar worked fine all by itself. I needed no other dependencies besides that jar.
+    // If you're using a dependency-managing build system like Maven or gradle,
+    // you'll notice that httpmime-4.2.6 depends on httpcore-4.2.5.
+    // Android's HttpClient seems compatible with httpcore-4.2.5, so I just excluded that dependency.
     compile 'org.apache.httpcomponents:httpmime:4.2.6'
     // HTTP library announced by google in I/O 2013. Illustrates, JSONRequest, StringRequest, Image caching
     compile 'com.mcxiaoke.volley:library:1.0.+'

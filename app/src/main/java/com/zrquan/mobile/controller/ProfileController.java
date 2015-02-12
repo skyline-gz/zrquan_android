@@ -1,6 +1,8 @@
 package com.zrquan.mobile.controller;
 
+import com.android.volley.TimeoutError;
 import com.android.volley.VolleyError;
+import com.zrquan.mobile.support.util.LogUtils;
 import com.zrquan.mobile.support.util.UrlUtils;
 import com.zrquan.mobile.support.volley.VolleyMultipartRequest;
 import com.zrquan.mobile.support.volley.VolleyRequestBase;
@@ -25,12 +27,14 @@ public class ProfileController {
         VolleyMultipartRequest.request(url, null, stringPartMap, filePartMap, new VolleyRequestBase.ResponseHandler() {
             @Override
             public void onResponse(JSONObject response) {
-
+                LogUtils.d("上传头像成功");
             }
 
             @Override
             public void onErrorResponse(VolleyError error) {
-
+                if(error instanceof TimeoutError) {
+                    LogUtils.d("服务器正忙，请稍后再上传");
+                }
             }
         });
     }

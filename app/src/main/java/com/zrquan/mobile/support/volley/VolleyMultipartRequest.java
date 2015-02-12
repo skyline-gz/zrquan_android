@@ -46,7 +46,7 @@ public class VolleyMultipartRequest extends VolleyRequestBase {
             , Map<String, String> stringPartMap, Map<String, File> filePartMap
             , Response.Listener<JSONObject> listener, Response.ErrorListener errorListener) {
 
-        MultipartRequest<JSONObject> req = new MultipartRequest<JSONObject>(url, stringPartMap
+        MultipartRequest req = new MultipartRequest(url, stringPartMap
                 , filePartMap, listener, errorListener) {
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
