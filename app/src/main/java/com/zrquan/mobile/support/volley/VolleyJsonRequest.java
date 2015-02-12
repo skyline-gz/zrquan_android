@@ -12,6 +12,7 @@ import com.zrquan.mobile.support.util.LogUtils;
 
 import org.json.JSONObject;
 
+import java.util.HashMap;
 import java.util.Map;
 
 public class VolleyJsonRequest extends VolleyRequestBase {
@@ -60,7 +61,8 @@ public class VolleyJsonRequest extends VolleyRequestBase {
         JsonObjectRequest req = new JsonObjectRequest(url, params, listener, errorListener) {
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
-                Map<String, String> headers = super.getHeaders();
+                HashMap<String, String> headers = new HashMap<>();
+                headers.put("Content-Type", "application/json");
                 if (!TextUtils.isEmpty(accessToken)) {
                     headers.put(ACCESS_TOKEN_HEADER_KEY, accessToken);
                 }

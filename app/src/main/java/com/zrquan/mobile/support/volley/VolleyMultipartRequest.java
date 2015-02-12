@@ -12,6 +12,7 @@ import com.zrquan.mobile.support.volley.toolbox.MultipartRequest;
 import org.json.JSONObject;
 
 import java.io.File;
+import java.util.HashMap;
 import java.util.Map;
 
 public class VolleyMultipartRequest extends VolleyRequestBase {
@@ -49,7 +50,7 @@ public class VolleyMultipartRequest extends VolleyRequestBase {
                 , filePartMap, listener, errorListener) {
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
-                Map<String, String> headers = super.getHeaders();
+                HashMap<String, String> headers = new HashMap<>();
                 if (!TextUtils.isEmpty(accessToken)) {
                     headers.put(ACCESS_TOKEN_HEADER_KEY, accessToken);
                 }

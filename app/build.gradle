@@ -33,6 +33,10 @@ repositories {
     }
 }
 
+configurations {
+    compile.exclude module: 'httpcore'
+}
+
 dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
     compile 'com.android.support:support-v4:21.0.+'
@@ -45,10 +49,7 @@ dependencies {
     // common annotations, string processing, I/O, and so forth.
     compile 'com.google.guava:guava:18.0'
     // for fully multipart form/data request entity support
-    // compile 'org.apache.httpcomponents:httpcore:4.4'
-    compile 'org.apache.httpcomponents:httpmime:4.4'
-    // see http://hc.apache.org/httpcomponents-client-4.4.x/index.html
-    // compile 'org.apache.httpcomponents:httpclient:4.4'
+    compile 'org.apache.httpcomponents:httpmime:4.2.6'
     // HTTP library announced by google in I/O 2013. Illustrates, JSONRequest, StringRequest, Image caching
     compile 'com.mcxiaoke.volley:library:1.0.+'
     // Powerful and flexible library for loading, caching and displaying images on Android.

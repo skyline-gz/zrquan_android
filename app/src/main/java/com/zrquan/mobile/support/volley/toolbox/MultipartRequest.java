@@ -3,10 +3,12 @@ package com.zrquan.mobile.support.volley.toolbox;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 import java.util.Map;
 
-import org.apache.http.HttpEntity;
-import org.apache.http.entity.mime.MultipartEntityBuilder;
+import org.apache.http.entity.mime.MultipartEntity;
+import org.apache.http.entity.mime.content.FileBody;
+import org.apache.http.entity.mime.content.StringBody;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.NetworkResponse;
@@ -22,7 +24,7 @@ public class MultipartRequest<T> extends Request <T> {
 
     private Map<String, String> mStringPartMap;
     private Map<String, File> mFilePartMap;
-    private HttpEntity mHttpEntity;
+    private MultipartEntity mMultipartEntity;
 
     public MultipartRequest(String url, Map<String, String> stringPartMap, Map<String, File> filePartMap,
                             Response.Listener<T> listener, Response.ErrorListener errorListener) {
@@ -30,19 +32,20 @@ public class MultipartRequest<T> extends Request <T> {
         mListener = listener;
         mStringPartMap = stringPartMap;
         mFilePartMap = filePartMap;
+        mMultipartEntity = new MultipartEntity();
         buildMultipartEntity();
     }
 
     @Override
     public String getBodyContentType() {
-        return mHttpEntity.getContentType().getValue();
+        return mMultipartEntity.getContentType().getValue();
     }
 
     @Override
     public byte[] getBody() throws AuthFailureError {
         ByteArrayOutputStream bos = new ByteArrayOutputStream();
         try {
-            mHttpEntity.writeTo(bos);
+            mMultipartEntity.writeTo(bos);
             String entityContentAsString = new String(bos.toByteArray());
             LogUtils.d(LOG_TAG, entityContentAsString);
         } catch (IOException e) {
@@ -62,13 +65,16 @@ public class MultipartRequest<T> extends Request <T> {
     }
 
     private void buildMultipartEntity() {
-        MultipartEntityBuilder multipartEntityBuilder = MultipartEntityBuilder.create();
-        for (Map.Entry<String, String> stringEntry : mStringPartMap.entrySet()) {
-            multipartEntityBuilder.addTextBody(stringEntry.getKey(), stringEntry.getValue());
+        try {
+            for (Map.Entry<String, String> stringEntry : mStringPartMap.entrySet()) {
+                mMultipartEntity.addPart(stringEntry.getKey(), new StringBody(stringEntry.getValue()));
+            }
+        } catch (UnsupportedEncodingException e) {
+            VolleyLog.e("UnsupportedEncodingException");
         }
+
         for (Map.Entry<String, File> fileEntry : mFilePartMap.entrySet()) {
-            multipartEntityBuilder.addBinaryBody(fileEntry.getKey(), fileEntry.getValue());
+            mMultipartEntity.addPart(fileEntry.getKey(), new FileBody(fileEntry.getValue()));
         }
-        mHttpEntity = multipartEntityBuilder.build();
     }
 }

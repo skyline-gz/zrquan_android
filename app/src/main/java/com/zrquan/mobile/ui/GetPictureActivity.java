@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.provider.MediaStore;
 import android.text.TextUtils;
 
+import com.zrquan.mobile.controller.ProfileController;
 import com.zrquan.mobile.event.ProfileAvatarChangeEvent;
 import com.zrquan.mobile.support.util.BitmapUtils;
 import com.zrquan.mobile.support.util.LogUtils;
@@ -73,7 +74,6 @@ public class GetPictureActivity extends CommonActivity {
 
         if (requestCode == REQUEST_CODE_GALLERY && resultCode == RESULT_OK && (data != null)) {
             Uri localUri = data.getData();
-            final Bitmap photo = data.getParcelableExtra("data");
             LogUtils.d(LOG_TAG, localUri.toString());
             Cursor cursor = getContentResolver().query(localUri, null, null, null, null);
             if ((cursor == null) || (cursor.getCount() < 1)) {
@@ -118,6 +118,7 @@ public class GetPictureActivity extends CommonActivity {
 
     //返回获取的图片路径并退出本Activity
     private void back(String imagePath) {
+        ProfileController.uploadAvatar(imagePath);
         EventBus.getDefault().post(new ProfileAvatarChangeEvent(imagePath));
         finish();
     }
