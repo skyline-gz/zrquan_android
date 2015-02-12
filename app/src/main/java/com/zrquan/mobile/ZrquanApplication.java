@@ -7,6 +7,11 @@ import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.VolleyLog;
 import com.android.volley.toolbox.Volley;
+
+import com.nostra13.universalimageloader.core.DisplayImageOptions;
+import com.nostra13.universalimageloader.core.ImageLoader;
+import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
+
 import com.zrquan.mobile.model.Account;
 import com.zrquan.mobile.support.db.DatabaseHelper;
 
@@ -58,7 +63,15 @@ public class ZrquanApplication extends Application {
     public void onCreate() {
         super.onCreate();
         zrquanApplication = this;
-        mAccount = new Account();
+
+        //创建默认的ImageLoader配置参数，默认开启硬盘内存和硬盘缓存
+        DisplayImageOptions defaultOptions = new DisplayImageOptions.Builder()
+                .cacheOnDisk(true).build();
+        ImageLoaderConfiguration configuration = new ImageLoaderConfiguration.Builder(getApplicationContext())
+                .defaultDisplayImageOptions(defaultOptions).build();
+
+        //Initialize ImageLoader with configuration.
+        ImageLoader.getInstance().init(configuration);
     }
 
     /**
