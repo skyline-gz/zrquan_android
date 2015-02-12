@@ -127,18 +127,26 @@ public class DiscussionFragment extends CommonFragment {
                         mAdapter.notifyDataSetChanged();
                         mPullListView.onPullDownRefreshComplete();
                     }
-                    new GetDataTask().execute();
                 }
 
                 @Override
                 public void onPullUpToRefresh(PullToRefreshBase<ListView> refreshView) {
                     mIsStart = false;
-                    pullUpCounter++;
-                    Account account = ZrquanApplication.getInstance().getAccount();
-                    if (account != null && account.getId() != null) {
-                        Integer[] partialIds = Arrays.copyOfRange(
-                                discussionIds, pullUpCounter * 20, pullUpCounter * 20 + 20);
-                        DiscussionController.getPartialList(partialIds, UrlUtils.SORT_TYPE_DEFAULT);
+                    // 如果已经上拉到24次，不再刷新数据
+                    if (pullUpCounter < 24) {
+                        pullUpCounter++;
+                        Account account = ZrquanApplication.getInstance().getAccount();
+                        if (account != null && account.getId() != null) {
+                            Integer[] partialIds = Arrays.copyOfRange(
+                                    discussionIds, pullUpCounter * 20, pullUpCounter * 20 + 20);
+                            DiscussionController.getPartialList(partialIds, UrlUtils.SORT_TYPE_DEFAULT);
+                        } else {
+                            mAdapter.notifyDataSetChanged();
+                            mPullListView.onPullDownRefreshComplete();
+                        }
+                    } else {
+                        mAdapter.notifyDataSetChanged();
+                        mPullListView.onPullDownRefreshComplete();
                     }
                 }
             });
@@ -216,6 +224,7 @@ public class DiscussionFragment extends CommonFragment {
         return v;
     }
 
+    // 下拉事件
     public void onEvent(PullDownEvent event){
         mListItems.clear();
         pullUpCounter = 0;      //重置 pullUpCounter
@@ -234,6 +243,7 @@ public class DiscussionFragment extends CommonFragment {
         setLastUpdateTime();
     }
 
+    // 上拉事件
     public void onEvent(PullUpEvent event){
         List<Discussion> dList = event.getPartialList();
         for (int i = 0; i < dList.size(); i++) {
@@ -254,48 +264,6 @@ public class DiscussionFragment extends CommonFragment {
         } else {
             vpBanner.stopAutoScroll();
         }
-    }
-
-    private class GetDataTask extends AsyncTask<Void, Void, Void> {
-
-        @Override
-        protected Void doInBackground(Void... params) {
-            // Simulates a background job.
-            try {
-                Thread.sleep(3000);
-            } catch (InterruptedException e) {
-            }
-            return null;
-        }
-
-//        @Override
-//        protected void onPostExecute(Void result) {
-//            boolean hasMoreData = true;
-//            if (mIsStart) {
-//                mListItems.addFirst("Added after refresh...");
-//            } else {
-//                int start = mCurIndex;
-//                int end = mCurIndex + mLoadDataCount;
-//                if (end >= mStrings.length) {
-//                    end = mStrings.length;
-//                    hasMoreData = false;
-//                }
-//
-//                for (int i = start; i < end; ++i) {
-//                    mListItems.add(mStrings[i]);
-//                }
-//
-//                mCurIndex = end;
-//            }
-//
-//            mAdapter.notifyDataSetChanged();
-//            mPullListView.onPullDownRefreshComplete();
-//            mPullListView.onPullUpRefreshComplete();
-//            mPullListView.setHasMoreData(hasMoreData);
-//            setLastUpdateTime();
-//
-//            super.onPostExecute(result);
-//        }
     }
 
     private void setLastUpdateTime() {
