@@ -4,8 +4,8 @@ import com.android.volley.VolleyError;
 import com.google.gson.FieldNamingPolicy;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import com.zrquan.mobile.event.DiscussionPullDownEvent;
-import com.zrquan.mobile.event.DiscussionPullUpEvent;
+import com.zrquan.mobile.event.PullDownEvent;
+import com.zrquan.mobile.event.PullUpEvent;
 import com.zrquan.mobile.model.Discussion;
 import com.zrquan.mobile.support.util.LogUtils;
 import com.zrquan.mobile.support.util.UrlUtils;
@@ -48,7 +48,7 @@ public class DiscussionController {
 //                        initialDiscussionList.add(d);
 //                    }
 //                    LogUtils.d("讨论数:" + initialDiscussionList.size());
-//                    EventBus.getDefault().post(new DiscussionPullDownEvent(initialDiscussionList));
+//                    EventBus.getDefault().post(new PullDownEvent(initialDiscussionList));
 //                } catch (Exception e) {
 //                    e.printStackTrace();
 //                }
@@ -64,7 +64,7 @@ public class DiscussionController {
         Map<String, String> params = new HashMap<>();
         params.put("userId", Integer.toString(userId));
         final String url =
-                "http://192.168.1.104:3000/home/hot_posts?userId=" + userId + "&sortType=" + sortType;
+                "http://192.168.1.104:3000/home/posts?userId=" + userId + "&sortType=" + sortType;
 
         LogUtils.i("服务器URL:" + url);
         VolleyJsonRequest.get(url, new VolleyJsonRequest.ResponseHandler() {
@@ -90,7 +90,7 @@ public class DiscussionController {
                             initialList.add(d);
                         }
                         LogUtils.i("讨论数:" + initialList.size());
-                        EventBus.getDefault().post(new DiscussionPullDownEvent(discussionIds, initialList));
+                        EventBus.getDefault().post(new PullDownEvent(discussionIds, initialList));
                     }
 
                 } catch (Exception e) {
@@ -116,7 +116,7 @@ public class DiscussionController {
             }
         }
         queryString = queryString + UrlUtils.PARAMETERS_SEPARATOR + "sortType=" + sortType;
-        final String url = "http://192.168.1.104:3000/home/hot_posts?" + queryString;
+        final String url = "http://192.168.1.104:3000/home/posts?" + queryString;
 
         LogUtils.i("服务器URL:" + url);
         VolleyJsonRequest.get(url, new VolleyJsonRequest.ResponseHandler() {
@@ -135,7 +135,7 @@ public class DiscussionController {
                         partialList.add(d);
                     }
                     LogUtils.i("讨论数:" + partialList.size());
-                    EventBus.getDefault().post(new DiscussionPullUpEvent(partialList));
+                    EventBus.getDefault().post(new PullUpEvent(partialList));
 
                 } catch (Exception e) {
                     e.printStackTrace();

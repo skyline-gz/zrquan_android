@@ -4,10 +4,10 @@ import com.zrquan.mobile.model.Discussion;
 
 import java.util.List;
 
-public class DiscussionPullUpEvent {
+public class PullUpEvent {
     private List<Discussion> partialList;
 
-    public DiscussionPullUpEvent(List<Discussion> partialList) {
+    public PullUpEvent(List<Discussion> partialList) {
         this.partialList = partialList;
     }
 

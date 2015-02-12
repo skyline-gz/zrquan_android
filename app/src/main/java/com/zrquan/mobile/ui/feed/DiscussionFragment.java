@@ -22,8 +22,8 @@ import com.viewpagerindicator.CirclePageIndicator;
 
 import com.zrquan.mobile.ZrquanApplication;
 import com.zrquan.mobile.controller.DiscussionController;
-import com.zrquan.mobile.event.DiscussionPullDownEvent;
-import com.zrquan.mobile.event.DiscussionPullUpEvent;
+import com.zrquan.mobile.event.PullDownEvent;
+import com.zrquan.mobile.event.PullUpEvent;
 import com.zrquan.mobile.model.Account;
 import com.zrquan.mobile.model.Discussion;
 import com.zrquan.mobile.support.util.ScreenUtils;
@@ -216,7 +216,7 @@ public class DiscussionFragment extends CommonFragment {
         return v;
     }
 
-    public void onEvent(DiscussionPullDownEvent event){
+    public void onEvent(PullDownEvent event){
         mListItems.clear();
         pullUpCounter = 0;      //重置 pullUpCounter
         discussionIds = event.getDiscussionIds();
@@ -234,7 +234,7 @@ public class DiscussionFragment extends CommonFragment {
         setLastUpdateTime();
     }
 
-    public void onEvent(DiscussionPullUpEvent event){
+    public void onEvent(PullUpEvent event){
         List<Discussion> dList = event.getPartialList();
         for (int i = 0; i < dList.size(); i++) {
             Discussion discussion = dList.get(i);

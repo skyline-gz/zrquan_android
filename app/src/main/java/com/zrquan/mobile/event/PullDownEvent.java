@@ -4,11 +4,11 @@ import com.zrquan.mobile.model.Discussion;
 
 import java.util.List;
 
-public class DiscussionPullDownEvent {
+public class PullDownEvent {
     private List<Discussion> initialDiscussionList;
     private Integer[] discussionIds;
 
-    public DiscussionPullDownEvent(Integer[] discussionIds, List<Discussion> initialList) {
+    public PullDownEvent(Integer[] discussionIds, List<Discussion> initialList) {
         this.initialDiscussionList = initialList;
         this.discussionIds = discussionIds;
     }
