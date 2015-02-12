@@ -40,7 +40,7 @@ public class VolleyJsonRequest extends VolleyRequestBase {
                     @Override
                     public void onResponse(JSONObject response) {
                         try {
-                            LogUtils.d("Response:" + response.toString(4));
+                            LogUtils.d("\n" + response.toString(4));
                             responseHandler.onResponse(response);
                         } catch (Exception e) {
                             LogUtils.d(LOG_Tag, e);

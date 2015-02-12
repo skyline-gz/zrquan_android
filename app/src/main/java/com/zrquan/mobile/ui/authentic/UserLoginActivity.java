@@ -11,6 +11,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.google.gson.Gson;
 import com.zrquan.mobile.R;
 import com.zrquan.mobile.ZrquanApplication;
 import com.zrquan.mobile.controller.AccountController;
@@ -25,6 +26,7 @@ import com.zrquan.mobile.support.util.ScreenUtils;
 import com.zrquan.mobile.support.util.StringUtils;
 import com.zrquan.mobile.support.util.ToastUtils;
 import com.zrquan.mobile.support.util.ViewUtils;
+import com.zrquan.mobile.support.volley.VolleyRequestBase;
 import com.zrquan.mobile.ui.MainActivity;
 import com.zrquan.mobile.ui.common.CommonActivity;
 
@@ -153,9 +155,9 @@ public class UserLoginActivity extends CommonActivity {
             if(accountEvent.getEventCode() == EventCode.S_OK) {
                 //生成Account对象，并存储到SharedPreferences
                 String token = accountEvent.getToken();
-                Account account = new Account();
-                account.setPhoneNum(etMobile.getText().toString());
+                Account account = new Gson().fromJson(accountEvent.getUserInfo().toString(), Account.class);
                 account.setAccessToken(token);
+                VolleyRequestBase.setAccessToken(token);
                 new AccountDao().saveAccount(context, account);
                 account.setVerified(true);
                 ZrquanApplication.getInstance().setAccount(account);

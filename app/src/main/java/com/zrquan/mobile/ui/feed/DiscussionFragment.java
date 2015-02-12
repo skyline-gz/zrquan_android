@@ -122,7 +122,7 @@ public class DiscussionFragment extends CommonFragment {
                 public void onPullDownToRefresh(PullToRefreshBase<ListView> refreshView) {
                     mIsStart = true;
                     Account account = ZrquanApplication.getInstance().getAccount();
-                    if (account != null && account.getPhoneNum() != null) {
+                    if (account != null && account.getMobile() != null) {
                         FeedController.getDiscussionFeed("1", "2");
                     } else {
                         mAdapter.notifyDataSetChanged();

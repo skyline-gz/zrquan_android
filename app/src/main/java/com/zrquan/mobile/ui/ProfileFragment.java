@@ -13,6 +13,7 @@ import com.nostra13.universalimageloader.core.listener.SimpleImageLoadingListene
 import com.zrquan.mobile.R;
 import com.zrquan.mobile.ZrquanApplication;
 import com.zrquan.mobile.event.ProfileEvent;
+import com.zrquan.mobile.model.Account;
 import com.zrquan.mobile.support.enums.EventType;
 import com.zrquan.mobile.support.util.ToastUtils;
 import com.zrquan.mobile.ui.common.CommonFragment;
@@ -42,6 +43,10 @@ public class ProfileFragment extends CommonFragment{
             } else {
                 rootView = inflater.inflate(R.layout.fragment_user_profile, container, false);
                 mUserProfileContentViewHolder = new UserProfileContentViewHolder(this, rootView);
+                Account account = ZrquanApplication.getInstance().getAccount();
+                if(account.getAvatar() != null) {
+                    reloadAccountAvatar(account.getAvatar());
+                }
             }
         } else {
             ((ViewGroup) rootView.getParent()).removeView(rootView);
@@ -65,14 +70,17 @@ public class ProfileFragment extends CommonFragment{
 
     public void onEvent(ProfileEvent profileEvent) {
         if(profileEvent.getEventType() == EventType.PE_NET_RELOAD_AVATAR_BEGIN){
-            ToastUtils.show(context, "上传头像成功");
-            ImageLoader.getInstance().loadImage(profileEvent.getAvatarPath() , new SimpleImageLoadingListener() {
-                @Override
-                public void onLoadingComplete(String imageUri, View view, Bitmap loadedImage) {
-                    super.onLoadingComplete(imageUri, view, loadedImage);
-                    mUserProfileContentViewHolder.reloadAvatar(loadedImage);
-                }
-            });
+            reloadAccountAvatar(profileEvent.getAvatarPath());
         }
+    }
+
+    private void reloadAccountAvatar(String avatarPath) {
+        ImageLoader.getInstance().loadImage( avatarPath, new SimpleImageLoadingListener() {
+            @Override
+            public void onLoadingComplete(String imageUri, View view, Bitmap loadedImage) {
+                super.onLoadingComplete(imageUri, view, loadedImage);
+                mUserProfileContentViewHolder.reloadAvatar(loadedImage);
+            }
+        });
     }
 }

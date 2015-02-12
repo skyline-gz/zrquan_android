@@ -13,6 +13,7 @@ import com.zrquan.mobile.support.enums.ServerCode;
 import com.zrquan.mobile.support.util.LogUtils;
 import com.zrquan.mobile.support.util.UrlUtils;
 import com.zrquan.mobile.support.volley.VolleyJsonRequest;
+import com.zrquan.mobile.support.volley.VolleyRequestBase;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -69,8 +70,9 @@ public class AccountController {
 
     //根据AccessToken验证当前已登录用户
     public static void verifyAccount(final String accessToken) {
-        VolleyJsonRequest.setAccessToken(accessToken);
+        VolleyRequestBase.setAccessToken(accessToken);
         String url = UrlUtils.getUrl("users/verify");
+
         VolleyJsonRequest.get(url, new VolleyJsonRequest.ResponseHandler() {
             @Override
             public void onResponse(JSONObject response) {
@@ -81,6 +83,9 @@ public class AccountController {
                         accountEvent.setEventType(EventType.AE_NET_VERIFY_JWT);
                         accountEvent.setEventCode(EventCode.S_OK);
                         accountEvent.setServerCode(ServerCode.S_OK);
+                        JSONObject results = response.getJSONObject("results");
+                        JSONObject userInfo = results.getJSONObject("user");
+                        accountEvent.setUserInfo(userInfo);
                         EventBus.getDefault().post(accountEvent);
                     }
                 } catch (JSONException e) {
@@ -164,6 +169,8 @@ public class AccountController {
                         JSONObject results = response.getJSONObject("results");
                         String token = results.getString("token");
                         accountEvent.setToken(token);
+                        JSONObject userInfo = results.getJSONObject("user");
+                        accountEvent.setUserInfo(userInfo);
                     } else {
                         accountEvent.setEventCode(EventCode.FA_SERVER_ERROR);
                         accountEvent.setServerCode(ServerCode.valueOf(code));
