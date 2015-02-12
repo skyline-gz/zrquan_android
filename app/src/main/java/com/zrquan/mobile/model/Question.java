@@ -7,42 +7,47 @@ import java.sql.Date;
  */
 public class Question {
 
-    private String title;
-    private int anonymousFlag;
-    private Date createdAt;
+    private String questionTitle;
+    private int questionAnonymousFlag;
+    private Date questionCreatedAt;
     private int answerCount;
     private int answerAgree;
     private int followCount;
-    private String userName;
-    private String latestCompanyName;
-    private String latestPosition;
-    private String latestSchoolName;
-    private String latestMajor;
-    private String avatar;
+    private String questionUserName;
+    private String questionUserProp1;
+    private String questionUserProp2;
+    private String questionUserAvatar;
     private String themeName;
+    private String answerContent;
+    private String answerCreatedAt;
+    private String answerAgreeScore;
+    private String answerUserName;
+    private String answerUserProp1;
+    private String answerUserProp2;
+    private String answerUserAvatar;
 
-    public String getTitle() {
-        return title;
+    public String getQuestionTitle() {
+        return questionTitle;
     }
 
-    public void setTitle(String title) {
-        this.title = title;
+    public void setQuestionTitle(String questionTitle) {
+        this.questionTitle = questionTitle;
     }
 
-    public int getAnonymousFlag() {
-        return anonymousFlag;
+    public int getQuestionAnonymousFlag() {
+        return questionAnonymousFlag;
     }
 
-    public void setAnonymousFlag(int anonymousFlag) {
-        this.anonymousFlag = anonymousFlag;
+    public void setQuestionAnonymousFlag(int questionAnonymousFlag) {
+        this.questionAnonymousFlag = questionAnonymousFlag;
     }
 
-    public Date getCreatedAt() {
-        return createdAt;
+    public Date getQuestionCreatedAt() {
+        return questionCreatedAt;
     }
 
-    public void setCreatedAt(Date createdAt) {
-        this.createdAt = createdAt;
+    public void setQuestionCreatedAt(Date questionCreatedAt) {
+        this.questionCreatedAt = questionCreatedAt;
     }
 
     public int getAnswerCount() {
@@ -69,52 +74,52 @@ public class Question {
         this.followCount = followCount;
     }
 
-    public String getUserName() {
-        return userName;
+    public String getQuestionUserName() {
+        return questionUserName;
     }
 
-    public void setUserName(String userName) {
-        this.userName = userName;
+    public void setQuestionUserName(String questionUserName) {
+        this.questionUserName = questionUserName;
     }
 
-    public String getLatestCompanyName() {
-        return latestCompanyName;
+    public String getQuestionUserProp1() {
+        return questionUserProp1;
     }
 
-    public void setLatestCompanyName(String latestCompanyName) {
-        this.latestCompanyName = latestCompanyName;
+    public void setQuestionUserProp1(String questionUserProp1) {
+        this.questionUserProp1 = questionUserProp1;
     }
 
-    public String getLatestPosition() {
-        return latestPosition;
+    public String getQuestionUserProp2() {
+        return questionUserProp2;
     }
 
-    public void setLatestPosition(String latestPosition) {
-        this.latestPosition = latestPosition;
+    public void setQuestionUserProp2(String questionUserProp2) {
+        this.questionUserProp2 = questionUserProp2;
     }
 
-    public String getLatestSchoolName() {
-        return latestSchoolName;
+    public String getAnswerContent() {
+        return answerContent;
     }
 
-    public void setLatestSchoolName(String latestSchoolName) {
-        this.latestSchoolName = latestSchoolName;
+    public void setAnswerContent(String answerContent) {
+        this.answerContent = answerContent;
     }
 
-    public String getLatestMajor() {
-        return latestMajor;
+    public String getAnswerCreatedAt() {
+        return answerCreatedAt;
     }
 
-    public void setLatestMajor(String latestMajor) {
-        this.latestMajor = latestMajor;
+    public void setAnswerCreatedAt(String answerCreatedAt) {
+        this.answerCreatedAt = answerCreatedAt;
     }
 
-    public String getAvatar() {
-        return avatar;
+    public String getQuestionUserAvatar() {
+        return questionUserAvatar;
     }
 
-    public void setAvatar(String avatar) {
-        this.avatar = avatar;
+    public void setQuestionUserAvatar(String questionUserAvatar) {
+        this.questionUserAvatar = questionUserAvatar;
     }
 
     public String getThemeName() {
@@ -123,5 +128,45 @@ public class Question {
 
     public void setThemeName(String themeName) {
         this.themeName = themeName;
+    }
+
+    public String getAnswerAgreeScore() {
+        return answerAgreeScore;
+    }
+
+    public void setAnswerAgreeScore(String answerAgreeScore) {
+        this.answerAgreeScore = answerAgreeScore;
+    }
+
+    public String getAnswerUserName() {
+        return answerUserName;
+    }
+
+    public void setAnswerUserName(String answerUserName) {
+        this.answerUserName = answerUserName;
+    }
+
+    public String getAnswerUserProp1() {
+        return answerUserProp1;
+    }
+
+    public void setAnswerUserProp1(String answerUserProp1) {
+        this.answerUserProp1 = answerUserProp1;
+    }
+
+    public String getAnswerUserProp2() {
+        return answerUserProp2;
+    }
+
+    public void setAnswerUserProp2(String answerUserProp2) {
+        this.answerUserProp2 = answerUserProp2;
+    }
+
+    public String getAnswerUserAvatar() {
+        return answerUserAvatar;
+    }
+
+    public void setAnswerUserAvatar(String answerUserAvatar) {
+        this.answerUserAvatar = answerUserAvatar;
     }
 }

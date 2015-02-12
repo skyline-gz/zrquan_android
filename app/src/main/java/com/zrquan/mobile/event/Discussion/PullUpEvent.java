@@ -1,4 +1,4 @@
-package com.zrquan.mobile.event;
+package com.zrquan.mobile.event.Discussion;
 
 import com.zrquan.mobile.model.Discussion;
 
