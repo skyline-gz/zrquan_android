@@ -59,12 +59,12 @@ public class DiscussionController {
 //        });
 //    }
 
-    public static void getIdsAndInitialList(int userId) {
+    public static void getIdsAndInitialList(int userId, String sortType) {
         // pass second argument as "null" for GET requests
         Map<String, String> params = new HashMap<>();
         params.put("userId", Integer.toString(userId));
         final String url =
-                "http://192.168.1.104:3000/home/hot_posts?userId=" + userId;
+                "http://192.168.1.104:3000/home/hot_posts?userId=" + userId + "&sortType=" + sortType;
 
         LogUtils.i("服务器URL:" + url);
         VolleyJsonRequest.get(url, new VolleyJsonRequest.ResponseHandler() {
@@ -103,7 +103,7 @@ public class DiscussionController {
         });
     }
 
-    public static void getPartialList(Integer[] postIds) {
+    public static void getPartialList(Integer[] postIds, String sortType) {
         // pass second argument as "null" for GET requests
         Map<String, String> params = new HashMap<>();
         String queryString = "";
@@ -115,6 +115,7 @@ public class DiscussionController {
                         UrlUtils.joinParams("postId[]", postIds[i].toString());
             }
         }
+        queryString = queryString + UrlUtils.PARAMETERS_SEPARATOR + "sortType=" + sortType;
         final String url = "http://192.168.1.104:3000/home/hot_posts?" + queryString;
 
         LogUtils.i("服务器URL:" + url);

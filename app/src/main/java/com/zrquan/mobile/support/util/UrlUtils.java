@@ -4,6 +4,9 @@ import java.util.Iterator;
 import java.util.Map;
 
 public class UrlUtils {
+    public static final String SORT_TYPE_HOT = "hot";
+    public static final String SORT_TYPE_NEW = "new";
+    public static final String SORT_TYPE_DEFAULT = "hot";
     /** url and para separator **/
     public static final String URL_AND_PARA_SEPARATOR = "?";
     /** parameters separator **/

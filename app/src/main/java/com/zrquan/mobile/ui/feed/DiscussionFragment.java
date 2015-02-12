@@ -27,6 +27,7 @@ import com.zrquan.mobile.event.DiscussionPullUpEvent;
 import com.zrquan.mobile.model.Account;
 import com.zrquan.mobile.model.Discussion;
 import com.zrquan.mobile.support.util.ScreenUtils;
+import com.zrquan.mobile.support.util.UrlUtils;
 import com.zrquan.mobile.ui.common.CommonFragment;
 import com.zrquan.mobile.widget.pulltorefresh.PullToRefreshBase;
 import com.zrquan.mobile.widget.pulltorefresh.PullToRefreshListView;
@@ -117,10 +118,11 @@ public class DiscussionFragment extends CommonFragment {
                 @Override
                 public void onPullDownToRefresh(PullToRefreshBase<ListView> refreshView) {
                     mIsStart = true;
+
                     Account account = ZrquanApplication.getInstance().getAccount();
                     if (account != null && account.getId() != null) {
-                        DiscussionController.getIdsAndInitialList(account.getId());
-                        DiscussionController.getIdsAndInitialList(10);
+                        DiscussionController.getIdsAndInitialList(account.getId(), UrlUtils.SORT_TYPE_DEFAULT);
+//                        DiscussionController.getIdsAndInitialList(10);
                     } else {
                         mAdapter.notifyDataSetChanged();
                         mPullListView.onPullDownRefreshComplete();
@@ -136,7 +138,7 @@ public class DiscussionFragment extends CommonFragment {
                     if (account != null && account.getId() != null) {
                         Integer[] partialIds = Arrays.copyOfRange(
                                 discussionIds, pullUpCounter * 20, pullUpCounter * 20 + 20);
-                        DiscussionController.getPartialList(partialIds);
+                        DiscussionController.getPartialList(partialIds, UrlUtils.SORT_TYPE_DEFAULT);
                     }
                 }
             });
@@ -261,7 +263,6 @@ public class DiscussionFragment extends CommonFragment {
             // Simulates a background job.
             try {
                 Thread.sleep(3000);
-                DiscussionController.getIdsAndInitialList(1);
             } catch (InterruptedException e) {
             }
             return null;
