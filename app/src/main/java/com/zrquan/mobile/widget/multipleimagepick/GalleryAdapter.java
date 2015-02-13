@@ -11,6 +11,7 @@ import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.listener.SimpleImageLoadingListener;
 
 import com.zrquan.mobile.R;
+import com.zrquan.mobile.support.util.LogUtils;
 
 import java.util.ArrayList;
 
@@ -117,8 +118,10 @@ public class GalleryAdapter extends BaseAdapter {
 			data.get(position).isSeleted = true;
 		}
 
-		((ViewHolder) v.getTag()).imgQueueMultiSelected.setSelected(data
-				.get(position).isSeleted);
+        LogUtils.d(Boolean.toString(data.get(position).isSeleted));
+
+        ((ViewHolder) v.getTag()).imgQueueMultiSelected.setSelected(data
+        .get(position).isSeleted);
 	}
 
 	@Override

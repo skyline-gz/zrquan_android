@@ -17,6 +17,7 @@ import com.zrquan.mobile.support.util.SDCardUtils;
 import com.zrquan.mobile.support.util.ScreenUtils;
 import com.zrquan.mobile.ui.common.CommonActivity;
 import com.zrquan.mobile.ui.viewholder.EmojiPanelViewHolder;
+import com.zrquan.mobile.widget.multipleimagepick.MultipleImagePickActivity;
 
 import java.io.File;
 
@@ -66,7 +67,7 @@ public class PublishActivity extends CommonActivity{
                         startCamera();
                         break;
                     case 1:
-                        Intent intent1 = new Intent("zrquan.action.MULTIPLE_PICTURE_PICK");
+                        Intent intent1 = new Intent(MultipleImagePickActivity.ACTION_MULTIPLE_PICK);
                         startActivity(intent1);
                         break;
                     default:

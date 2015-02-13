@@ -1,6 +1,5 @@
 package com.zrquan.mobile.widget.multipleimagepick;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
@@ -26,13 +25,18 @@ import com.nostra13.universalimageloader.core.listener.PauseOnScrollListener;
 import com.nostra13.universalimageloader.utils.StorageUtils;
 
 import com.zrquan.mobile.R;
+import com.zrquan.mobile.support.util.LogUtils;
+import com.zrquan.mobile.ui.common.CommonActivity;
 
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Collections;
 
 //see https://github.com/luminousman/MultipleImagePick
-public class MultipleImagePickActivity extends Activity {
+public class MultipleImagePickActivity extends CommonActivity {
+
+    public static final String ACTION_PICK = "zrquan.action.SINGLE_PICTURE_PICK";
+    public static final String ACTION_MULTIPLE_PICK = "zrquan.action.MULTIPLE_PICTURE_PICK";
 
 	GridView gridGallery;
 	Handler handler;
@@ -68,12 +72,12 @@ public class MultipleImagePickActivity extends Activity {
                     CACHE_DIR);
 
 			DisplayImageOptions defaultOptions = new DisplayImageOptions.Builder()
-					.cacheOnDisc(true).imageScaleType(ImageScaleType.EXACTLY)
+					.cacheInMemory(true).cacheOnDisk(true).imageScaleType(ImageScaleType.EXACTLY)
 					.bitmapConfig(Bitmap.Config.RGB_565).build();
 			ImageLoaderConfiguration.Builder builder = new ImageLoaderConfiguration.Builder(
 					getBaseContext())
 					.defaultDisplayImageOptions(defaultOptions)
-					.discCache(new UnlimitedDiscCache(cacheDir))
+					.diskCache(new UnlimitedDiscCache(cacheDir))
 					.memoryCache(new WeakMemoryCache());
 
 			ImageLoaderConfiguration config = builder.build();
@@ -81,7 +85,7 @@ public class MultipleImagePickActivity extends Activity {
 			imageLoader.init(config);
 
 		} catch (Exception e) {
-
+            LogUtils.d(LOG_TAG, e);
 		}
 	}
 
@@ -95,18 +99,14 @@ public class MultipleImagePickActivity extends Activity {
 				true, true);
 		gridGallery.setOnScrollListener(listener);
 
-		if (action.equalsIgnoreCase(Action.ACTION_MULTIPLE_PICK)) {
-
+		if (action.equalsIgnoreCase(ACTION_MULTIPLE_PICK)) {
 			findViewById(R.id.llBottomContainer).setVisibility(View.VISIBLE);
 			gridGallery.setOnItemClickListener(mItemMulClickListener);
 			adapter.setMultiplePick(true);
-
-		} else if (action.equalsIgnoreCase(Action.ACTION_PICK)) {
-
+		} else if (action.equalsIgnoreCase(ACTION_PICK)) {
 			findViewById(R.id.llBottomContainer).setVisibility(View.GONE);
 			gridGallery.setOnItemClickListener(mItemSingleClickListener);
 			adapter.setMultiplePick(false);
-
 		}
 
 		gridGallery.setAdapter(adapter);
@@ -166,7 +166,6 @@ public class MultipleImagePickActivity extends Activity {
 		@Override
 		public void onItemClick(AdapterView<?> l, View v, int position, long id) {
 			adapter.changeSelection(v, position);
-
 		}
 	};
 
