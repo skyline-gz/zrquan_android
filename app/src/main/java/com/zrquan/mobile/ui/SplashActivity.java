@@ -70,7 +70,7 @@ public class SplashActivity extends CommonActivity {
         if(accountEvent.getEventType() == EventType.AE_NET_VERIFY_JWT) {
             Account currentAccount = ZrquanApplication.getInstance().getAccount();
             if(accountEvent.getEventCode() == EventCode.S_OK) {
-                GsonUtils.populate(new GsonBuilder(), accountEvent.getUserInfo().toString(), Account.class, currentAccount);
+                GsonUtils.populate(new GsonBuilder(), accountEvent.getUserInfo(), Account.class, currentAccount);
                 currentAccount.setVerified(true);
             } else {
                 currentAccount.setVerified(false);

@@ -13,7 +13,7 @@ import java.io.UnsupportedEncodingException;
 
 /**
  * A request for retrieving a {@link com.google.gson.JsonObject} response body at a given URL, allowing for an
- * optional {@link org.json.JSONObject} to be passed in as part of the request body.
+ * optional {@link com.google.gson.JsonObject} to be passed in as part of the request body.
  */
 public class JsonObjectRequest extends JsonRequest<JsonObject> {
 
