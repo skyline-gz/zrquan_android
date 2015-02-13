@@ -5,7 +5,7 @@ import java.sql.Date;
 /**
  * Created by James_Ouyang on 2015/2/6.
  */
-public class Discussion {
+public class DiscussionFeed {
     private String postContent;
     private int postAnonymousFlag;
     private Date postCreatedAt;

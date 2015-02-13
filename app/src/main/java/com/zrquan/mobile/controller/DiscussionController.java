@@ -10,7 +10,7 @@ import com.google.gson.JsonObject;
 
 import com.zrquan.mobile.event.Discussion.PullDownEvent;
 import com.zrquan.mobile.event.Discussion.PullUpEvent;
-import com.zrquan.mobile.model.Discussion;
+import com.zrquan.mobile.model.DiscussionFeed;
 import com.zrquan.mobile.support.util.LogUtils;
 import com.zrquan.mobile.support.util.UrlUtils;
 import com.zrquan.mobile.support.volley.VolleyJsonRequest;
@@ -45,13 +45,13 @@ public class DiscussionController {
 //                        LogUtils.d(discussionIds.toString());
 
                         JsonArray initialResult = response.get("initial_result").getAsJsonArray();
-                        List<Discussion> initialList = new ArrayList<>();
+                        List<DiscussionFeed> initialList = new ArrayList<>();
                         Gson gson = new GsonBuilder()
                                 .setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES)
                                 .create();
                         LogUtils.d("开始循环");
                         for (int i = 0; i < initialResult.size(); i ++ ) {
-                            Discussion d = gson.fromJson(initialResult.get(i), Discussion.class);
+                            DiscussionFeed d = gson.fromJson(initialResult.get(i), DiscussionFeed.class);
                             initialList.add(d);
                         }
                         LogUtils.i("讨论数:" + initialList.size());
@@ -90,13 +90,13 @@ public class DiscussionController {
                 try {
                     LogUtils.i("收到请求的回复了");
                     JsonArray partialResult = response.get("partial_result").getAsJsonArray();
-                    List<Discussion> partialList = new ArrayList<>();
+                    List<DiscussionFeed> partialList = new ArrayList<>();
                     Gson gson = new GsonBuilder()
                             .setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES)
                             .create();
                     LogUtils.d("开始循环");
                     for (int i = 0; i < partialResult.size(); i ++ ) {
-                        Discussion d = gson.fromJson(partialResult.get(i), Discussion.class);
+                        DiscussionFeed d = gson.fromJson(partialResult.get(i), DiscussionFeed.class);
                         partialList.add(d);
                     }
                     LogUtils.i("讨论数:" + partialList.size());

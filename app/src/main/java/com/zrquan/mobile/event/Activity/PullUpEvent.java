@@ -1,7 +1,6 @@
 package com.zrquan.mobile.event.Activity;
 
 import com.zrquan.mobile.model.Activity;
-import com.zrquan.mobile.model.Discussion;
 
 import java.util.List;
 

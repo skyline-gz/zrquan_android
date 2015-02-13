@@ -1,23 +1,23 @@
 package com.zrquan.mobile.event.Discussion;
 
-import com.zrquan.mobile.model.Discussion;
+import com.zrquan.mobile.model.DiscussionFeed;
 
 import java.util.List;
 
 public class PullDownEvent {
-    private List<Discussion> initialList;
+    private List<DiscussionFeed> initialList;
     private Integer[] discussionIds;
 
-    public PullDownEvent(Integer[] discussionIds, List<Discussion> initialList) {
+    public PullDownEvent(Integer[] discussionIds, List<DiscussionFeed> initialList) {
         this.initialList = initialList;
         this.discussionIds = discussionIds;
     }
 
-    public List<Discussion> getInitialList() {
+    public List<DiscussionFeed> getInitialList() {
         return initialList;
     }
 
-    public void setInitialList(List<Discussion> initialList) {
+    public void setInitialList(List<DiscussionFeed> initialList) {
         this.initialList = initialList;
     }
 
