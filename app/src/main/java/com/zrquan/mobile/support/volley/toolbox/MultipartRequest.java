@@ -27,7 +27,7 @@ import com.zrquan.mobile.support.util.LogUtils;
 public class MultipartRequest extends Request<JsonObject> {
     private final static String LOG_TAG = "MultipartRequest";
 
-    private final static int DEFAULT_SOCKET_TIMEOUT_MS = 10000;
+    private final static int DEFAULT_SOCKET_TIMEOUT_MS = 20000;
     private final static int DEFAULT_RETRY_TIMES = 0;
 
     private Response.Listener<JsonObject> mListener;
