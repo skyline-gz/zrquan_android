@@ -24,48 +24,12 @@ import de.greenrobot.event.EventBus;
 
 public class DiscussionController {
 
-//    public static void getIdsAndInitialList(int userId, int page) {
-//        // pass second argument as "null" for GET requests
-//        Map<String, String> params = new HashMap<>();
-//        params.put("userId", Integer.toString(userId));
-//        params.put("page", Integer.toString(page));
-//        final String url =
-//                "http://192.168.1.104:3000/home/hot_posts?userId=" + userId + "&page=" + page;
-//
-//        LogUtils.d("服务器URL:" + url);
-//        VolleyJsonRequest.get(url, new VolleyJsonRequest.ResponseHandler() {
-//            @Override
-//            public void onResponse(JSONObject response) {
-//                try {
-//                    LogUtils.d("收到请求的回复了");
-//                    JSONArray results = response.getJSONArray("result");
-//                    List<Discussion> initialDiscussionList = new ArrayList<>();
-//                    Gson gson = new GsonBuilder()
-//                            .setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES)
-//                            .create();
-//                    LogUtils.d("开始循环");
-//                    for (int i = 0; i < results.length(); i ++ ) {
-//                        Discussion d = gson.fromJson(results.getJSONObject(i).toString(), Discussion.class);
-//                        initialDiscussionList.add(d);
-//                    }
-//                    LogUtils.d("讨论数:" + initialDiscussionList.size());
-//                    EventBus.getDefault().post(new PullDownEvent(initialDiscussionList));
-//                } catch (Exception e) {
-//                    e.printStackTrace();
-//                }
-//            }
-//
-//            @Override
-//            public void onErrorResponse(VolleyError error) {}
-//        });
-//    }
-
     public static void getIdsAndInitialList(int userId, String sortType) {
         // pass second argument as "null" for GET requests
         Map<String, String> params = new HashMap<>();
-        params.put("userId", Integer.toString(userId));
+        params.put("user_id", Integer.toString(userId));
         final String url =
-                "http://192.168.1.104:3000/home/posts?userId=" + userId + "&sortType=" + sortType;
+                "http://192.168.1.104:3000/home/posts?user_id=" + userId + "&sort=" + sortType;
 
         LogUtils.i("服务器URL:" + url);
         VolleyJsonRequest.get(url, new VolleyJsonRequest.ResponseHandler() {
@@ -110,13 +74,13 @@ public class DiscussionController {
         String queryString = "";
         for (int i=0; i<postIds.length; i++) {
             if (i == 0) {
-                queryString = UrlUtils.joinParams("postId[]", postIds[i].toString());
+                queryString = UrlUtils.joinParams("post_id[]", postIds[i].toString());
             } else {
                 queryString = queryString + UrlUtils.PARAMETERS_SEPARATOR +
-                        UrlUtils.joinParams("postId[]", postIds[i].toString());
+                        UrlUtils.joinParams("post_id[]", postIds[i].toString());
             }
         }
-        queryString = queryString + UrlUtils.PARAMETERS_SEPARATOR + "sortType=" + sortType;
+        queryString = queryString + UrlUtils.PARAMETERS_SEPARATOR + "sort=" + sortType;
         final String url = "http://192.168.1.104:3000/home/posts?" + queryString;
 
         LogUtils.i("服务器URL:" + url);
