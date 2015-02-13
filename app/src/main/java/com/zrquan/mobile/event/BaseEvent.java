@@ -42,4 +42,17 @@ public abstract class BaseEvent {
     public void setServerCode(ServerCode serverCode) {
         this.serverCode = serverCode;
     }
+
+    public final String LOG_TAG = getClass().getName();
+
+    @Override
+    public String toString() {
+        return "\nEventClass:" + LOG_TAG + "\nEventType" + getEnumPropertyName(eventType)
+                + "\nEventCode" + getEnumPropertyName(eventCode)
+                + "\nServerCode" + getEnumPropertyName(serverCode);
+    }
+
+    public static String getEnumPropertyName (Enum e) {
+        return (e != null) ? e.name() : "";
+    }
 }

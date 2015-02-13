@@ -6,11 +6,13 @@ import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
+import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.text.TextUtils;
 
+import com.zrquan.mobile.R;
 import com.zrquan.mobile.controller.ProfileController;
 import com.zrquan.mobile.event.ProfileEvent;
 import com.zrquan.mobile.support.enums.EventCode;
@@ -153,7 +155,8 @@ public class GetPictureActivity extends CommonActivity {
             finish();
             return;
         }
-        mProgressDialog = new ProgressDialog(this);
+        mProgressDialog = new ProgressDialog(this, R.style.Base_Theme_AppCompat_Light_Dialog);
+        mProgressDialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
         mProgressDialog.setCancelable(false);
         mProgressDialog.setMessage("服务器正在处理，请稍后...");
         mProgressDialog.show();

@@ -1,5 +1,6 @@
 package com.zrquan.mobile.support.volley.toolbox;
 
+import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.NetworkResponse;
 import com.android.volley.ParseError;
 import com.android.volley.Response;
@@ -17,6 +18,9 @@ import java.io.UnsupportedEncodingException;
  */
 public class JsonObjectRequest extends JsonRequest<JsonObject> {
 
+    private final static String LOG_TAG = "JsonObjectRequest";
+    private final static int DEFAULT_SOCKET_TIMEOUT_MS = 5000;
+
     /**
      * Creates a new request.
      *
@@ -31,6 +35,9 @@ public class JsonObjectRequest extends JsonRequest<JsonObject> {
                              Response.Listener<JsonObject> listener, Response.ErrorListener errorListener) {
         super(method, url, (jsonRequest == null) ? null : jsonRequest.toString(), listener,
                 errorListener);
+        setRetryPolicy(new DefaultRetryPolicy(DEFAULT_SOCKET_TIMEOUT_MS, DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
+                DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+        setShouldCache(false);
     }
 
     /**
