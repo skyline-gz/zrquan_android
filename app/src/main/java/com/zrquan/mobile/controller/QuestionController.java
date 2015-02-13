@@ -27,9 +27,9 @@ public class QuestionController {
     public static void getIdsAndInitialList(int userId, String sortType) {
         // pass second argument as "null" for GET requests
         Map<String, String> params = new HashMap<>();
-        params.put("userId", Integer.toString(userId));
+        params.put("user_id", Integer.toString(userId));
         final String url =
-                "http://192.168.1.104:3000/home/questions?userId=" + userId + "&sortType=" + sortType;
+                "http://192.168.1.104:3000/home/questions?user_id=" + userId + "&sort=" + sortType;
 
         LogUtils.i("服务器URL:" + url);
         VolleyJsonRequest.get(url, new VolleyJsonRequest.ResponseHandler() {
@@ -73,13 +73,13 @@ public class QuestionController {
         String queryString = "";
         for (int i=0; i<postIds.length; i++) {
             if (i == 0) {
-                queryString = UrlUtils.joinParams("postId[]", postIds[i].toString());
+                queryString = UrlUtils.joinParams("post_id[]", postIds[i].toString());
             } else {
                 queryString = queryString + UrlUtils.PARAMETERS_SEPARATOR +
-                        UrlUtils.joinParams("postId[]", postIds[i].toString());
+                        UrlUtils.joinParams("post_id[]", postIds[i].toString());
             }
         }
-        queryString = queryString + UrlUtils.PARAMETERS_SEPARATOR + "sortType=" + sortType;
+        queryString = queryString + UrlUtils.PARAMETERS_SEPARATOR + "sort=" + sortType;
         final String url = "http://192.168.1.104:3000/home/posts?" + queryString;
 
         LogUtils.i("服务器URL:" + url);
