@@ -132,7 +132,9 @@ public class GetPictureActivity extends CommonActivity {
         //此处全部统一将图片指定MediaStore.EXTRA_OUTPUT uri，不使用indent的回传bitmap方式
         if (requestCode == REQUEST_CODE_CROP && resultCode == RESULT_OK ) {
             back(this.mTempCroppedPath);
+            return;
         }
+        finish();
     }
 
     private void getIntentData() {

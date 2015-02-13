@@ -9,8 +9,6 @@ import java.util.Map;
 import org.apache.http.entity.mime.MultipartEntity;
 import org.apache.http.entity.mime.content.FileBody;
 import org.apache.http.entity.mime.content.StringBody;
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.DefaultRetryPolicy;
@@ -18,24 +16,28 @@ import com.android.volley.NetworkResponse;
 import com.android.volley.ParseError;
 import com.android.volley.Request;
 import com.android.volley.Response;
-import com.android.volley.VolleyLog;
 import com.android.volley.toolbox.HttpHeaderParser;
+
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
+
 import com.zrquan.mobile.support.util.FileUtils;
 import com.zrquan.mobile.support.util.LogUtils;
 
-public class MultipartRequest extends Request <JSONObject> {
+public class MultipartRequest extends Request<JsonObject> {
     private final static String LOG_TAG = "MultipartRequest";
-    private final static int DEFAULT_SOCKET_TIMEOUT_MS = 10000;
+
+    private final static int DEFAULT_SOCKET_TIMEOUT_MS = 20000;
     private final static int DEFAULT_RETRY_TIMES = 0;
 
-    private Response.Listener<JSONObject> mListener;
+    private Response.Listener<JsonObject> mListener;
 
     private Map<String, String> mStringPartMap;
     private Map<String, File> mFilePartMap;
     private MultipartEntity mMultipartEntity;
 
     public MultipartRequest(String url, Map<String, String> stringPartMap, Map<String, File> filePartMap,
-                            Response.Listener<JSONObject> listener, Response.ErrorListener errorListener) {
+                            Response.Listener<JsonObject> listener, Response.ErrorListener errorListener) {
         super(Method.POST, url, errorListener);
         mListener = listener;
         mStringPartMap = stringPartMap;
@@ -43,7 +45,7 @@ public class MultipartRequest extends Request <JSONObject> {
         mMultipartEntity = new MultipartEntity();
         buildMultipartEntity();
 
-        setRetryPolicy(new DefaultRetryPolicy( DEFAULT_SOCKET_TIMEOUT_MS, DEFAULT_RETRY_TIMES,
+        setRetryPolicy(new DefaultRetryPolicy(DEFAULT_SOCKET_TIMEOUT_MS, DEFAULT_RETRY_TIMES,
                 DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
         setShouldCache(false);
     }
@@ -61,27 +63,25 @@ public class MultipartRequest extends Request <JSONObject> {
             String entityContentAsString = new String(bos.toByteArray());
             LogUtils.d(LOG_TAG, entityContentAsString);
         } catch (IOException e) {
-            VolleyLog.e("IOException writing to ByteArrayOutputStream");
+            LogUtils.e(LOG_TAG, "IOException writing to ByteArrayOutputStream");
         }
         return bos.toByteArray();
     }
 
     @Override
-    protected void deliverResponse(JSONObject response) {
+    protected void deliverResponse(JsonObject response) {
         mListener.onResponse(response);
     }
 
     @Override
-    protected Response<JSONObject> parseNetworkResponse(NetworkResponse response) {
+    protected Response<JsonObject> parseNetworkResponse(NetworkResponse response) {
         try {
             String jsonString =
                     new String(response.data, HttpHeaderParser.parseCharset(response.headers));
-            return Response.success(new JSONObject(jsonString),
-                    HttpHeaderParser.parseCacheHeaders(response));
+            JsonObject jsonObject = new JsonParser().parse(jsonString).getAsJsonObject();
+            return Response.success(jsonObject, HttpHeaderParser.parseCacheHeaders(response));
         } catch (UnsupportedEncodingException e) {
             return Response.error(new ParseError(e));
-        } catch (JSONException je) {
-            return Response.error(new ParseError(je));
         }
     }
 
@@ -91,7 +91,7 @@ public class MultipartRequest extends Request <JSONObject> {
                 mMultipartEntity.addPart(stringEntry.getKey(), new StringBody(stringEntry.getValue()));
             }
         } catch (UnsupportedEncodingException e) {
-            VolleyLog.e("UnsupportedEncodingException");
+            LogUtils.e(LOG_TAG, "UnsupportedEncodingException");
         }
 
         for (Map.Entry<String, File> fileEntry : mFilePartMap.entrySet()) {

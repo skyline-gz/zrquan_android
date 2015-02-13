@@ -2,6 +2,7 @@ package com.zrquan.mobile.task;
 
 import android.content.Context;
 
+import com.zrquan.mobile.ZrquanApplication;
 import com.zrquan.mobile.controller.AccountController;
 import com.zrquan.mobile.dao.AccountDao;
 import com.zrquan.mobile.event.AccountEvent;
@@ -20,10 +21,15 @@ public class StartUpTask extends AsyncTask<Object, Void, Void> {
     protected Void doInBackground(Object[] paramArrayOfObject) {
         LogUtils.d("StartUpTask");
         Context context = (Context)paramArrayOfObject[0];
+
+        //初始化数据库以及从SharedPreferences读取用户账户
         DatabaseHelper databaseHelper = new DatabaseHelper(context);
         //this line responsible to call onCreate()
         databaseHelper.getWritableDatabase();
         Account account = new AccountDao().loadAccount(context);
+
+        ZrquanApplication.getInstance().setDatabaseHelper(databaseHelper);
+        ZrquanApplication.getInstance().setAccount(account);
 
         if (account.isValid()) {
             AccountController.verifyAccount(account.getAccessToken());
@@ -33,7 +39,8 @@ public class StartUpTask extends AsyncTask<Object, Void, Void> {
             accountEvent.setEventCode(EventCode.FA_ACCESS_TOKEN_NOT_EXIT);
             EventBus.getDefault().post(accountEvent);
         }
-        EventBus.getDefault().post(new StartUpEvent(databaseHelper, account));
+
+        EventBus.getDefault().post(new StartUpEvent());
         return null;
     }
 }

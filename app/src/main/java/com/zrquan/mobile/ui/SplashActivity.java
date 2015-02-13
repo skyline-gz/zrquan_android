@@ -4,12 +4,16 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 
+import com.google.gson.GsonBuilder;
+
 import com.zrquan.mobile.R;
 import com.zrquan.mobile.ZrquanApplication;
 import com.zrquan.mobile.event.AccountEvent;
 import com.zrquan.mobile.event.StartUpEvent;
+import com.zrquan.mobile.model.Account;
 import com.zrquan.mobile.support.enums.EventCode;
 import com.zrquan.mobile.support.enums.EventType;
+import com.zrquan.mobile.support.util.GsonUtils;
 import com.zrquan.mobile.task.StartUpTask;
 import com.zrquan.mobile.ui.common.CommonActivity;
 
@@ -56,10 +60,7 @@ public class SplashActivity extends CommonActivity {
         super.onStop();
     }
 
-    //初始化数据库以及从SharedPreferences读取用户账户的完成后的处理
     public void onEvent(StartUpEvent startUpEvent) {
-        ZrquanApplication.getInstance().setDatabaseHelper(startUpEvent.databaseHelper);
-        ZrquanApplication.getInstance().setAccount(startUpEvent.account);
         bReadyBgTask = true;
         checkAndstartMainActivity();
     }
@@ -67,10 +68,12 @@ public class SplashActivity extends CommonActivity {
     //从服务器校验用户完成后的处理
     public void onEvent(AccountEvent accountEvent) {
         if(accountEvent.getEventType() == EventType.AE_NET_VERIFY_JWT) {
+            Account currentAccount = ZrquanApplication.getInstance().getAccount();
             if(accountEvent.getEventCode() == EventCode.S_OK) {
-                ZrquanApplication.getInstance().getAccount().setVerified(true);
+                GsonUtils.populate(new GsonBuilder(), accountEvent.getUserInfo(), Account.class, currentAccount);
+                currentAccount.setVerified(true);
             } else {
-                ZrquanApplication.getInstance().getAccount().setVerified(false);
+                currentAccount.setVerified(false);
             }
             bReadyVerifyAccount = true;
             checkAndstartMainActivity();

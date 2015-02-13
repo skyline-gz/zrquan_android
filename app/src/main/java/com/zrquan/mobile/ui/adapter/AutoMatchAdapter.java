@@ -5,12 +5,10 @@ import android.widget.ArrayAdapter;
 import android.widget.Filter;
 import android.widget.Filterable;
 
-import com.zrquan.mobile.controller.AutoMatchController;
-import com.zrquan.mobile.support.util.LogUtils;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
 
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
+import com.zrquan.mobile.controller.AutoMatchController;
 
 import java.util.ArrayList;
 
@@ -41,16 +39,11 @@ public class AutoMatchAdapter extends ArrayAdapter implements Filterable {
                 FilterResults filterResults = new Filter.FilterResults();
                 if(constraint != null) {
                     mData.clear();
-                    JSONObject response = AutoMatchController.match("School", constraint.toString());
-                    try {
-                        LogUtils.d("Response:" + response.toString(4));
-                        JSONArray matches = response.getJSONArray("matches");
-                        for(int i=0; i< matches.length(); i++) {
-                            JSONObject matchObj = matches.getJSONObject(i);
-                            mData.add(matchObj.getString("value"));
-                        }
-                    } catch (JSONException e) {
-                        LogUtils.d("ParseJsonError:", e);
+                    JsonObject response = AutoMatchController.match("School", constraint.toString());
+                    JsonArray matches = response.get("matches").getAsJsonArray();
+                    for(int i=0; i< matches.size(); i++) {
+                        JsonObject matchObj = matches.get(i).getAsJsonObject();
+                        mData.add(matchObj.get("value").getAsString());
                     }
                     filterResults.values = mData;
                     filterResults.count = mData.size();

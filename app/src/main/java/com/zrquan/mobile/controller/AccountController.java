@@ -3,6 +3,9 @@ package com.zrquan.mobile.controller;
 import android.content.Context;
 
 import com.android.volley.VolleyError;
+
+import com.google.gson.JsonObject;
+
 import com.zrquan.mobile.ZrquanApplication;
 import com.zrquan.mobile.dao.AccountDao;
 import com.zrquan.mobile.event.AccountEvent;
@@ -10,12 +13,9 @@ import com.zrquan.mobile.model.Account;
 import com.zrquan.mobile.support.enums.EventCode;
 import com.zrquan.mobile.support.enums.EventType;
 import com.zrquan.mobile.support.enums.ServerCode;
-import com.zrquan.mobile.support.util.LogUtils;
 import com.zrquan.mobile.support.util.UrlUtils;
 import com.zrquan.mobile.support.volley.VolleyJsonRequest;
-
-import org.json.JSONException;
-import org.json.JSONObject;
+import com.zrquan.mobile.support.volley.VolleyRequestBase;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -37,27 +37,23 @@ public class AccountController {
             params.put("ignore_mobile_check", "true");
         }
         String url = UrlUtils.getUrlWithParams("users/send_verify_code", params);
-        VolleyJsonRequest.get(url, new VolleyJsonRequest.ResponseHandler() {
+        VolleyJsonRequest.get(url, new VolleyRequestBase.ResponseHandler() {
             @Override
-            public void onResponse(JSONObject response) {
-                try {
-                    String code = response.getString("code");
-                    AccountEvent accountEvent = new AccountEvent();
-                    accountEvent.setEventType(EventType.AE_NET_SEND_VERIFY_CODE);
-                    if (code.equals(ServerCode.S_OK.name())) {
-                        accountEvent.setEventCode(EventCode.S_OK);
-                        accountEvent.setServerCode(ServerCode.S_OK);
-                        JSONObject results = response.getJSONObject("results");
-                        String verifyCode = results.getString("verify_code");
-                        accountEvent.setVerifyCode(verifyCode);
-                    } else {
-                        accountEvent.setEventCode(EventCode.FA_SERVER_ERROR);
-                        accountEvent.setServerCode(ServerCode.valueOf(code));
-                    }
-                    EventBus.getDefault().post(accountEvent);
-                } catch (JSONException e) {
-                    e.printStackTrace();
+            public void onResponse(JsonObject response) {
+                String code = response.get("code").getAsString();
+                AccountEvent accountEvent = new AccountEvent();
+                accountEvent.setEventType(EventType.AE_NET_SEND_VERIFY_CODE);
+                if (code.equals(ServerCode.S_OK.name())) {
+                    accountEvent.setEventCode(EventCode.S_OK);
+                    accountEvent.setServerCode(ServerCode.S_OK);
+                    JsonObject results = response.get("results").getAsJsonObject();
+                    String verifyCode = results.get("verify_code").getAsString();
+                    accountEvent.setVerifyCode(verifyCode);
+                } else {
+                    accountEvent.setEventCode(EventCode.FA_SERVER_ERROR);
+                    accountEvent.setServerCode(ServerCode.valueOf(code));
                 }
+                EventBus.getDefault().post(accountEvent);
             }
 
             @Override
@@ -69,22 +65,22 @@ public class AccountController {
 
     //根据AccessToken验证当前已登录用户
     public static void verifyAccount(final String accessToken) {
-        VolleyJsonRequest.setAccessToken(accessToken);
+        VolleyRequestBase.setAccessToken(accessToken);
         String url = UrlUtils.getUrl("users/verify");
-        VolleyJsonRequest.get(url, new VolleyJsonRequest.ResponseHandler() {
+
+        VolleyJsonRequest.get(url, new VolleyRequestBase.ResponseHandler() {
             @Override
-            public void onResponse(JSONObject response) {
-                try {
-                    String code = response.getString("code");
-                    if (code.equals(ServerCode.S_OK.name())) {
-                        AccountEvent accountEvent = new AccountEvent();
-                        accountEvent.setEventType(EventType.AE_NET_VERIFY_JWT);
-                        accountEvent.setEventCode(EventCode.S_OK);
-                        accountEvent.setServerCode(ServerCode.S_OK);
-                        EventBus.getDefault().post(accountEvent);
-                    }
-                } catch (JSONException e) {
-                    e.printStackTrace();
+            public void onResponse(JsonObject response) {
+                String code = response.get("code").getAsString();
+                if (code.equals(ServerCode.S_OK.name())) {
+                    AccountEvent accountEvent = new AccountEvent();
+                    accountEvent.setEventType(EventType.AE_NET_VERIFY_JWT);
+                    accountEvent.setEventCode(EventCode.S_OK);
+                    accountEvent.setServerCode(ServerCode.S_OK);
+                    JsonObject results = response.get("results").getAsJsonObject();
+                    JsonObject userInfo = results.get("user").getAsJsonObject();
+                    accountEvent.setUserInfo(userInfo);
+                    EventBus.getDefault().post(accountEvent);
                 }
             }
 
@@ -100,36 +96,28 @@ public class AccountController {
             , int industryId, String latestSchoolName) {
         String url = UrlUtils.getUrl("users/registration");
 
-        JSONObject params = new JSONObject();
-        try {
-            params.put("verify_code", verifyCode);
-            params.put("mobile", phoneNum);
-            params.put("password", password);
-            params.put("name", trueName);
-            params.put("industry_id", industryId);
-            params.put("latest_school_name", latestSchoolName);
-        } catch (JSONException e) {
-            LogUtils.d("ParseJsonError:", e);
-        }
+        JsonObject params = new JsonObject();
+        params.addProperty("verify_code", verifyCode);
+        params.addProperty("mobile", phoneNum);
+        params.addProperty("password", password);
+        params.addProperty("name", trueName);
+        params.addProperty("industry_id", industryId);
+        params.addProperty("latest_school_name", latestSchoolName);
 
-        VolleyJsonRequest.post(url, params, new VolleyJsonRequest.ResponseHandler() {
+        VolleyJsonRequest.post(url, params, new VolleyRequestBase.ResponseHandler() {
             @Override
-            public void onResponse(JSONObject response) {
-                try {
-                    String code = response.getString("code");
-                    AccountEvent accountEvent = new AccountEvent();
-                    accountEvent.setEventType(EventType.AE_NET_REGISTER);
-                    if (code.equals(ServerCode.S_OK.name())) {
-                        accountEvent.setEventCode(EventCode.S_OK);
-                        accountEvent.setServerCode(ServerCode.S_OK);
-                    } else {
-                        accountEvent.setEventCode(EventCode.FA_SERVER_ERROR);
-                        accountEvent.setServerCode(ServerCode.valueOf(code));
-                    }
-                    EventBus.getDefault().post(accountEvent);
-                } catch (JSONException e) {
-                    e.printStackTrace();
+            public void onResponse(JsonObject response) {
+                String code = response.get("code").getAsString();
+                AccountEvent accountEvent = new AccountEvent();
+                accountEvent.setEventType(EventType.AE_NET_REGISTER);
+                if (code.equals(ServerCode.S_OK.name())) {
+                    accountEvent.setEventCode(EventCode.S_OK);
+                    accountEvent.setServerCode(ServerCode.S_OK);
+                } else {
+                    accountEvent.setEventCode(EventCode.FA_SERVER_ERROR);
+                    accountEvent.setServerCode(ServerCode.valueOf(code));
                 }
+                EventBus.getDefault().post(accountEvent);
             }
 
             @Override
@@ -143,35 +131,29 @@ public class AccountController {
     public static void loginAccount(String mobile, String password) {
         String url = UrlUtils.getUrl("users/session");
 
-        JSONObject params = new JSONObject();
-        try {
-            params.put("mobile", mobile);
-            params.put("password", password);
-        } catch (JSONException e) {
-            LogUtils.d("ParseJsonError:", e);
-        }
+        JsonObject params = new JsonObject();
+        params.addProperty("mobile", mobile);
+        params.addProperty("password", password);
 
-        VolleyJsonRequest.post(url, params, new VolleyJsonRequest.ResponseHandler() {
+        VolleyJsonRequest.post(url, params, new VolleyRequestBase.ResponseHandler() {
             @Override
-            public void onResponse(JSONObject response) {
-                try {
-                    String code = response.getString("code");
+            public void onResponse(JsonObject response) {
+                    String code = response.get("code").getAsString();
                     AccountEvent accountEvent = new AccountEvent();
                     accountEvent.setEventType(EventType.AE_NET_LOGIN);
                     if (code.equals(ServerCode.S_OK.name())) {
                         accountEvent.setEventCode(EventCode.S_OK);
                         accountEvent.setServerCode(ServerCode.S_OK);
-                        JSONObject results = response.getJSONObject("results");
-                        String token = results.getString("token");
+                        JsonObject results = response.get("results").getAsJsonObject();
+                        String token = results.get("token").getAsString();
                         accountEvent.setToken(token);
+                        JsonObject userInfo = results.get("user").getAsJsonObject();
+                        accountEvent.setUserInfo(userInfo);
                     } else {
                         accountEvent.setEventCode(EventCode.FA_SERVER_ERROR);
                         accountEvent.setServerCode(ServerCode.valueOf(code));
                     }
                     EventBus.getDefault().post(accountEvent);
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
             }
 
             @Override
@@ -194,33 +176,25 @@ public class AccountController {
     public static void resetPassword(String mobile, String newPassword, String verifyCode) {
         String url = UrlUtils.getUrl("users/reset_password");
 
-        JSONObject params = new JSONObject();
-        try {
-            params.put("mobile", mobile);
-            params.put("new_password", newPassword);
-            params.put("verify_code", verifyCode);
-        } catch (JSONException e) {
-            LogUtils.d("ParseJsonError:", e);
-        }
+        JsonObject params = new JsonObject();
+        params.addProperty("mobile", mobile);
+        params.addProperty("new_password", newPassword);
+        params.addProperty("verify_code", verifyCode);
 
-        VolleyJsonRequest.post(url, params, new VolleyJsonRequest.ResponseHandler() {
+        VolleyJsonRequest.post(url, params, new VolleyRequestBase.ResponseHandler() {
             @Override
-            public void onResponse(JSONObject response) {
-                try {
-                    String code = response.getString("code");
-                    AccountEvent accountEvent = new AccountEvent();
-                    accountEvent.setEventType(EventType.AE_NET_RESET_PASSWORD);
-                    if (code.equals(ServerCode.S_OK.name())) {
-                        accountEvent.setEventCode(EventCode.S_OK);
-                        accountEvent.setServerCode(ServerCode.S_OK);
-                    } else {
-                        accountEvent.setEventCode(EventCode.FA_SERVER_ERROR);
-                        accountEvent.setServerCode(ServerCode.valueOf(code));
-                    }
-                    EventBus.getDefault().post(accountEvent);
-                } catch (JSONException e) {
-                    e.printStackTrace();
+            public void onResponse(JsonObject response) {
+                String code = response.get("code").getAsString();
+                AccountEvent accountEvent = new AccountEvent();
+                accountEvent.setEventType(EventType.AE_NET_RESET_PASSWORD);
+                if (code.equals(ServerCode.S_OK.name())) {
+                    accountEvent.setEventCode(EventCode.S_OK);
+                    accountEvent.setServerCode(ServerCode.S_OK);
+                } else {
+                    accountEvent.setEventCode(EventCode.FA_SERVER_ERROR);
+                    accountEvent.setServerCode(ServerCode.valueOf(code));
                 }
+                EventBus.getDefault().post(accountEvent);
             }
 
             @Override

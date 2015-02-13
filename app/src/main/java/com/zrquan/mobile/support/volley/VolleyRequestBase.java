@@ -2,7 +2,7 @@ package com.zrquan.mobile.support.volley;
 
 import com.android.volley.VolleyError;
 
-import org.json.JSONObject;
+import com.google.gson.JsonObject;
 
 public abstract class VolleyRequestBase {
 
@@ -19,7 +19,7 @@ public abstract class VolleyRequestBase {
     }
 
     public static interface ResponseHandler {
-        public void onResponse(JSONObject response);
+        public void onResponse(JsonObject response);
 
         public void onErrorResponse(VolleyError error);
     }
