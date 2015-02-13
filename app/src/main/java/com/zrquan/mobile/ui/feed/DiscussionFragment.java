@@ -24,7 +24,7 @@ import com.zrquan.mobile.controller.DiscussionController;
 import com.zrquan.mobile.event.Discussion.PullDownEvent;
 import com.zrquan.mobile.event.Discussion.PullUpEvent;
 import com.zrquan.mobile.model.Account;
-import com.zrquan.mobile.model.Discussion;
+import com.zrquan.mobile.model.DiscussionFeed;
 import com.zrquan.mobile.support.util.ScreenUtils;
 import com.zrquan.mobile.support.util.UrlUtils;
 import com.zrquan.mobile.ui.common.CommonFragment;
@@ -229,11 +229,11 @@ public class DiscussionFragment extends CommonFragment {
         pullUpCounter = 0;      //重置 pullUpCounter
         discussionIds = event.getDiscussionIds();
 
-        List<Discussion> dList = event.getInitialList();
+        List<DiscussionFeed> dList = event.getInitialList();
         for (int i = 0; i < dList.size(); i++) {
-            Discussion discussion = dList.get(i);
-            mListItems.addLast(discussion.getPostContent() +
-                    discussion.getPostUserName() + discussion.getThemeName());
+            DiscussionFeed discussionFeed = dList.get(i);
+            mListItems.addLast(discussionFeed.getPostContent() +
+                    discussionFeed.getPostUserName() + discussionFeed.getThemeName());
         }
         mAdapter.notifyDataSetChanged();
         mPullListView.onPullDownRefreshComplete();
@@ -244,11 +244,11 @@ public class DiscussionFragment extends CommonFragment {
 
     // 上拉事件
     public void onEvent(PullUpEvent event){
-        List<Discussion> dList = event.getPartialList();
+        List<DiscussionFeed> dList = event.getPartialList();
         for (int i = 0; i < dList.size(); i++) {
-            Discussion discussion = dList.get(i);
-            mListItems.addLast(discussion.getPostContent() +
-                    discussion.getPostUserName() + discussion.getThemeName());
+            DiscussionFeed discussionFeed = dList.get(i);
+            mListItems.addLast(discussionFeed.getPostContent() +
+                    discussionFeed.getPostUserName() + discussionFeed.getThemeName());
         }
         mAdapter.notifyDataSetChanged();
         mPullListView.onPullUpRefreshComplete();
