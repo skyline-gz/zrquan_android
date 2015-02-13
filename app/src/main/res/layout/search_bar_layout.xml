@@ -38,6 +38,7 @@
             android:layout_height="@dimen/search_bar_height"
             android:layout_marginLeft="8.0dip"
             android:singleLine="true"
+            android:inputType="text"
             android:imeOptions="actionSearch" />
     </LinearLayout>
 

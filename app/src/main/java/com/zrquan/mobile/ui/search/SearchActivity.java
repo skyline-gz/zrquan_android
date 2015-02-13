@@ -5,8 +5,13 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.view.KeyEvent;
+import android.view.inputmethod.EditorInfo;
+import android.widget.EditText;
+import android.widget.TextView;
 
 import com.viewpagerindicator.TabPageIndicator;
+import com.zrquan.mobile.controller.SearchController;
 import com.zrquan.mobile.support.util.ScreenUtils;
 import com.zrquan.mobile.ui.common.CommonFragmentActivity;
 import com.zrquan.mobile.R;
@@ -31,6 +36,19 @@ public class SearchActivity extends CommonFragmentActivity {
 
         TabPageIndicator indicator = (TabPageIndicator)findViewById(R.id.indicator);
         indicator.setViewPager(pager);
+
+        final EditText editText = (EditText) findViewById(R.id.tv_search_keyword);
+        editText.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+                boolean handled = false;
+                if (actionId == EditorInfo.IME_ACTION_SEARCH) {
+                    SearchController.performSearch(editText.getText().toString());
+                    handled = true;
+                }
+                return handled;
+            }
+        });
     }
 
     @OnClick(R.id.tv_search_cancel)
