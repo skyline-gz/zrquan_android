@@ -61,7 +61,15 @@
             android:label="获取头像"
             android:theme="@android:style/Theme.Translucent.NoTitleBar">
             <intent-filter>
-                <action android:name="cn.zrquan.mobile.action.GET_PICTURE" />
+                <action android:name="zrquan.action.GET_PICTURE" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        <activity android:name=".widget.multipleimagepick.MultipleImagePickActivity"
+            android:label="选择图片">
+            <intent-filter>
+                <action android:name="zrquan.ACTION_PICK" />
+                <action android:name="zrquan.action.MULTIPLE_PICTURE_PICK" />
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>

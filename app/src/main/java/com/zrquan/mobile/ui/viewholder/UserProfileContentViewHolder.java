@@ -46,10 +46,11 @@ public class UserProfileContentViewHolder {
     public void onUserAvatarClick() {
         AlertDialog.Builder selectAvatarBuilder = new AlertDialog.Builder(context.getActivity());
         DialogInterface.OnClickListener local1 = new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface paramAnonymousDialogInterface, int paramAnonymousInt) {
-                switch (paramAnonymousInt) {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    switch (which) {
                     case 0:
-                        Intent intent1 = new Intent("cn.zrquan.mobile.action.GET_PICTURE");
+                        Intent intent1 = new Intent("zrquan.action.GET_PICTURE");
                         intent1.putExtra("source", GetPictureActivity.REQUEST_CODE_CAMERA);
                         intent1.putExtra("width", 100);
                         intent1.putExtra("height", 100);
@@ -57,7 +58,7 @@ public class UserProfileContentViewHolder {
                         context.startActivity(intent1);
                         break;
                     case 1:
-                        Intent intent2 = new Intent("cn.zrquan.mobile.action.GET_PICTURE");
+                        Intent intent2 = new Intent("zrquan.action.GET_PICTURE");
                         intent2.putExtra("source", GetPictureActivity.REQUEST_CODE_GALLERY);
                         intent2.putExtra("width", 100);
                         intent2.putExtra("height", 100);
@@ -65,7 +66,7 @@ public class UserProfileContentViewHolder {
                         context.startActivity(intent2);
                         break;
                     default:
-                        paramAnonymousDialogInterface.dismiss();
+                        dialog.dismiss();
                 }
             }
         };

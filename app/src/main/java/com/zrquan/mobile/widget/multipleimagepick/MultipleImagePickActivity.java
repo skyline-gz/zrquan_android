@@ -160,6 +160,7 @@ public class MultipleImagePickActivity extends Activity {
 
 		}
 	};
+
 	AdapterView.OnItemClickListener mItemMulClickListener = new AdapterView.OnItemClickListener() {
 
 		@Override
