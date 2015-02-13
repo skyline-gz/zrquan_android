@@ -136,7 +136,7 @@ public class MainActivity extends CommonFragmentActivity {
             public void onClick(View v) {
                 Intent myIntent = new Intent(MainActivity.this, PublishActivity.class);
                 MainActivity.this.startActivity(myIntent);
-                MainActivity.this.overridePendingTransition(R.anim.dow2up_enter, R.anim.dow2up_enter);
+                MainActivity.this.overridePendingTransition(R.anim.dow2up_enter, 0);
                 dismissPopupAndRestoreTab();
                 Toast.makeText(context, "点击了讨论按钮", Toast.LENGTH_LONG).show();
             }

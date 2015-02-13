@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical" >
+
+    <include
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        layout="@layout/visitor_titlebar" />
+
+    <include
+        android:layout_width="fill_parent"
+        android:layout_height="1dp"
+        layout="@layout/common_border" />
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1" >
+
+        <GridView
+            android:id="@+id/gridGallery"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="top"
+            android:layout_marginBottom="-10dp"
+            android:layout_marginLeft="-10dp"
+            android:layout_marginRight="-10dp"
+            android:layout_marginTop="-10dp"
+            android:horizontalSpacing="-15dp"
+            android:numColumns="3"
+            android:padding="0dp"
+            android:verticalSpacing="-15dp"
+            tools:listitem="@layout/layout_single_image_pick_item" >
+        </GridView>
+
+        <ImageView
+            android:id="@+id/imgNoMedia"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:contentDescription="@string/app_name"
+            android:src="@drawable/no_media" />
+    </FrameLayout>
+
+    <LinearLayout
+        android:id="@+id/llBottomContainer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="5dp" >
+
+        <Button
+            android:id="@+id/btn_confirm"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/common_button_big_orange"
+            android:textColor="@color/font_button_enable_disable"
+            android:text="确认" />
+    </LinearLayout>
+
+</LinearLayout>
