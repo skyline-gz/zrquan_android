@@ -2,6 +2,7 @@ package com.zrquan.mobile.controller;
 
 import android.content.Context;
 
+import com.android.volley.TimeoutError;
 import com.android.volley.VolleyError;
 
 import com.google.gson.JsonObject;
@@ -86,7 +87,12 @@ public class AccountController {
 
             @Override
             public void onErrorResponse(VolleyError error) {
-
+                if (error instanceof TimeoutError) {
+                    AccountEvent accountEvent = new AccountEvent();
+                    accountEvent.setEventType(EventType.AE_NET_VERIFY_JWT);
+                    accountEvent.setEventCode(EventCode.FA_SERVER_TIMEOUT);
+                    EventBus.getDefault().post(accountEvent);
+                }
             }
         });
     }

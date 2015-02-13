@@ -14,6 +14,7 @@ import com.zrquan.mobile.model.Account;
 import com.zrquan.mobile.support.enums.EventCode;
 import com.zrquan.mobile.support.enums.EventType;
 import com.zrquan.mobile.support.util.GsonUtils;
+import com.zrquan.mobile.support.util.LogUtils;
 import com.zrquan.mobile.task.StartUpTask;
 import com.zrquan.mobile.ui.common.CommonActivity;
 
@@ -72,7 +73,11 @@ public class SplashActivity extends CommonActivity {
             if(accountEvent.getEventCode() == EventCode.S_OK) {
                 GsonUtils.populate(new GsonBuilder(), accountEvent.getUserInfo(), Account.class, currentAccount);
                 currentAccount.setVerified(true);
+            } else if(accountEvent.getEventCode() == EventCode.FA_SERVER_TIMEOUT) {
+                LogUtils.d(LOG_TAG, accountEvent.toString());
+                currentAccount.setVerified(true);
             } else {
+                LogUtils.d(LOG_TAG, accountEvent.toString());
                 currentAccount.setVerified(false);
             }
             bReadyVerifyAccount = true;
