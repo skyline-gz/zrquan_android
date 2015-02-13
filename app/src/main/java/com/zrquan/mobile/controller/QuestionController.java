@@ -1,19 +1,19 @@
 package com.zrquan.mobile.controller;
 
 import com.android.volley.VolleyError;
+
 import com.google.gson.FieldNamingPolicy;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
+
 import com.zrquan.mobile.event.Question.PullDownEvent;
 import com.zrquan.mobile.event.Question.PullUpEvent;
-import com.zrquan.mobile.model.Discussion;
 import com.zrquan.mobile.model.Question;
 import com.zrquan.mobile.support.util.LogUtils;
 import com.zrquan.mobile.support.util.UrlUtils;
 import com.zrquan.mobile.support.volley.VolleyJsonRequest;
-
-import org.json.JSONArray;
-import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -34,24 +34,23 @@ public class QuestionController {
         LogUtils.i("服务器URL:" + url);
         VolleyJsonRequest.get(url, new VolleyJsonRequest.ResponseHandler() {
             @Override
-            public void onResponse(JSONObject response) {
+            public void onResponse(JsonObject response) {
                 try {
                     LogUtils.i("收到请求的回复了");
 
-                    JSONArray idArray = response.getJSONArray("ids");
-                    if (idArray != null && idArray.length() != 0) {
+                    JsonArray idArray = response.get("ids").getAsJsonArray();
+                    if (idArray != null && idArray.size() != 0) {
                         // 转所有的post id 成数组
                         Integer[] questionIds = new Gson().fromJson(idArray.toString(), Integer[].class);
-                        LogUtils.d(questionIds.toString());
 
-                        JSONArray initialResult = response.getJSONArray("initial_result");
+                        JsonArray initialResult = response.get("initial_result").getAsJsonArray();
                         List<Question> initialList = new ArrayList<>();
                         Gson gson = new GsonBuilder()
                                 .setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES)
                                 .create();
                         LogUtils.d("开始循环");
-                        for (int i = 0; i < initialResult.length(); i ++ ) {
-                            Question q = gson.fromJson(initialResult.getJSONObject(i).toString(), Question.class);
+                        for (int i = 0; i < initialResult.size(); i ++ ) {
+                            Question q = gson.fromJson(initialResult.get(i), Question.class);
                             initialList.add(q);
                         }
                         LogUtils.i("讨论数:" + initialList.size());
@@ -86,17 +85,17 @@ public class QuestionController {
         LogUtils.i("服务器URL:" + url);
         VolleyJsonRequest.get(url, new VolleyJsonRequest.ResponseHandler() {
             @Override
-            public void onResponse(JSONObject response) {
+            public void onResponse(JsonObject response) {
                 try {
                     LogUtils.i("收到请求的回复了");
-                    JSONArray partialResult = response.getJSONArray("partial_result");
+                    JsonArray partialResult = response.get("partial_result").getAsJsonArray();
                     List<Question> partialList = new ArrayList<>();
                     Gson gson = new GsonBuilder()
                             .setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES)
                             .create();
                     LogUtils.d("开始循环");
-                    for (int i = 0; i < partialResult.length(); i ++ ) {
-                        Question q = gson.fromJson(partialResult.getJSONObject(i).toString(), Question.class);
+                    for (int i = 0; i < partialResult.size(); i ++ ) {
+                        Question q = gson.fromJson(partialResult.get(i), Question.class);
                         partialList.add(q);
                     }
                     LogUtils.i("讨论数:" + partialList.size());
