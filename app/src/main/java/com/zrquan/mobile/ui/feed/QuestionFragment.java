@@ -20,6 +20,7 @@ import com.zrquan.mobile.support.util.ToastUtils;
 import com.zrquan.mobile.ui.MainActivity;
 import com.zrquan.mobile.ui.authentic.UserRegisterSetPasswordActivity;
 import com.zrquan.mobile.ui.common.CommonFragment;
+import com.zrquan.mobile.ui.demo.DemoPlayMusicActivity;
 import com.zrquan.mobile.ui.demo.GalleryViewPagerSampleActivity;
 import com.zrquan.mobile.widget.switchbutton.SwitchButton;
 
@@ -100,6 +101,16 @@ public class QuestionFragment extends CommonFragment {
                     startActivity(intent);
                     QuestionFragment.this.getActivity().overridePendingTransition(R.anim.right2left_enter, R.anim.right2left_exit);
                     ToastUtils.show(context, "成功注销账户");
+                }
+            });
+
+            TextView tv_test_play_music = (TextView) rootView.findViewById(R.id.tv_test_play_music);
+            tv_test_play_music.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(QuestionFragment.this.getActivity(), DemoPlayMusicActivity.class);
+                    startActivity(intent);
+                    QuestionFragment.this.getActivity().overridePendingTransition(R.anim.right2left_enter, R.anim.right2left_exit);
                 }
             });
         } else {

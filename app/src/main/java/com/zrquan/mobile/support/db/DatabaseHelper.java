@@ -23,22 +23,23 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
 
     /**
      * 在SQLiteOpenHelper的子类当中，必须有该构造函数
-     * @param context    上下文对象
-     * @param name        数据库名称
+     *
+     * @param context 上下文对象
+     * @param name    数据库名称
      * @param factory
-     * @param version    当前数据库的版本，值必须是整数并且是递增的状态
+     * @param version 当前数据库的版本，值必须是整数并且是递增的状态
      */
     private DatabaseHelper(Context context, String name, CursorFactory factory,
-                          int version) {
+                           int version) {
         //必须通过super调用父类当中的构造函数
         super(context, name, factory, version);
     }
 
-    private DatabaseHelper(Context context, String name, int version){
-        this(context,name, null, version);
+    private DatabaseHelper(Context context, String name, int version) {
+        this(context, name, null, version);
     }
 
-    private DatabaseHelper(Context context, String name){
+    private DatabaseHelper(Context context, String name) {
         this(context, name, VERSION);
     }
 
@@ -65,7 +66,7 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
 
     private void initCreateTables(SQLiteDatabase sqLiteDatabase) {
         String[] sqlNames = {"sql/create_industries.sql", "sql/create_locations.sql"
-                , "sql/create_regions.sql"};
+                , "sql/create_regions.sql", "sql/create_file_download_logs"};
         for (String sqlName : sqlNames) {
             String create_sql = FileUtils.readFile(sqlName, null, true, context).toString();
             sqLiteDatabase.execSQL(create_sql);
@@ -91,7 +92,7 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
 
     private void execMultiLine(SQLiteDatabase sqLiteDatabase, String multiSqls) {
         String[] queries = multiSqls.split(";");
-        for(String query : queries){
+        for (String query : queries) {
             sqLiteDatabase.execSQL(query);
         }
     }

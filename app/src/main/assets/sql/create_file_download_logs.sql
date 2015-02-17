@@ -1,0 +1,1 @@
+﻿CREATE TABLE IF NOT EXISTS file_download_logs (id integer primary key autoincrement, download_path varchar(100), thread_id INTEGER, download_length INTEGER);
