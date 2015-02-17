@@ -189,8 +189,7 @@ public class BitmapUtils {
 
         // Decode bitmap with inSampleSize set
         options.inJustDecodeBounds = false;//重新读入图片，注意这次要把options.inJustDecodeBounds 设为 false
-        Bitmap bitmap = BitmapFactory.decodeFile(filePath, options);// BitmapFactory.decodeFile()按指定大小取得图片缩略图
-        return bitmap;
+        return BitmapFactory.decodeFile(filePath, options);// BitmapFactory.decodeFile()按指定大小取得图片缩略图
     }
 
     public static Intent buildGalleryPickIntent(Uri saveTo, int aspectX, int aspectY,

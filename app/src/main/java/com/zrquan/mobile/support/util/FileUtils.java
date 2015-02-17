@@ -21,8 +21,8 @@ import java.util.List;
  * File Utils
  * <ul>
  * Read or write file
- * <li>{@link #readFile(String)} read file</li>
- * <li>{@link #readFileToList(String)} read file to string list</li>
+ * <li>{@link #readFile(String filePath, String charsetName)} read file</li>
+ * <li>{@link #readFileToList(String filePath, String charsetName)} read file to string list</li>
  * <li>{@link #writeFile(String, String, boolean)} write file from String</li>
  * <li>{@link #writeFile(String, String)} write file from String</li>
  * <li>{@link #writeFile(String, java.util.List, boolean)} write file from String List</li>
@@ -610,5 +610,13 @@ public class FileUtils {
             type = mime.getMimeTypeFromExtension(extension);
         }
         return type;
+    }
+
+    public static Boolean isGifType(String contentType) {
+        return contentType.toLowerCase().contains("image/gif");
+    }
+
+    public static Boolean isGifFile(String url) {
+        return isGifType(getMimeType(url));
     }
 }

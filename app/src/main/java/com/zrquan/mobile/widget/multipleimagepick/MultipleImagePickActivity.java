@@ -37,6 +37,7 @@ public class MultipleImagePickActivity extends CommonActivity {
 
     public static final String ACTION_PICK = "zrquan.action.SINGLE_PICTURE_PICK";
     public static final String ACTION_MULTIPLE_PICK = "zrquan.action.MULTIPLE_PICTURE_PICK";
+    public static final String IMAGES_PATH_EXTRA = "all_path";
 
 	GridView gridGallery;
 	Handler handler;
@@ -174,7 +175,7 @@ public class MultipleImagePickActivity extends CommonActivity {
 		@Override
 		public void onItemClick(AdapterView<?> l, View v, int position, long id) {
 			ImageItem item = adapter.getItem(position);
-			Intent data = new Intent().putExtra("single_path", item.sdcardPath);
+			Intent data = new Intent().putExtra(IMAGES_PATH_EXTRA, item.sdcardPath);
 			setResult(RESULT_OK, data);
 			finish();
 		}
