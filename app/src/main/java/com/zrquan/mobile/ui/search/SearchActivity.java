@@ -36,6 +36,7 @@ public class SearchActivity extends CommonFragmentActivity {
 
         TabPageIndicator indicator = (TabPageIndicator)findViewById(R.id.indicator);
         indicator.setViewPager(pager);
+        indicator.setOnPageChangeListener(new MyOnPageChangeListener());
 
         final EditText editText = (EditText) findViewById(R.id.tv_search_keyword);
         editText.setOnEditorActionListener(new TextView.OnEditorActionListener() {
@@ -87,5 +88,24 @@ public class SearchActivity extends CommonFragmentActivity {
         ScreenUtils.hideSoftInput(this);
         finish();
         overridePendingTransition(R.anim.right2left_enter, R.anim.right2left_exit);
+    }
+
+    private class MyOnPageChangeListener implements ViewPager.OnPageChangeListener {
+
+        @Override
+        public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+        }
+
+        @Override
+        public void onPageScrollStateChanged(int state) {
+        }
+
+        @Override
+        public void onPageSelected(int position) {
+            /**
+             *  TODO 如果换页的话并且该关键字的搜索结果没有cache的话，则发起搜索请求
+             *  TODO 否则的话不发任何请求
+             */
+        }
     }
 }

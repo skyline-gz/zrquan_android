@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <color name="divider_primary_dark">#ff39424e</color>
+    <color name="divider_primary_light">#ffc2c2c2</color>
     <color name="msp_dialog_tiltle_blue">#ff2277bb</color>
     <color name="msp_text_color_gray">#ff333333</color>
     <color name="msp_hint_color">#ffb2b2b2</color>

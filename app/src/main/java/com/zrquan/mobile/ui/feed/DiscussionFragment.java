@@ -91,7 +91,7 @@ public class DiscussionFragment extends CommonFragment {
             mCurIndex = mLoadDataCount;
             mListItems = new LinkedList<String>();
             mListItems.addAll(Arrays.asList(mStrings).subList(0, mCurIndex));
-            mAdapter = new ArrayAdapter<String>(context, R.layout.layout_discussion_card_item, R.id.line1, mListItems);
+            mAdapter = new ArrayAdapter<String>(context, R.layout.layout_discussion_card_item, R.id.content, mListItems);
             mListView = mPullListView.getRefreshableView();
 
             // Note: When first introduced, this method could only be called before
