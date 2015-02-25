@@ -41,8 +41,8 @@ public class FeedFragment extends CommonFragment {
     ImageView ivSearch;
     @InjectView(R.id.iv_arrange_setting)
     ImageView ivArrangeSetting;
-    @InjectView(R.id.tv_discussion)
-    TextView tvDiscussion;
+    @InjectView(R.id.tv_post)
+    TextView tvPost;
     @InjectView(R.id.tv_question)
     TextView tvQuestion;
     @InjectView(R.id.tv_register)
@@ -76,7 +76,7 @@ public class FeedFragment extends CommonFragment {
      * 初始化导航栏
 	 */
     private void initNavBar(Boolean isLogin) {
-        tvDiscussion.setOnClickListener(new TxListener(0));
+        tvPost.setOnClickListener(new TxListener(0));
         tvQuestion.setOnClickListener(new TxListener(1));
         if (isLogin) {
             tvLogin.setVisibility(View.GONE);
@@ -139,14 +139,14 @@ public class FeedFragment extends CommonFragment {
      */
     private void initViewPager() {
         fragmentList = new ArrayList<>();
-        fragmentList.add(new DiscussionFragment());
+        fragmentList.add(new PostFragment());
         fragmentList.add(new QuestionFragment());
 
         //给ViewPager设置适配器
         vpFeedContent.setAdapter(new FeedPagerAdapter(getChildFragmentManager(), fragmentList));
         vpFeedContent.setCurrentItem(0);                                           //设置当前显示标签页为第一页
         vpFeedContent.setOnPageChangeListener(new MyOnPageChangeListener());       //页面变化时的监听器
-        selectTabDiscussion();
+        selectTabPost();
     }
 
     private class MyOnPageChangeListener implements ViewPager.OnPageChangeListener {
@@ -165,12 +165,12 @@ public class FeedFragment extends CommonFragment {
         public void onPageSelected(int position) {
             switch (position) {
                 case 0:
-                    selectTabDiscussion();
-                    EventBus.getDefault().post(new DiscussionFragment.ScrollBannerEvent(true));
+                    selectTabPost();
+                    EventBus.getDefault().post(new PostFragment.ScrollBannerEvent(true));
                     break;
                 case 1:
                     selectTabQuestion();
-                    EventBus.getDefault().post(new DiscussionFragment.ScrollBannerEvent(false));
+                    EventBus.getDefault().post(new PostFragment.ScrollBannerEvent(false));
                     break;
                 default:
                     break;
@@ -179,16 +179,16 @@ public class FeedFragment extends CommonFragment {
         }
     }
 
-    private void selectTabDiscussion() {
-        tvDiscussion.setSelected(true);
-        tvDiscussion.setBackgroundResource(R.drawable.bg_navigation_text_selected);
+    private void selectTabPost() {
+        tvPost.setSelected(true);
+        tvPost.setBackgroundResource(R.drawable.bg_navigation_text_selected);
         tvQuestion.setSelected(false);
         tvQuestion.setBackgroundResource(Color.TRANSPARENT);
     }
 
     private void selectTabQuestion() {
-        tvDiscussion.setSelected(false);
-        tvDiscussion.setBackgroundResource(Color.TRANSPARENT);
+        tvPost.setSelected(false);
+        tvPost.setBackgroundResource(Color.TRANSPARENT);
         tvQuestion.setSelected(true);
         tvQuestion.setBackgroundResource(R.drawable.bg_navigation_text_selected);
     }

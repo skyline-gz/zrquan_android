@@ -6,19 +6,14 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
-import com.zrquan.mobile.event.Discussion.PullUpEvent;
-import com.zrquan.mobile.model.DiscussionFeed;
 import com.zrquan.mobile.model.UserSearch;
 import com.zrquan.mobile.support.util.LogUtils;
-import com.zrquan.mobile.support.util.UrlUtils;
 import com.zrquan.mobile.support.volley.VolleyJsonRequest;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
-import de.greenrobot.event.EventBus;
 
 public class SearchController {
 
@@ -45,8 +40,6 @@ public class SearchController {
                         UserSearch d = gson.fromJson(result.get(i), UserSearch.class);
                         initialList.add(d);
                     }
-//                    LogUtils.i("讨论数:" + initialList.size());
-//                    EventBus.getDefault().post(new PullDownEvent(discussionIds, initialList));
 
                 } catch (Exception e) {
                     e.printStackTrace();

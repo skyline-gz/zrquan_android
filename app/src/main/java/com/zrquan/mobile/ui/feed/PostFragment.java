@@ -20,11 +20,11 @@ import com.zrquan.mobile.R;
 import com.viewpagerindicator.CirclePageIndicator;
 
 import com.zrquan.mobile.ZrquanApplication;
-import com.zrquan.mobile.controller.DiscussionController;
-import com.zrquan.mobile.event.Discussion.PullDownEvent;
-import com.zrquan.mobile.event.Discussion.PullUpEvent;
+import com.zrquan.mobile.controller.PostController;
+import com.zrquan.mobile.event.Post.PullDownEvent;
+import com.zrquan.mobile.event.Post.PullUpEvent;
 import com.zrquan.mobile.model.Account;
-import com.zrquan.mobile.model.DiscussionFeed;
+import com.zrquan.mobile.model.PostFeed;
 import com.zrquan.mobile.support.util.ScreenUtils;
 import com.zrquan.mobile.support.util.UrlUtils;
 import com.zrquan.mobile.ui.common.CommonFragment;
@@ -43,14 +43,14 @@ import java.util.List;
 import de.greenrobot.event.EventBus;
 
 //轻讨论 动态
-public class DiscussionFragment extends CommonFragment {
+public class PostFragment extends CommonFragment {
     private Context context;
     private AutoScrollViewPager vpBanner;
     private CirclePageIndicator indicatorBanner;
     private ImageView ivCancelBanner;
     private RelativeLayout rlBanner;
 
-    private Integer[] discussionIds;
+    private Integer[] postIds;
     private int pullUpCounter = 0;
 
     private ListView mListView;
@@ -91,7 +91,7 @@ public class DiscussionFragment extends CommonFragment {
             mCurIndex = mLoadDataCount;
             mListItems = new LinkedList<String>();
             mListItems.addAll(Arrays.asList(mStrings).subList(0, mCurIndex));
-            mAdapter = new ArrayAdapter<String>(context, R.layout.layout_discussion_card_item, R.id.content, mListItems);
+            mAdapter = new ArrayAdapter<String>(context, R.layout.card_item_post, R.id.content, mListItems);
             mListView = mPullListView.getRefreshableView();
 
             // Note: When first introduced, this method could only be called before
@@ -120,8 +120,7 @@ public class DiscussionFragment extends CommonFragment {
 
                     Account account = ZrquanApplication.getInstance().getAccount();
                     if (account != null && account.getId() != null) {
-                        DiscussionController.getIdsAndInitialList(account.getId(), UrlUtils.SORT_TYPE_DEFAULT);
-//                        DiscussionController.getIdsAndInitialList(10);
+                        PostController.getIdsAndInitialList(account.getId(), UrlUtils.SORT_TYPE_DEFAULT);
                     } else {
                         mAdapter.notifyDataSetChanged();
                         mPullListView.onPullDownRefreshComplete();
@@ -137,8 +136,8 @@ public class DiscussionFragment extends CommonFragment {
                         Account account = ZrquanApplication.getInstance().getAccount();
                         if (account != null && account.getId() != null) {
                             Integer[] partialIds = Arrays.copyOfRange(
-                                    discussionIds, pullUpCounter * 20, pullUpCounter * 20 + 20);
-                            DiscussionController.getPartialList(partialIds, UrlUtils.SORT_TYPE_DEFAULT);
+                                    postIds, pullUpCounter * 20, pullUpCounter * 20 + 20);
+                            PostController.getPartialList(partialIds, UrlUtils.SORT_TYPE_DEFAULT);
                         } else {
                             mAdapter.notifyDataSetChanged();
                             mPullListView.onPullDownRefreshComplete();
@@ -227,13 +226,13 @@ public class DiscussionFragment extends CommonFragment {
     public void onEvent(PullDownEvent event){
         mListItems.clear();
         pullUpCounter = 0;      //重置 pullUpCounter
-        discussionIds = event.getDiscussionIds();
+        postIds = event.getPostIds();
 
-        List<DiscussionFeed> dList = event.getInitialList();
+        List<PostFeed> dList = event.getInitialList();
         for (int i = 0; i < dList.size(); i++) {
-            DiscussionFeed discussionFeed = dList.get(i);
-            mListItems.addLast(discussionFeed.getPostContent() +
-                    discussionFeed.getPostUserName() + discussionFeed.getThemeName());
+            PostFeed postFeed = dList.get(i);
+            mListItems.addLast(postFeed.getPostContent() +
+                    postFeed.getPostUserName() + postFeed.getThemeName());
         }
         mAdapter.notifyDataSetChanged();
         mPullListView.onPullDownRefreshComplete();
@@ -244,11 +243,11 @@ public class DiscussionFragment extends CommonFragment {
 
     // 上拉事件
     public void onEvent(PullUpEvent event){
-        List<DiscussionFeed> dList = event.getPartialList();
+        List<PostFeed> dList = event.getPartialList();
         for (int i = 0; i < dList.size(); i++) {
-            DiscussionFeed discussionFeed = dList.get(i);
-            mListItems.addLast(discussionFeed.getPostContent() +
-                    discussionFeed.getPostUserName() + discussionFeed.getThemeName());
+            PostFeed postFeed = dList.get(i);
+            mListItems.addLast(postFeed.getPostContent() +
+                    postFeed.getPostUserName() + postFeed.getThemeName());
         }
         mAdapter.notifyDataSetChanged();
         mPullListView.onPullUpRefreshComplete();

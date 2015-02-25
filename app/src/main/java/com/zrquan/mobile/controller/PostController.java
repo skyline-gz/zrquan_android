@@ -8,9 +8,9 @@ import com.google.gson.GsonBuilder;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 
-import com.zrquan.mobile.event.Discussion.PullDownEvent;
-import com.zrquan.mobile.event.Discussion.PullUpEvent;
-import com.zrquan.mobile.model.DiscussionFeed;
+import com.zrquan.mobile.event.Post.PullDownEvent;
+import com.zrquan.mobile.event.Post.PullUpEvent;
+import com.zrquan.mobile.model.PostFeed;
 import com.zrquan.mobile.support.util.LogUtils;
 import com.zrquan.mobile.support.util.UrlUtils;
 import com.zrquan.mobile.support.volley.VolleyJsonRequest;
@@ -22,7 +22,7 @@ import java.util.Map;
 
 import de.greenrobot.event.EventBus;
 
-public class DiscussionController {
+public class PostController {
 
     public static void getIdsAndInitialList(int userId, String sortType) {
         // pass second argument as "null" for GET requests
@@ -41,21 +41,20 @@ public class DiscussionController {
                     JsonArray idArray = response.get("ids").getAsJsonArray();
                     if (idArray != null && idArray.size() != 0) {
                         // 转所有的post id 成数组
-                        Integer[] discussionIds = new Gson().fromJson(idArray, Integer[].class);
-//                        LogUtils.d(discussionIds.toString());
+                        Integer[] postIds = new Gson().fromJson(idArray, Integer[].class);
 
                         JsonArray initialResult = response.get("initial_result").getAsJsonArray();
-                        List<DiscussionFeed> initialList = new ArrayList<>();
+                        List<PostFeed> initialList = new ArrayList<>();
                         Gson gson = new GsonBuilder()
                                 .setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES)
                                 .create();
                         LogUtils.d("开始循环");
                         for (int i = 0; i < initialResult.size(); i ++ ) {
-                            DiscussionFeed d = gson.fromJson(initialResult.get(i), DiscussionFeed.class);
+                            PostFeed d = gson.fromJson(initialResult.get(i), PostFeed.class);
                             initialList.add(d);
                         }
                         LogUtils.i("讨论数:" + initialList.size());
-                        EventBus.getDefault().post(new PullDownEvent(discussionIds, initialList));
+                        EventBus.getDefault().post(new PullDownEvent(postIds, initialList));
                     }
 
                 } catch (Exception e) {
@@ -90,13 +89,13 @@ public class DiscussionController {
                 try {
                     LogUtils.i("收到请求的回复了");
                     JsonArray partialResult = response.get("partial_result").getAsJsonArray();
-                    List<DiscussionFeed> partialList = new ArrayList<>();
+                    List<PostFeed> partialList = new ArrayList<>();
                     Gson gson = new GsonBuilder()
                             .setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES)
                             .create();
                     LogUtils.d("开始循环");
                     for (int i = 0; i < partialResult.size(); i ++ ) {
-                        DiscussionFeed d = gson.fromJson(partialResult.get(i), DiscussionFeed.class);
+                        PostFeed d = gson.fromJson(partialResult.get(i), PostFeed.class);
                         partialList.add(d);
                     }
                     LogUtils.i("讨论数:" + partialList.size());

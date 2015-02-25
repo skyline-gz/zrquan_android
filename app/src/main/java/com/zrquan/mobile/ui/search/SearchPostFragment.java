@@ -8,7 +8,7 @@ import android.view.ViewGroup;
 import com.zrquan.mobile.R;
 import com.zrquan.mobile.ui.common.CommonFragment;
 
-public class SearchDiscussionFragment extends CommonFragment {
+public class SearchPostFragment extends CommonFragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,

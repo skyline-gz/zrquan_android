@@ -64,7 +64,7 @@ public class SearchActivity extends CommonFragmentActivity {
 
         @Override
         public Fragment getItem(int position) {
-            return new SearchDiscussionFragment();
+            return new SearchPostFragment();
         }
 
         @Override

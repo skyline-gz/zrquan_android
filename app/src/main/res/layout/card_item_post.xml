@@ -19,7 +19,7 @@
             android:paddingLeft="10dp"
             android:paddingRight="10dp"
             android:paddingBottom="10dp"
-            android:id="@+id/discussionCard">
+            android:id="@+id/postCard">
             <ImageView
                 android:layout_width="50dp"
                 android:layout_height="50dp"
@@ -144,21 +144,4 @@
         </LinearLayout>
     </LinearLayout>
 
-    <!--<LinearLayout-->
-        <!--android:orientation="vertical"-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:paddingLeft="15dp"-->
-        <!--android:paddingTop="15dp"-->
-        <!--android:paddingBottom="15dp"-->
-        <!--android:paddingRight="15dp"-->
-        <!--android:background="@drawable/bg_card_selector"-->
-        <!--android:descendantFocusability="afterDescendants">-->
-        <!-- 给每个item增加background -->-->
-        <!--<TextView-->
-            <!--android:id="@+id/discussionCard"-->
-            <!--android:layout_width="wrap_content"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:text="Text"/>-->
-    <!--</LinearLayout>-->
 </FrameLayout>
