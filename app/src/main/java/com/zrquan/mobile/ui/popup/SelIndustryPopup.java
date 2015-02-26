@@ -13,8 +13,8 @@ import com.zrquan.mobile.R;
 import com.zrquan.mobile.ZrquanApplication;
 import com.zrquan.mobile.model.Industry;
 import com.zrquan.mobile.support.util.LogUtils;
-import com.zrquan.mobile.ui.adapter.ChildIndustryAdapter;
-import com.zrquan.mobile.ui.adapter.ParentIndustryAdapter;
+import com.zrquan.mobile.adapter.ChildIndustryAdapter;
+import com.zrquan.mobile.adapter.ParentIndustryAdapter;
 
 import java.sql.SQLException;
 import java.util.List;

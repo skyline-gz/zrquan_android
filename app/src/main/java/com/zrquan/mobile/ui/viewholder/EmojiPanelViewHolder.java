@@ -19,7 +19,7 @@ import android.widget.LinearLayout;
 import com.zrquan.mobile.R;
 import com.zrquan.mobile.support.util.RegUtils;
 import com.zrquan.mobile.support.util.ScreenUtils;
-import com.zrquan.mobile.ui.adapter.EmojiAdapter;
+import com.zrquan.mobile.adapter.EmojiAdapter;
 import com.zrquan.mobile.support.util.LogUtils;
 
 import java.util.regex.Matcher;

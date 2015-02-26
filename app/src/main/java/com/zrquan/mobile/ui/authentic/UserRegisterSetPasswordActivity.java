@@ -29,7 +29,7 @@ import com.zrquan.mobile.support.enums.ServerCode;
 import com.zrquan.mobile.support.util.RegUtils;
 import com.zrquan.mobile.support.util.ScreenUtils;
 import com.zrquan.mobile.support.util.ToastUtils;
-import com.zrquan.mobile.ui.adapter.AutoMatchAdapter;
+import com.zrquan.mobile.adapter.AutoMatchAdapter;
 import com.zrquan.mobile.ui.common.CommonActivity;
 import com.zrquan.mobile.ui.popup.SelIndustryPopup;
 

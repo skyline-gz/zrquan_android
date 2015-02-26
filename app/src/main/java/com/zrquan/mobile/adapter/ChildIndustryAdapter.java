@@ -1,4 +1,4 @@
-package com.zrquan.mobile.ui.adapter;
+package com.zrquan.mobile.adapter;
 
 import android.content.Context;
 import android.view.LayoutInflater;
