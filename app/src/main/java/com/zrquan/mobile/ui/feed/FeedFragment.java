@@ -16,6 +16,7 @@ import android.widget.Toast;
 
 import com.zrquan.mobile.R;
 import com.zrquan.mobile.ZrquanApplication;
+import com.zrquan.mobile.adapter.FeedPagerAdapter;
 import com.zrquan.mobile.support.util.ScreenUtils;
 import com.zrquan.mobile.ui.authentic.UserLoginActivity;
 import com.zrquan.mobile.ui.authentic.UserRegisterActivity;

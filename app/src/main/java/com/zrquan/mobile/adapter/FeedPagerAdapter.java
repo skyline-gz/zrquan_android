@@ -1,4 +1,4 @@
-package com.zrquan.mobile.ui.feed;
+package com.zrquan.mobile.adapter;
 
 import java.util.ArrayList;
 
