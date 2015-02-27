@@ -25,8 +25,8 @@ import com.zrquan.mobile.event.Post.PullDownEvent;
 import com.zrquan.mobile.event.Post.PullUpEvent;
 import com.zrquan.mobile.model.Account;
 import com.zrquan.mobile.model.PostFeed;
+import com.zrquan.mobile.support.enums.SORT_TYPE;
 import com.zrquan.mobile.support.util.ScreenUtils;
-import com.zrquan.mobile.support.util.UrlUtils;
 import com.zrquan.mobile.ui.common.CommonFragment;
 import com.zrquan.mobile.widget.pulltorefresh.PullToRefreshBase;
 import com.zrquan.mobile.widget.pulltorefresh.PullToRefreshListView;
@@ -37,7 +37,6 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
-import java.util.LinkedList;
 import java.util.List;
 
 import de.greenrobot.event.EventBus;
@@ -53,15 +52,12 @@ public class PostFragment extends CommonFragment {
     private Integer[] postIds;
     private int pullUpCounter = 0;
 
-    private ListView mListView;
-    private Parcelable mListViewState;                   //用于保存ListView状态
-    private PullToRefreshListView mPullListView;
+    private ListView postListView;
+    private Parcelable postListViewState;                   //用于保存ListView状态
+    private PullToRefreshListView pullListView;
     private PostFeedAdapter postFeedAdapter;
     private SimpleDateFormat mDateFormat = new SimpleDateFormat("MM-dd HH:mm");
     private List<PostFeed> postList;
-    private boolean mIsStart = true;
-    private int mCurIndex = 0;
-    private static final int mLoadDataCount = 100;
 
     private int index;
 //    private ScrollControlReceiver scrollControlReceiver;
@@ -72,64 +68,57 @@ public class PostFragment extends CommonFragment {
 
         EventBus.getDefault().register(this);
 
-        if (mPullListView == null) {
+        if (pullListView == null) {
             context = getActivity().getApplicationContext();
 
+            // 设置pullListView属性
+            pullListView = new PullToRefreshListView(context);
+            pullListView.setBackgroundColor(getResources().getColor(R.color.main_feed_background_color));
+            pullListView.setPullLoadEnabled(false);
+            pullListView.setScrollLoadEnabled(true);
+
+            // 触发事件，抽取数据
+            PostController.getIdsAndInitialList(1, SORT_TYPE.DEFAULT.value());
+            // 获得实际的ListView
+            postListView = pullListView.getRefreshableView();
+
+            // 根据手册，addHeaderView要在setAdapter之前
+            // 轮播banner
             View bannerView = getBannerView(inflater, container);
             // http://stackoverflow.com/questions/4393775/android-classcastexception-when-adding-a-header-view-to-expandablelistview
-            // ERROR/AndroidRuntime(421): Caused by:java.lang.ClassCastException: android.widget.LinearLayout$LayoutParams
-            // 修复因HeadView不是ListView导致的运行时异常
-            // So basically, if you are adding a view to another,
-            // you MUST set the LayoutParams of the view to the LayoutParams type that the parent uses,
-            // or you will get a runtime error.
             bannerView.setLayoutParams(new ListView.LayoutParams(ListView.LayoutParams.MATCH_PARENT,
                     ListView.LayoutParams.WRAP_CONTENT));
+            postListView.addHeaderView(bannerView);
+            postListView.setDivider(null);
+            postListView.setDividerHeight((int) ScreenUtils.dpToPx(context, 6.0f));
+            postListView.setSelector(android.R.color.transparent);
+            postListView.setCacheColorHint(Color.TRANSPARENT);
 
-            mPullListView = new PullToRefreshListView(context);
-
-            mPullListView.setBackgroundColor(getResources().getColor(R.color.main_feed_background_color));
-            mCurIndex = mLoadDataCount;
-            // 触发事件，抽取数据
-            PostController.getIdsAndInitialList(1, UrlUtils.SORT_TYPE_DEFAULT);
             postFeedAdapter = new PostFeedAdapter(context, postList);
-            mListView = mPullListView.getRefreshableView();
+            postListView.setAdapter(postFeedAdapter);
 
-            // Note: When first introduced, this method could only be called before
-            // setting the adapter with {@link #setAdapter(ListAdapter)}. Starting with
-            mListView.addHeaderView(bannerView);
-            mListView.setAdapter(postFeedAdapter);
-            mListView.setDivider(null);
-            mListView.setDividerHeight((int) ScreenUtils.dpToPx(context, 6.0f));
-            mListView.setSelector(android.R.color.transparent);
-            mListView.setCacheColorHint(Color.TRANSPARENT);
-
-            mPullListView.setPullLoadEnabled(false);
-            mPullListView.setScrollLoadEnabled(true);
-
-            mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            postListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 @Override
                 public void onItemClick(AdapterView<?> arg0, View view, int position, long id) {
                     String text = postList.get(position) + ", index = " + (position + 1);
                     Toast.makeText(getActivity(), text, Toast.LENGTH_SHORT).show();
                 }
             });
-            mPullListView.setOnRefreshListener(new PullToRefreshBase.OnRefreshListener<ListView>() {
+            pullListView.setOnRefreshListener(new PullToRefreshBase.OnRefreshListener<ListView>() {
                 @Override
                 public void onPullDownToRefresh(PullToRefreshBase<ListView> refreshView) {
-                    mIsStart = true;
 
                     Account account = ZrquanApplication.getInstance().getAccount();
                     if (account != null && account.getId() != null) {
-                        PostController.getIdsAndInitialList(account.getId(), UrlUtils.SORT_TYPE_DEFAULT);
+                        PostController.getIdsAndInitialList(account.getId(), SORT_TYPE.DEFAULT.value());
                     } else {
                         postFeedAdapter.notifyDataSetChanged();
-                        mPullListView.onPullDownRefreshComplete();
+                        pullListView.onPullDownRefreshComplete();
                     }
                 }
 
                 @Override
                 public void onPullUpToRefresh(PullToRefreshBase<ListView> refreshView) {
-                    mIsStart = false;
                     // 如果已经上拉到24次，不再刷新数据
                     if (pullUpCounter < 24) {
                         pullUpCounter++;
@@ -137,27 +126,27 @@ public class PostFragment extends CommonFragment {
                         if (account != null && account.getId() != null) {
                             Integer[] partialIds = Arrays.copyOfRange(
                                     postIds, pullUpCounter * 20, pullUpCounter * 20 + 20);
-                            PostController.getPartialList(partialIds, UrlUtils.SORT_TYPE_DEFAULT);
+                            PostController.getPartialList(partialIds, SORT_TYPE.DEFAULT.value());
                         } else {
                             postFeedAdapter.notifyDataSetChanged();
-                            mPullListView.onPullDownRefreshComplete();
+                            pullListView.onPullDownRefreshComplete();
                         }
                     } else {
                         postFeedAdapter.notifyDataSetChanged();
-                        mPullListView.onPullDownRefreshComplete();
+                        pullListView.onPullDownRefreshComplete();
                     }
                 }
             });
             setLastUpdateTime();
         } else {
-            ((ViewGroup) mPullListView.getParent()).removeView(mPullListView);
+            ((ViewGroup) pullListView.getParent()).removeView(pullListView);
             // Restore previous state (including selected item index and scroll position)
-            mListView.onRestoreInstanceState(mListViewState);
+            postListView.onRestoreInstanceState(postListViewState);
         }
 
         vpBanner.startAutoScroll();
 
-        return mPullListView;
+        return pullListView;
     }
 
     @Override
@@ -165,7 +154,7 @@ public class PostFragment extends CommonFragment {
         super.onDestroyView();
         // see http://stackoverflow.com/questions/3014089/maintain-save-restore-scroll-position-when-returning-to-a-listview/3035521#3035521
         // Save ListView state
-        mListViewState = mListView.onSaveInstanceState();
+        postListViewState = postListView.onSaveInstanceState();
         EventBus.getDefault().unregister(this);
         vpBanner.stopAutoScroll();
     }
@@ -230,9 +219,9 @@ public class PostFragment extends CommonFragment {
 
         postList = event.getInitialList();
         postFeedAdapter.notifyDataSetChanged();
-        mPullListView.onPullDownRefreshComplete();
+        pullListView.onPullDownRefreshComplete();
 
-        mPullListView.setHasMoreData(true);
+        pullListView.setHasMoreData(true);
         setLastUpdateTime();
     }
 
@@ -241,9 +230,9 @@ public class PostFragment extends CommonFragment {
         List<PostFeed> dList = event.getPartialList();
         postList.addAll(dList);
         postFeedAdapter.notifyDataSetChanged();
-        mPullListView.onPullUpRefreshComplete();
+        pullListView.onPullUpRefreshComplete();
 
-        mPullListView.setHasMoreData(true);
+        pullListView.setHasMoreData(true);
         setLastUpdateTime();
     }
 
@@ -257,7 +246,7 @@ public class PostFragment extends CommonFragment {
 
     private void setLastUpdateTime() {
         String text = formatDateTime(System.currentTimeMillis());
-        mPullListView.setLastUpdatedLabel(text);
+        pullListView.setLastUpdatedLabel(text);
     }
 
     private String formatDateTime(long time) {
