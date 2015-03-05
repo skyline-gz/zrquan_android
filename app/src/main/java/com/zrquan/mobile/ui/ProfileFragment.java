@@ -24,7 +24,6 @@ import de.greenrobot.event.EventBus;
 
 public class ProfileFragment extends CommonFragment{
 
-    private Context context;
     private View rootView;
     private VisitorContentViewHolder mVisitorContentViewHolder;
     private UserProfileContentViewHolder mUserProfileContentViewHolder;
@@ -35,7 +34,6 @@ public class ProfileFragment extends CommonFragment{
         boolean isLogin = ((ZrquanApplication) getActivity().getApplicationContext()).getAccount().isLogin();
 
         if (rootView == null) {
-            context = getActivity().getApplicationContext();
             if(!isLogin) {
                 rootView = inflater.inflate(R.layout.visitor_tab_profile_fragment, container, false);
                 mVisitorContentViewHolder = new VisitorContentViewHolder(this, rootView);

@@ -8,8 +8,12 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.android.volley.RequestQueue;
+import com.android.volley.toolbox.ImageLoader;
+import com.android.volley.toolbox.NetworkImageView;
 import com.zrquan.mobile.R;
 import com.zrquan.mobile.model.PostFeed;
+import com.zrquan.mobile.support.volley.cache.BitmapLruCache;
 
 import java.util.List;
 
@@ -19,10 +23,12 @@ import java.util.List;
 public class PostFeedAdapter extends ArrayAdapter<PostFeed> {
 
     private LayoutInflater inflater;
+    private ImageLoader imageLoader;
 
-    public PostFeedAdapter(Context context, List<PostFeed> data) {
+    public PostFeedAdapter(Context context, List<PostFeed> data, RequestQueue queue) {
         super(context, R.layout.card_item_post, data);
         inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        imageLoader = new ImageLoader(queue, new BitmapLruCache());
     }
 
     public View getView(int position, View convertView, ViewGroup parent) {
@@ -39,6 +45,9 @@ public class PostFeedAdapter extends ArrayAdapter<PostFeed> {
 
         PostFeed item = getItem(position);
 
+        holder.avatar.setImageUrl(item.getPostUserAvatar(), imageLoader);
+        holder.avatar.setDefaultImageResId(R.drawable.avatar_default);
+        holder.avatar.setErrorImageResId(R.drawable.avatar_default);
         holder.user.setText(item.getPostUserName());
 //        holder.time.setText(item.getPostCreatedAt().toString());
         holder.theme.setText(item.getThemeName());
@@ -49,6 +58,7 @@ public class PostFeedAdapter extends ArrayAdapter<PostFeed> {
 
     private ViewHolder buildHolder(View convertView) {
         ViewHolder holder = new ViewHolder();
+        holder.avatar = (NetworkImageView) convertView.findViewById(R.id.avatar);
         holder.user = (TextView) convertView.findViewById(R.id.user);
         holder.time = (TextView) convertView.findViewById(R.id.time);
         holder.theme = (TextView) convertView.findViewById(R.id.theme);
@@ -57,7 +67,7 @@ public class PostFeedAdapter extends ArrayAdapter<PostFeed> {
     }
 
     public static class ViewHolder {
-        ImageView avatar;
+        NetworkImageView avatar;
         TextView user;
         TextView time;
         TextView theme;

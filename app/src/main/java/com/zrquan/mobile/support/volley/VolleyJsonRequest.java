@@ -76,6 +76,6 @@ public class VolleyJsonRequest extends VolleyRequestBase {
         };
 
         // add the request object to the queue to be executed
-        ZrquanApplication.getInstance().addToRequestQueue(req);
+        VolleyContext.getInstance().getRequestQueue().add(req);
     }
 }

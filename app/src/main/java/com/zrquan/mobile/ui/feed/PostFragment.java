@@ -29,6 +29,7 @@ import com.zrquan.mobile.model.Account;
 import com.zrquan.mobile.model.PostFeed;
 import com.zrquan.mobile.support.enums.SortType;
 import com.zrquan.mobile.support.util.ScreenUtils;
+import com.zrquan.mobile.support.volley.VolleyContext;
 import com.zrquan.mobile.ui.common.CommonFragment;
 import com.zrquan.mobile.widget.pulltorefresh.PullToRefreshBase;
 import com.zrquan.mobile.widget.pulltorefresh.PullToRefreshListView;
@@ -118,7 +119,8 @@ public class PostFragment extends CommonFragment {
     }
 
     public void onViewCreated(View paramView, Bundle paramBundle) {
-        postFeedAdapter = new PostFeedAdapter(context, postList);
+
+        postFeedAdapter = new PostFeedAdapter(context, postList, VolleyContext.getInstance().getRequestQueue());
         postListView.setAdapter(postFeedAdapter);
     }
 

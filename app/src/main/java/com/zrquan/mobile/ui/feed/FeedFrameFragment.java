@@ -31,7 +31,7 @@ import butterknife.InjectView;
 import butterknife.OnClick;
 import de.greenrobot.event.EventBus;
 
-public class FeedFragment extends CommonFragment {
+public class FeedFrameFragment extends CommonFragment {
 
     private Context context;
     private View rootView;                          //当前Fragment持有的View实例

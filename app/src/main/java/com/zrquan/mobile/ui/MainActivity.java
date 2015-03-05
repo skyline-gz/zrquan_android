@@ -22,7 +22,7 @@ import android.widget.Toast;
 import com.google.common.base.Optional;
 import com.zrquan.mobile.R;
 import com.zrquan.mobile.ui.common.CommonFragmentActivity;
-import com.zrquan.mobile.ui.feed.FeedFragment;
+import com.zrquan.mobile.ui.feed.FeedFrameFragment;
 import com.zrquan.mobile.widget.fragment.FragmentTabHost;
 
 public class MainActivity extends CommonFragmentActivity {
@@ -32,7 +32,7 @@ public class MainActivity extends CommonFragmentActivity {
     private final int COMPOSE_TAB_INDEX = 2;
 
     //定义数组来存放Fragment界面
-    private Class fragmentArray[] = {FeedFragment.class, FollowFragment.class, null,
+    private Class fragmentArray[] = {FeedFrameFragment.class, FollowFragment.class, null,
             MessageFragment.class, ProfileFragment.class};
 
     //定义数组来存放按钮图片
