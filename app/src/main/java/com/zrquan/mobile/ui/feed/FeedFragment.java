@@ -62,7 +62,7 @@ public class FeedFragment extends CommonFragment {
         //http://stackoverflow.com/questions/10716571/avoid-recreating-same-view-when-perform-tab-switching
         if (rootView == null) {
             context = getActivity().getApplicationContext();
-            rootView = inflater.inflate(R.layout.fragment_feed, container, false);
+            rootView = inflater.inflate(R.layout.fragment_feed_frame, container, false);
             ButterKnife.inject(this, rootView);
         } else {
             ((ViewGroup) rootView.getParent()).removeView(rootView);

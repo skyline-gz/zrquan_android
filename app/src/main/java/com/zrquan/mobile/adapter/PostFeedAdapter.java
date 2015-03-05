@@ -30,19 +30,30 @@ public class PostFeedAdapter extends ArrayAdapter<PostFeed> {
         ViewHolder holder;
         if (convertView == null) {
             convertView = inflater.inflate(R.layout.card_item_post, null, false);
-            holder = new ViewHolder();
+            holder = buildHolder(convertView);
             convertView.setTag(holder);
         }
         else {
             holder = (ViewHolder) convertView.getTag();
         }
-        holder.avatar = (ImageView) convertView.findViewById(R.id.avatar);
+
+        PostFeed item = getItem(position);
+
+        holder.user.setText(item.getPostUserName());
+//        holder.time.setText(item.getPostCreatedAt().toString());
+        holder.theme.setText(item.getThemeName());
+        holder.content.setText(item.getPostContent());
+
+        return convertView;
+    }
+
+    private ViewHolder buildHolder(View convertView) {
+        ViewHolder holder = new ViewHolder();
         holder.user = (TextView) convertView.findViewById(R.id.user);
         holder.time = (TextView) convertView.findViewById(R.id.time);
         holder.theme = (TextView) convertView.findViewById(R.id.theme);
         holder.content = (TextView) convertView.findViewById(R.id.content);
-
-        return convertView;
+        return holder;
     }
 
     public static class ViewHolder {

@@ -12,6 +12,7 @@ import android.view.animation.AnimationUtils;
 import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 
@@ -23,9 +24,10 @@ import com.zrquan.mobile.adapter.PostFeedAdapter;
 import com.zrquan.mobile.controller.PostController;
 import com.zrquan.mobile.event.Post.PullDownEvent;
 import com.zrquan.mobile.event.Post.PullUpEvent;
+import com.zrquan.mobile.event.Post.StartLoadEvent;
 import com.zrquan.mobile.model.Account;
 import com.zrquan.mobile.model.PostFeed;
-import com.zrquan.mobile.support.enums.SORT_TYPE;
+import com.zrquan.mobile.support.enums.SortType;
 import com.zrquan.mobile.support.util.ScreenUtils;
 import com.zrquan.mobile.ui.common.CommonFragment;
 import com.zrquan.mobile.widget.pulltorefresh.PullToRefreshBase;
@@ -57,10 +59,8 @@ public class PostFragment extends CommonFragment {
     private PullToRefreshListView pullListView;
     private PostFeedAdapter postFeedAdapter;
     private SimpleDateFormat mDateFormat = new SimpleDateFormat("MM-dd HH:mm");
-    private List<PostFeed> postList;
-
-    private int index;
-//    private ScrollControlReceiver scrollControlReceiver;
+    private List<PostFeed> postList = new ArrayList<>();
+    private ProgressBar progressBar;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -68,17 +68,18 @@ public class PostFragment extends CommonFragment {
 
         EventBus.getDefault().register(this);
 
+        View view = inflater.inflate(R.layout.fragment_feed_list, container, false);
         if (pullListView == null) {
             context = getActivity().getApplicationContext();
 
             // 设置pullListView属性
-            pullListView = new PullToRefreshListView(context);
+            pullListView = (PullToRefreshListView) view.findViewById(R.id.pullListView);
+//            pullListView = new PullToRefreshListView(context);
             pullListView.setBackgroundColor(getResources().getColor(R.color.main_feed_background_color));
             pullListView.setPullLoadEnabled(false);
             pullListView.setScrollLoadEnabled(true);
+            pullListView.setOnRefreshListener(getRefreshListener());
 
-            // 触发事件，抽取数据
-            PostController.getIdsAndInitialList(1, SORT_TYPE.DEFAULT.value());
             // 获得实际的ListView
             postListView = pullListView.getRefreshableView();
 
@@ -94,49 +95,8 @@ public class PostFragment extends CommonFragment {
             postListView.setSelector(android.R.color.transparent);
             postListView.setCacheColorHint(Color.TRANSPARENT);
 
-            postFeedAdapter = new PostFeedAdapter(context, postList);
-            postListView.setAdapter(postFeedAdapter);
+            postListView.setOnItemClickListener(getItemClickListener());
 
-            postListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                @Override
-                public void onItemClick(AdapterView<?> arg0, View view, int position, long id) {
-                    String text = postList.get(position) + ", index = " + (position + 1);
-                    Toast.makeText(getActivity(), text, Toast.LENGTH_SHORT).show();
-                }
-            });
-            pullListView.setOnRefreshListener(new PullToRefreshBase.OnRefreshListener<ListView>() {
-                @Override
-                public void onPullDownToRefresh(PullToRefreshBase<ListView> refreshView) {
-
-                    Account account = ZrquanApplication.getInstance().getAccount();
-                    if (account != null && account.getId() != null) {
-                        PostController.getIdsAndInitialList(account.getId(), SORT_TYPE.DEFAULT.value());
-                    } else {
-                        postFeedAdapter.notifyDataSetChanged();
-                        pullListView.onPullDownRefreshComplete();
-                    }
-                }
-
-                @Override
-                public void onPullUpToRefresh(PullToRefreshBase<ListView> refreshView) {
-                    // 如果已经上拉到24次，不再刷新数据
-                    if (pullUpCounter < 24) {
-                        pullUpCounter++;
-                        Account account = ZrquanApplication.getInstance().getAccount();
-                        if (account != null && account.getId() != null) {
-                            Integer[] partialIds = Arrays.copyOfRange(
-                                    postIds, pullUpCounter * 20, pullUpCounter * 20 + 20);
-                            PostController.getPartialList(partialIds, SORT_TYPE.DEFAULT.value());
-                        } else {
-                            postFeedAdapter.notifyDataSetChanged();
-                            pullListView.onPullDownRefreshComplete();
-                        }
-                    } else {
-                        postFeedAdapter.notifyDataSetChanged();
-                        pullListView.onPullDownRefreshComplete();
-                    }
-                }
-            });
             setLastUpdateTime();
         } else {
             ((ViewGroup) pullListView.getParent()).removeView(pullListView);
@@ -144,9 +104,22 @@ public class PostFragment extends CommonFragment {
             postListView.onRestoreInstanceState(postListViewState);
         }
 
+        progressBar = (ProgressBar) view.findViewById(R.id.progress);
+        if (postList != null && postList.size() != 0) {
+            PostController.startLoad(1, SortType.DEFAULT.value());
+            progressBar.setVisibility(View.GONE);
+        } else {
+            progressBar.setVisibility(View.VISIBLE);
+        }
+
         vpBanner.startAutoScroll();
 
-        return pullListView;
+        return view;
+    }
+
+    public void onViewCreated(View paramView, Bundle paramBundle) {
+        postFeedAdapter = new PostFeedAdapter(context, postList);
+        postListView.setAdapter(postFeedAdapter);
     }
 
     @Override
@@ -211,13 +184,29 @@ public class PostFragment extends CommonFragment {
         return v;
     }
 
+    // 开始读取
+    // 下拉事件
+    public void onEvent(StartLoadEvent event){
+        pullUpCounter = 0;      //重置 pullUpCounter
+        progressBar.setVisibility(View.GONE);
+
+        postIds = event.getPostIds();
+        postList.clear();
+        postList.addAll(event.getInitialList());
+        postFeedAdapter.notifyDataSetChanged();
+        pullListView.onPullDownRefreshComplete();
+
+        pullListView.setHasMoreData(true);
+        setLastUpdateTime();
+    }
+
     // 下拉事件
     public void onEvent(PullDownEvent event){
-        postList.clear();
         pullUpCounter = 0;      //重置 pullUpCounter
-        postIds = event.getPostIds();
 
-        postList = event.getInitialList();
+        postIds = event.getPostIds();
+        postList.clear();
+        postList.addAll(event.getInitialList());
         postFeedAdapter.notifyDataSetChanged();
         pullListView.onPullDownRefreshComplete();
 
@@ -242,6 +231,53 @@ public class PostFragment extends CommonFragment {
         } else {
             vpBanner.stopAutoScroll();
         }
+    }
+
+    private AdapterView.OnItemClickListener getItemClickListener() {
+        return new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> arg0, View view, int position, long id) {
+                String text = postList.get(position) + ", index = " + (position + 1);
+                Toast.makeText(getActivity(), text, Toast.LENGTH_SHORT).show();
+            }
+        };
+    }
+
+    private PullToRefreshBase.OnRefreshListener<ListView> getRefreshListener() {
+        return new PullToRefreshBase.OnRefreshListener<ListView>() {
+            @Override
+            public void onPullDownToRefresh(PullToRefreshBase<ListView> refreshView) {
+
+                Account account = ZrquanApplication.getInstance().getAccount();
+//                    if (account != null && account.getId() != null) {
+//                        PostController.pullDown(account.getId(), SORT_TYPE.DEFAULT.value());
+                PostController.pullDown(1, SortType.DEFAULT.value());
+//                    } else {
+//                        postFeedAdapter.notifyDataSetChanged();
+//                        pullListView.onPullDownRefreshComplete();
+//                    }
+            }
+
+            @Override
+            public void onPullUpToRefresh(PullToRefreshBase<ListView> refreshView) {
+                // 如果已经上拉到24次，不再刷新数据
+                if (pullUpCounter < 24) {
+                    pullUpCounter++;
+                    Account account = ZrquanApplication.getInstance().getAccount();
+//                    if (account != null && account.getId() != null) {
+                        Integer[] partialIds = Arrays.copyOfRange(
+                                postIds, pullUpCounter * 20, pullUpCounter * 20 + 20);
+                        PostController.pullUp(partialIds, SortType.DEFAULT.value());
+//                    } else {
+//                        postFeedAdapter.notifyDataSetChanged();
+//                        pullListView.onPullUpRefreshComplete();
+//                    }
+                } else {
+                    postFeedAdapter.notifyDataSetChanged();
+                    pullListView.onPullUpRefreshComplete();
+                }
+            }
+        };
     }
 
     private void setLastUpdateTime() {

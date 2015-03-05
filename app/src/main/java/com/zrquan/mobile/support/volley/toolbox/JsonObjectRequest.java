@@ -37,7 +37,6 @@ public class JsonObjectRequest extends JsonRequest<JsonObject> {
                 errorListener);
         setRetryPolicy(new DefaultRetryPolicy(DEFAULT_SOCKET_TIMEOUT_MS, DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
                 DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
-        setShouldCache(false);
     }
 
     /**

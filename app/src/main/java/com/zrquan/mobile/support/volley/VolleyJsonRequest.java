@@ -41,9 +41,7 @@ public class VolleyJsonRequest extends VolleyRequestBase {
                     @Override
                     public void onResponse(JsonObject response) {
                         try {
-                            //for pretty json output
-                            String jsonString = new GsonBuilder().setPrettyPrinting().create().toJson(response);
-                            LogUtils.d("\nResponse:" + jsonString);
+//                            String jsonString = new GsonBuilder().setPrettyPrinting().create().toJson(response);
                             responseHandler.onResponse(response);
                         } catch (Exception e) {
                             LogUtils.d(LOG_Tag, e);

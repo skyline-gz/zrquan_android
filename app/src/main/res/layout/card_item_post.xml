@@ -37,7 +37,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/time"
-                android:layout_below="@id/user_name"
+                android:layout_below="@id/user"
                 android:layout_toRightOf="@id/avatar"
                 android:text="time"
                 android:layout_marginLeft="8dp"/>
@@ -45,7 +45,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/theme"
-                android:layout_below="@id/user_name"
+                android:layout_below="@id/user"
                 android:layout_toRightOf="@id/time"
                 android:text="theme"
                 android:layout_marginLeft="8dp"/>

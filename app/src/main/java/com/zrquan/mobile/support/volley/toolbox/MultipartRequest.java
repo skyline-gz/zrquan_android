@@ -47,7 +47,6 @@ public class MultipartRequest extends Request<JsonObject> {
 
         setRetryPolicy(new DefaultRetryPolicy(DEFAULT_SOCKET_TIMEOUT_MS, DEFAULT_RETRY_TIMES,
                 DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
-        setShouldCache(false);
     }
 
     @Override
