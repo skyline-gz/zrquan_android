@@ -1,5 +1,8 @@
 package com.zrquan.mobile.support.util;
 
+import org.apache.commons.lang3.StringUtils;
+
+import java.net.URLEncoder;
 import java.util.Iterator;
 import java.util.Map;
 
@@ -53,7 +56,6 @@ public class UrlUtils {
      * @param paramsMap
      * @return
      * @see #getUrlWithParams(String, Map)
-     * @see StringUtils#utf8Encode(String)
      */
     public static String getUrlWithValueEncodeParams(String url, Map<String, String> paramsMap) {
         StringBuilder urlWithParams = new StringBuilder();
@@ -98,7 +100,6 @@ public class UrlUtils {
      * @param paramsMap
      * @return joined params string
      * @see #joinParams(Map)
-     * @see StringUtils#utf8Encode(String)
      */
     public static String joinParamsWithEncodedValue(Map<String, String> paramsMap) {
         StringBuilder params = new StringBuilder("");
@@ -106,8 +107,9 @@ public class UrlUtils {
             Iterator<Map.Entry<String, String>> ite = paramsMap.entrySet().iterator();
             try {
                 while (ite.hasNext()) {
-                    Map.Entry<String, String> entry = (Map.Entry<String, String>)ite.next();
-                    params.append(entry.getKey()).append(EQUAL_SIGN).append(StringUtils.utf8Encode(entry.getValue()));
+                    Map.Entry<String, String> entry = ite.next();
+                    params.append(entry.getKey()).append(EQUAL_SIGN).append(
+                            URLEncoder.encode(entry.getValue(), "UTF-8"));
                     if (ite.hasNext()) {
                         params.append(PARAMETERS_SEPARATOR);
                     }

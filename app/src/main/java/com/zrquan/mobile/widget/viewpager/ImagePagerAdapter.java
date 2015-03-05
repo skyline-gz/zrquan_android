@@ -5,17 +5,17 @@
  */
 package com.zrquan.mobile.widget.viewpager;
 
-import java.util.List;
-
 import android.content.Context;
 import android.util.TypedValue;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.zrquan.mobile.support.util.ListUtils;
-
-import com.zrquan.mobile.widget.view.RoundedImageView;
 import com.zrquan.mobile.widget.salvage.RecyclingPagerAdapter;
+import com.zrquan.mobile.widget.view.RoundedImageView;
+
+import org.apache.commons.collections4.CollectionUtils;
+
+import java.util.List;
 
 /**
  * ImagePagerAdapter
@@ -33,14 +33,14 @@ public class ImagePagerAdapter extends RecyclingPagerAdapter {
     public ImagePagerAdapter(Context context, List<Integer> imageIdList) {
         this.context = context;
         this.imageIdList = imageIdList;
-        this.size = ListUtils.getSize(imageIdList);
+        this.size = CollectionUtils.size(imageIdList);
         isInfiniteLoop = false;
     }
 
     @Override
     public int getCount() {
         // Infinite loop
-        return isInfiniteLoop ? Integer.MAX_VALUE : ListUtils.getSize(imageIdList);
+        return isInfiniteLoop ? Integer.MAX_VALUE : CollectionUtils.size(imageIdList);
     }
 
     /**

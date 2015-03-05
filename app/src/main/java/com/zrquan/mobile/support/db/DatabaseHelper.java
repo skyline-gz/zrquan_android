@@ -7,7 +7,7 @@ import android.database.sqlite.SQLiteDatabase.CursorFactory;
 import com.j256.ormlite.android.apptools.OrmLiteSqliteOpenHelper;
 import com.j256.ormlite.support.ConnectionSource;
 
-import com.zrquan.mobile.support.util.FileUtils;
+import com.zrquan.mobile.support.util.AndroidIOUtils;
 import com.zrquan.mobile.support.util.LogUtils;
 
 /**
@@ -68,7 +68,7 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
         String[] sqlNames = {"sql/create_industries.sql", "sql/create_locations.sql"
                 , "sql/create_regions.sql", "sql/create_file_download_logs"};
         for (String sqlName : sqlNames) {
-            String create_sql = FileUtils.readFile(sqlName, null, true, context).toString();
+            String create_sql = AndroidIOUtils.readFile(sqlName, null, true, context).toString();
             sqLiteDatabase.execSQL(create_sql);
         }
     }
@@ -77,7 +77,7 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
         String[] sqlNames = {"sql/insert_industries.sql", "sql/insert_locations.sql"
                 , "sql/insert_regions.sql"};
         for (String sqlName : sqlNames) {
-            String insert_sqls = FileUtils.readFile(sqlName, null, true, context).toString();
+            String insert_sqls = AndroidIOUtils.readFile(sqlName, null, true, context).toString();
             execMultiLine(sqLiteDatabase, insert_sqls);
         }
     }
@@ -85,7 +85,7 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
     private void initUpdateTables(SQLiteDatabase sqLiteDatabase) {
         String[] sqlNames = {"sql/update_industries.sql", "sql/update_locations.sql"};
         for (String sqlName : sqlNames) {
-            String update_sqls = FileUtils.readFile(sqlName, null, true, context).toString();
+            String update_sqls = AndroidIOUtils.readFile(sqlName, null, true, context).toString();
             execMultiLine(sqLiteDatabase, update_sqls);
         }
     }

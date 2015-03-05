@@ -21,7 +21,7 @@ import com.android.volley.toolbox.HttpHeaderParser;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 
-import com.zrquan.mobile.support.util.FileUtils;
+import com.zrquan.mobile.support.util.AndroidIOUtils;
 import com.zrquan.mobile.support.util.LogUtils;
 
 public class MultipartRequest extends Request<JsonObject> {
@@ -95,7 +95,7 @@ public class MultipartRequest extends Request<JsonObject> {
 
         for (Map.Entry<String, File> fileEntry : mFilePartMap.entrySet()) {
             File file = fileEntry.getValue();
-            mMultipartEntity.addPart(fileEntry.getKey(), new FileBody(file, FileUtils.getMimeType(file.getPath())));
+            mMultipartEntity.addPart(fileEntry.getKey(), new FileBody(file, AndroidIOUtils.getMimeType(file.getPath())));
         }
     }
 }

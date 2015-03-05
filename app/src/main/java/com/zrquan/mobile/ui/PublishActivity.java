@@ -4,7 +4,6 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.graphics.Bitmap;
 import android.graphics.Point;
 import android.net.Uri;
 import android.os.Bundle;
@@ -15,7 +14,7 @@ import android.widget.LinearLayout;
 
 import com.zrquan.mobile.R;
 import com.zrquan.mobile.model.ImageDesc;
-import com.zrquan.mobile.support.util.FileUtils;
+import com.zrquan.mobile.support.util.AndroidIOUtils;
 import com.zrquan.mobile.support.util.LogUtils;
 import com.zrquan.mobile.support.util.SDCardUtils;
 import com.zrquan.mobile.support.util.ScreenUtils;
@@ -121,7 +120,7 @@ public class PublishActivity extends CommonActivity{
     }
 
     private void prepareForUploadAndDisplay(String imagePath) {
-        String contentType = FileUtils.getMimeType(imagePath);
+        String contentType = AndroidIOUtils.getMimeType(imagePath);
         File imageFile = new File(imagePath);
         String fileName = imageFile.getName();
 
@@ -131,7 +130,7 @@ public class PublishActivity extends CommonActivity{
         imageDesc.setFileName(fileName);
 
         //如果不是Gif 类型，则根据屏幕高宽生成缩略图
-        if(!FileUtils.isGifType(contentType)) {
+        if(!AndroidIOUtils.isGifType(contentType)) {
             Point screenSize = ScreenUtils.getScreenSize(context);
         }
 

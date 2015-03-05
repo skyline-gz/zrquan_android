@@ -23,12 +23,13 @@ import com.zrquan.mobile.support.enums.EventType;
 import com.zrquan.mobile.support.enums.IntentExtra;
 import com.zrquan.mobile.support.enums.ServerCode;
 import com.zrquan.mobile.support.util.ScreenUtils;
-import com.zrquan.mobile.support.util.StringUtils;
 import com.zrquan.mobile.support.util.ToastUtils;
 import com.zrquan.mobile.support.util.ViewUtils;
 import com.zrquan.mobile.support.volley.VolleyRequestBase;
 import com.zrquan.mobile.ui.MainActivity;
 import com.zrquan.mobile.ui.common.CommonActivity;
+
+import org.apache.commons.lang3.StringUtils;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
