@@ -36,6 +36,8 @@ import com.zrquan.mobile.widget.pulltorefresh.PullToRefreshListView;
 import com.zrquan.mobile.widget.viewpager.AutoScrollViewPager;
 import com.zrquan.mobile.widget.viewpager.ImagePagerAdapter;
 
+import org.apache.commons.collections4.CollectionUtils;
+
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -106,11 +108,11 @@ public class PostFragment extends CommonFragment {
         }
 
         progressBar = (ProgressBar) view.findViewById(R.id.progress);
-        if (postList != null && postList.size() != 0) {
+        if (CollectionUtils.isEmpty(postList)) {
             PostController.startLoad(1, SortType.DEFAULT.value());
-            progressBar.setVisibility(View.GONE);
-        } else {
             progressBar.setVisibility(View.VISIBLE);
+        } else {
+            progressBar.setVisibility(View.GONE);
         }
 
         vpBanner.startAutoScroll();
@@ -193,13 +195,8 @@ public class PostFragment extends CommonFragment {
         progressBar.setVisibility(View.GONE);
 
         postIds = event.getPostIds();
-        postList.clear();
         postList.addAll(event.getInitialList());
         postFeedAdapter.notifyDataSetChanged();
-        pullListView.onPullDownRefreshComplete();
-
-        pullListView.setHasMoreData(true);
-        setLastUpdateTime();
     }
 
     // 下拉事件

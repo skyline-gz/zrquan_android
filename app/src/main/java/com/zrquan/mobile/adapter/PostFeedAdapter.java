@@ -45,7 +45,7 @@ public class PostFeedAdapter extends ArrayAdapter<PostFeed> {
 
         PostFeed item = getItem(position);
 
-        holder.avatar.setImageUrl(item.getPostUserAvatar(), imageLoader);
+        holder.avatar.setImageUrl("http://zrquan.qiniudn.com/uploads/avartars/4/bb02460b87b65f3c4c95b9c8e72d0e2c20150213-18962-hih4tz.png", imageLoader);
         holder.avatar.setDefaultImageResId(R.drawable.avatar_default);
         holder.avatar.setErrorImageResId(R.drawable.avatar_default);
         holder.user.setText(item.getPostUserName());
