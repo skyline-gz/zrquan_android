@@ -54,7 +54,7 @@ public class UserRegisterSetPasswordActivity extends CommonActivity {
 
     @InjectView(R.id.tv_title)
     TextView tvTitle;
-    @InjectView(R.id.tv_back)
+    @InjectView(R.id.tv_left)
     TextView tvBack;
 
     @InjectView(R.id.tv_content)
@@ -202,7 +202,7 @@ public class UserRegisterSetPasswordActivity extends CommonActivity {
         AccountController.sendVerifyCode(mPhoneNum);
     }
 
-    @OnClick(R.id.tv_back)
+    @OnClick(R.id.tv_left)
     public void onBtnBackClick(View view) {
         doBack();
     }

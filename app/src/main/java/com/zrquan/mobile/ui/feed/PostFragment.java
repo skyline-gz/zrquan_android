@@ -28,6 +28,8 @@ import com.zrquan.mobile.event.Post.StartLoadEvent;
 import com.zrquan.mobile.model.Account;
 import com.zrquan.mobile.model.PostFeed;
 import com.zrquan.mobile.support.enums.SortType;
+import com.zrquan.mobile.support.util.DateUtils;
+import com.zrquan.mobile.support.util.LogUtils;
 import com.zrquan.mobile.support.util.ScreenUtils;
 import com.zrquan.mobile.support.volley.VolleyContext;
 import com.zrquan.mobile.ui.common.CommonFragment;
@@ -37,6 +39,7 @@ import com.zrquan.mobile.widget.viewpager.AutoScrollViewPager;
 import com.zrquan.mobile.widget.viewpager.ImagePagerAdapter;
 
 import org.apache.commons.collections4.CollectionUtils;
+import org.apache.commons.lang3.StringUtils;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -66,46 +69,42 @@ public class PostFragment extends CommonFragment {
     private ProgressBar progressBar;
 
     @Override
+    public void onCreate (Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        EventBus.getDefault().register(this);
+        context = getActivity().getApplicationContext();
+    }
+
+    @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        EventBus.getDefault().register(this);
-
         View view = inflater.inflate(R.layout.fragment_feed_list, container, false);
-        if (pullListView == null) {
-            context = getActivity().getApplicationContext();
 
-            // 设置pullListView属性
-            pullListView = (PullToRefreshListView) view.findViewById(R.id.pullListView);
-//            pullListView = new PullToRefreshListView(context);
-            pullListView.setBackgroundColor(getResources().getColor(R.color.main_feed_background_color));
-            pullListView.setPullLoadEnabled(false);
-            pullListView.setScrollLoadEnabled(true);
-            pullListView.setOnRefreshListener(getRefreshListener());
+        // 设置pullListView属性
+        pullListView = (PullToRefreshListView) view.findViewById(R.id.pullListView);
+        pullListView.setPullLoadEnabled(false);
+        pullListView.setScrollLoadEnabled(true);
+        pullListView.setOnRefreshListener(getRefreshListener());
 
-            // 获得实际的ListView
-            postListView = pullListView.getRefreshableView();
+        // 获得实际的ListView
+        postListView = pullListView.getRefreshableView();
+        // 根据手册，addHeaderView要在setAdapter之前
+        // 轮播banner
+        View bannerView = getBannerView(inflater, container);
+        // http://stackoverflow.com/questions/4393775/android-classcastexception-when-adding-a-header-view-to-expandablelistview
+        bannerView.setLayoutParams(new ListView.LayoutParams(ListView.LayoutParams.MATCH_PARENT,
+                ListView.LayoutParams.WRAP_CONTENT));
+        postListView.addHeaderView(bannerView);
+        postListView.setDivider(null);
+        postListView.setDividerHeight((int) ScreenUtils.dpToPx(context, 6.0f));
+        postListView.setSelector(android.R.color.transparent);
+        postListView.setCacheColorHint(Color.TRANSPARENT);
 
-            // 根据手册，addHeaderView要在setAdapter之前
-            // 轮播banner
-            View bannerView = getBannerView(inflater, container);
-            // http://stackoverflow.com/questions/4393775/android-classcastexception-when-adding-a-header-view-to-expandablelistview
-            bannerView.setLayoutParams(new ListView.LayoutParams(ListView.LayoutParams.MATCH_PARENT,
-                    ListView.LayoutParams.WRAP_CONTENT));
-            postListView.addHeaderView(bannerView);
-            postListView.setDivider(null);
-            postListView.setDividerHeight((int) ScreenUtils.dpToPx(context, 6.0f));
-            postListView.setSelector(android.R.color.transparent);
-            postListView.setCacheColorHint(Color.TRANSPARENT);
-
-            postListView.setOnItemClickListener(getItemClickListener());
-
-            setLastUpdateTime();
-        } else {
-            ((ViewGroup) pullListView.getParent()).removeView(pullListView);
-            // Restore previous state (including selected item index and scroll position)
-            postListView.onRestoreInstanceState(postListViewState);
-        }
+        postListView.setOnItemClickListener(getItemClickListener());
+//        } else {
+//            postListView.onRestoreInstanceState(postListViewState);
+//        }
 
         progressBar = (ProgressBar) view.findViewById(R.id.progress);
         if (CollectionUtils.isEmpty(postList)) {
@@ -121,9 +120,11 @@ public class PostFragment extends CommonFragment {
     }
 
     public void onViewCreated(View paramView, Bundle paramBundle) {
-
-        postFeedAdapter = new PostFeedAdapter(context, postList, VolleyContext.getInstance().getRequestQueue());
+        if (postFeedAdapter == null) {
+            postFeedAdapter = new PostFeedAdapter(context, postList, VolleyContext.getInstance().getRequestQueue());
+        }
         postListView.setAdapter(postFeedAdapter);
+        postFeedAdapter.notifyDataSetChanged();
     }
 
     @Override
@@ -134,6 +135,11 @@ public class PostFragment extends CommonFragment {
         postListViewState = postListView.onSaveInstanceState();
         EventBus.getDefault().unregister(this);
         vpBanner.stopAutoScroll();
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
     }
 
     private View getBannerView(LayoutInflater inflater, ViewGroup container) {
@@ -195,8 +201,10 @@ public class PostFragment extends CommonFragment {
         progressBar.setVisibility(View.GONE);
 
         postIds = event.getPostIds();
+        postList.clear();
         postList.addAll(event.getInitialList());
         postFeedAdapter.notifyDataSetChanged();
+        pullListView.setLastUpdatedLabel(DateUtils.getMDHMDate(System.currentTimeMillis()));
     }
 
     // 下拉事件
@@ -210,7 +218,7 @@ public class PostFragment extends CommonFragment {
         pullListView.onPullDownRefreshComplete();
 
         pullListView.setHasMoreData(true);
-        setLastUpdateTime();
+        pullListView.setLastUpdatedLabel(DateUtils.getMDHMDate(System.currentTimeMillis()));;
     }
 
     // 上拉事件
@@ -221,7 +229,7 @@ public class PostFragment extends CommonFragment {
         pullListView.onPullUpRefreshComplete();
 
         pullListView.setHasMoreData(true);
-        setLastUpdateTime();
+        pullListView.setLastUpdatedLabel(DateUtils.getMDHMDate(System.currentTimeMillis()));;
     }
 
     public void onEvent(ScrollBannerEvent scrollBannerEvent) {
@@ -277,19 +285,6 @@ public class PostFragment extends CommonFragment {
                 }
             }
         };
-    }
-
-    private void setLastUpdateTime() {
-        String text = formatDateTime(System.currentTimeMillis());
-        pullListView.setLastUpdatedLabel(text);
-    }
-
-    private String formatDateTime(long time) {
-        if (0 == time) {
-            return "";
-        }
-
-        return mDateFormat.format(new Date(time));
     }
 
     //此事件仅在切换feedFragment的Viewpager时使用，用于暂停，开启滚动

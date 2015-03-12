@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="acc_find_friend">Find Friends</string>
+    <string name="btn_header_bar_cancel">取消</string>
+    <string name="btn_header_bar_publish">发表</string>
+    <string name="btn_header_bar_next">下一步</string>
+    <string name="title_add_themes">添加最多5个主题</string>
+    <string name="write_post">说一说</string>
     <string name="acc_home_function_list">Open Function List</string>
     <string name="acc_mblog_item_menu">Menu Button</string>
     <string name="acc_more_oper_button">More Operation Button</string>
@@ -561,7 +565,6 @@ The end time: %2$s"</string>
     <string name="forward">Repost</string>
     <string name="comment">Comment</string>
     <string name="reply">Reply</string>
-    <string name="cancel">Cancel</string>
     <string name="close">Close</string>
     <string name="go_next">Continue</string>
     <string name="exit">Log Out</string>

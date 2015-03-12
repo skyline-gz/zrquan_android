@@ -33,6 +33,6 @@ public class SDCardUtils {
     }
 
     public static String tempSendPictureName() {
-        return DateUtil.getTestSendPictureFileNameDate() + " By " + SystemUtil.BRAND_MODEL + ".png";
+        return DateUtils.getTestSendPictureFileNameDate() + " By " + SystemUtil.BRAND_MODEL + ".png";
     }
 }

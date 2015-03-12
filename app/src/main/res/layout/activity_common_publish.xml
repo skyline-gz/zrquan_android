@@ -13,13 +13,11 @@
         android:layout_width="fill_parent"
         android:layout_height="fill_parent">
 
-        <!--<include layout="@layout/activity_menu_bar" />-->
-        <include layout="@layout/visitor_titlebar" />
+        <include layout="@layout/header_bar_common" />
 
-        <!--<com.taou.maimai.common.EditText></com.taou.maimai.common.EditText>-->
         <EditText
             android:gravity="center|left|top"
-            android:id="@+id/common_publish_content_txt"
+            android:id="@+id/txt_content"
             android:background="@android:color/transparent"
             android:paddingLeft="15dip"
             android:paddingTop="15dip"
@@ -103,57 +101,10 @@
 
         <include layout="@layout/common_border" />
 
-        <LinearLayout
-            android:orientation="horizontal"
-            android:id="@+id/common_publish_tool_bar"
-            android:background="#fff6f6f6"
-            android:padding="10.0dip"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content">
-
-            <ImageView
-                android:layout_gravity="center|right|top"
-                android:id="@+id/common_publish_pick_picture_btn"
-                android:layout_width="35.0dip"
-                android:layout_height="35.0dip"
-                android:src="@drawable/topic_p" />
-
-            <Button
-                android:textColor="@android:color/white"
-                android:layout_gravity="center_vertical"
-                android:id="@+id/common_publish_emoji_btn"
-                android:background="@drawable/topic_e"
-                android:layout_width="35.0dip"
-                android:layout_height="35.0dip"
-                android:layout_marginLeft="16.0dip" />
-
-            <Button
-                android:textColor="@android:color/white"
-                android:layout_gravity="center_vertical"
-                android:id="@+id/common_publish_topic_btn"
-                android:background="@drawable/at_btn_bg"
-                android:layout_width="35.0dip"
-                android:layout_height="35.0dip"
-                android:layout_marginLeft="12.0dip" />
-
-            <View
-                android:layout_width="0.0dip"
-                android:layout_height="fill_parent"
-                android:layout_weight="1.0" />
-
-            <Button
-                android:textSize="12sp"
-                android:textColor="#ff858585"
-                android:layout_gravity="center_vertical"
-                android:id="@+id/common_publish_anonymous_btn"
-                android:background="@drawable/anonymous_pub_btn_bg_true"
-                android:layout_width="69.0dip"
-                android:layout_height="30.0dip"
-                android:layout_marginLeft="10.0dip" />
-        </LinearLayout>
+        <include layout="@layout/optionbar_publish" />
 
         <include
             android:id="@+id/common_publish_emoji_panel"
-            layout="@layout/emoji_panel" />
+            layout="@layout/panel_emoji" />
     </LinearLayout>
 </FrameLayout>

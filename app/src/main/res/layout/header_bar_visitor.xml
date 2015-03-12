@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="45dp"
+    android:background="@drawable/navigationbar_background"
+    android:orientation="horizontal"
+    android:paddingLeft="12dp"
+    android:paddingRight="12dp"
+    android:paddingTop="8dp">
+
+    <TextView
+        android:id="@+id/tv_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:visibility="gone"
+        android:padding="6dp"
+        android:singleLine="true"
+        android:textColor="@color/titlebar_title_text"
+        android:textSize="18dp" />
+
+    <TextView
+        android:id="@+id/tv_login"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:visibility="gone"
+        android:clickable="true"
+        android:paddingTop="6dp"
+        android:singleLine="true"
+        android:text="登陆"
+        android:textColor="@color/navigationbar_text_color"
+        android:textSize="15dp" />
+
+    <TextView
+        android:id="@+id/tv_register"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:visibility="gone"
+        android:clickable="true"
+        android:paddingTop="6dp"
+        android:singleLine="true"
+        android:text="注册"
+        android:textColor="@color/navigationbar_text_color"
+        android:textSize="15dp" />
+
+    <TextView
+        android:id="@+id/tv_left"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:visibility="gone"
+        android:clickable="true"
+        android:paddingTop="6dp"
+        android:singleLine="true"
+        android:text="取消"
+        android:textColor="@color/navigationbar_text_color"
+        android:textSize="15dp" />
+</RelativeLayout>

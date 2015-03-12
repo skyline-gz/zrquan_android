@@ -7,7 +7,8 @@
     <com.zrquan.mobile.widget.pulltorefresh.PullToRefreshListView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:id="@+id/pullListView">
+        android:id="@+id/pullListView"
+        android:background="@color/main_feed_background_color">
     </com.zrquan.mobile.widget.pulltorefresh.PullToRefreshListView>
 
     <ProgressBar

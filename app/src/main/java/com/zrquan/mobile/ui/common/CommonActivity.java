@@ -4,9 +4,10 @@ import android.app.Activity;
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 
+import com.zrquan.mobile.R;
 import com.zrquan.mobile.support.util.LogUtils;
 
-public class CommonActivity extends Activity{
+public class CommonActivity extends Activity {
     protected final String LOG_TAG = getClass().getName();
 
     @Override

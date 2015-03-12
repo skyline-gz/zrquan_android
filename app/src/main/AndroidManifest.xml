@@ -42,7 +42,7 @@
             android:theme="@style/PageIndicatorLightDefaults"
             android:windowSoftInputMode="stateHidden" />
         <activity
-            android:name=".ui.PublishActivity"
+            android:name=".ui.WritePostActivity"
             android:label="发布说说" />
         <activity
             android:name=".ui.authentic.UserRegisterSetPasswordActivity"
@@ -61,7 +61,7 @@
             android:label="播放音乐"
             android:windowSoftInputMode="stateHidden" />
         <activity
-            android:name="com.zrquan.mobile.ui.GetPictureActivity"
+            android:name=".ui.GetPictureActivity"
             android:label="获取头像"
             android:theme="@android:style/Theme.Translucent.NoTitleBar">
             <intent-filter>
@@ -77,6 +77,8 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
+        <activity android:name=".ui.ThemeListActivity"
+            android:label="主题列表" />
     </application>
 
 </manifest>

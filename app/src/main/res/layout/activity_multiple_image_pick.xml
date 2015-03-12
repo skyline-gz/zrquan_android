@@ -8,7 +8,7 @@
     <include
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        layout="@layout/visitor_titlebar" />
+        layout="@layout/header_bar_visitor" />
 
     <include
         android:layout_width="fill_parent"

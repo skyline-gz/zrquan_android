@@ -18,7 +18,6 @@ import com.zrquan.mobile.R;
 import com.zrquan.mobile.controller.AccountController;
 import com.zrquan.mobile.support.util.ToastUtils;
 import com.zrquan.mobile.ui.MainActivity;
-import com.zrquan.mobile.ui.authentic.UserRegisterSetPasswordActivity;
 import com.zrquan.mobile.ui.common.CommonFragment;
 import com.zrquan.mobile.ui.demo.DemoPlayMusicActivity;
 import com.zrquan.mobile.ui.demo.GalleryViewPagerSampleActivity;

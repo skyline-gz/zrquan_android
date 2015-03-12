@@ -31,14 +31,14 @@ import butterknife.OnClick;
 import butterknife.OnTextChanged;
 import de.greenrobot.event.EventBus;
 
-public class UserRegisterActivity extends CommonActivity{
+public class UserRegisterActivity extends CommonActivity {
 
     private Context context;
     private ProgressDialog mProgressDialog;
 
     @InjectView(R.id.tv_title)
     TextView tvTitle;
-    @InjectView(R.id.tv_back)
+    @InjectView(R.id.tv_left)
     TextView tvBack;
 
     @InjectView(R.id.phoneNum)
@@ -96,7 +96,7 @@ public class UserRegisterActivity extends CommonActivity{
         }
     }
 
-    @OnClick(R.id.tv_back)
+    @OnClick(R.id.tv_left)
     public void onBtnBackClick(View view) {
         doBack();
     }

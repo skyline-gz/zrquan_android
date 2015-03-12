@@ -122,19 +122,19 @@ public class MainActivity extends CommonFragmentActivity {
         mPopupWindow.setTouchable(true);
         mPopupWindow.setOutsideTouchable(true);
 
-        View ivCloseViewBtn = popupView.findViewById(R.id.pop_control_bar_front_holder);
-        ivCloseViewBtn.setOnClickListener(new View.OnClickListener() {
+        View btnClose = popupView.findViewById(R.id.pop_control_bar_front_holder);
+        btnClose.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 dismissPopupAndRestoreTab();
             }
         });
 
-        View vDiscussBtn = popupView.findViewById(R.id.layout_item_discuss);
-        vDiscussBtn.setOnClickListener(new View.OnClickListener() {
+        View btnWritPost = popupView.findViewById(R.id.layout_item_discuss);
+        btnWritPost.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent myIntent = new Intent(MainActivity.this, PublishActivity.class);
+                Intent myIntent = new Intent(MainActivity.this, WritePostActivity.class);
                 MainActivity.this.startActivity(myIntent);
                 MainActivity.this.overridePendingTransition(R.anim.dow2up_enter, 0);
                 dismissPopupAndRestoreTab();
@@ -142,8 +142,8 @@ public class MainActivity extends CommonFragmentActivity {
             }
         });
 
-        View vQuestionBtn = popupView.findViewById(R.id.layout_item_question);
-        vQuestionBtn.setOnClickListener(new View.OnClickListener() {
+        View btnWriteQuestion = popupView.findViewById(R.id.layout_item_question);
+        btnWriteQuestion.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 dismissPopupAndRestoreTab();

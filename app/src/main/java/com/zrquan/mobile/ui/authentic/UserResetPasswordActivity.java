@@ -34,7 +34,7 @@ import butterknife.InjectView;
 import butterknife.OnClick;
 import butterknife.OnTextChanged;
 
-public class UserResetPasswordActivity extends CommonActivity{
+public class UserResetPasswordActivity extends CommonActivity {
     private Context context;
     // see http://stackoverflow.com/questions/8771963/what-is-the-equivalent-of-settimeout-javascript-to-android
     private Handler mResendVerifyCounterHandler;
@@ -43,7 +43,7 @@ public class UserResetPasswordActivity extends CommonActivity{
 
     @InjectView(R.id.tv_title)
     TextView tvTitle;
-    @InjectView(R.id.tv_back)
+    @InjectView(R.id.tv_left)
     TextView tvBack;
 
     @InjectView(R.id.et_mobile)
@@ -203,7 +203,7 @@ public class UserResetPasswordActivity extends CommonActivity{
         }
     }
 
-    @OnClick(R.id.tv_back)
+    @OnClick(R.id.tv_left)
     public void onBackClick(View view) {
         doBack();
     }

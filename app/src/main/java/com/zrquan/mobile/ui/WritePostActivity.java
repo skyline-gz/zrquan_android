@@ -18,7 +18,6 @@ import com.zrquan.mobile.support.util.AndroidIOUtils;
 import com.zrquan.mobile.support.util.LogUtils;
 import com.zrquan.mobile.support.util.SDCardUtils;
 import com.zrquan.mobile.support.util.ScreenUtils;
-import com.zrquan.mobile.ui.common.CommonActivity;
 import com.zrquan.mobile.ui.viewholder.EmojiPanelViewHolder;
 import com.zrquan.mobile.widget.multipleimagepick.MultipleImagePickActivity;
 
@@ -29,8 +28,8 @@ import butterknife.ButterKnife;
 import butterknife.InjectView;
 import butterknife.OnClick;
 
-public class PublishActivity extends CommonActivity{
-    protected Context context;
+public class WritePostActivity extends AbstractPublishActivity {
+    private Context context;
     protected EmojiPanelViewHolder emojiPanelViewHolder;
     private String mTempCameraPath;
     private ArrayList<ImageDesc> uploadImages;
@@ -38,20 +37,19 @@ public class PublishActivity extends CommonActivity{
     public static final int REQUEST_CODE_MULTIPLE_IMAGE_PICK = 1;
     public static final int REQUEST_CODE_CAMERA_IMAGE_PICK = 2;
 
-    @InjectView(R.id.common_publish_emoji_btn)
-    Button btnCommonPublishEmoji;
-    @InjectView(R.id.common_publish_content_txt)
-    EditText etCommonPublishContent;
+    @InjectView(R.id.btn_emoji)
+    Button btnEmoji;
+    @InjectView(R.id.txt_content)
+    EditText txtContent;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_common_publish);
         ButterKnife.inject(this);
         context = getApplicationContext();
         uploadImages = new ArrayList<>();
         emojiPanelViewHolder = new EmojiPanelViewHolder((LinearLayout)findViewById(R.id.common_publish_emoji_panel));
-        emojiPanelViewHolder.fillViews(context, etCommonPublishContent, new View.OnClickListener() {
+        emojiPanelViewHolder.fillViews(context, txtContent, new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
@@ -63,6 +61,14 @@ public class PublishActivity extends CommonActivity{
     public void onBackPressed() {
         super.onBackPressed();
         overridePendingTransition(0, R.anim.up2down_exit);
+    }
+
+    @OnClick(R.id.tv_right)
+    public void onTvNextClick(View v) {
+        Intent intent = new Intent(WritePostActivity.this, ThemeListActivity.class);
+        intent.putExtra("content", txtContent.getText().toString());
+        intent.putExtra("anonymousFlag", 0);
+        startActivity(intent);
     }
 
     @OnClick(R.id.common_publish_pick_picture_btn)
@@ -89,15 +95,19 @@ public class PublishActivity extends CommonActivity{
         selectPictureDialog.show();
     }
 
-    @OnClick(R.id.common_publish_emoji_btn)
+    @OnClick(R.id.btn_emoji)
     public void onBtnCommonPublishEmojiClick(View v) {
         emojiPanelViewHolder.show();
-        ScreenUtils.hideSoftInput(context, etCommonPublishContent);
+        ScreenUtils.hideSoftInput(context, txtContent);
     }
 
-    @OnClick(R.id.common_publish_content_txt)
+    @OnClick(R.id.txt_content)
     public void onEditTextCommonPublishContent(View v) {
         emojiPanelViewHolder.hide();
+    }
+
+    protected int getTitleStringRes() {
+        return R.string.write_post;
     }
 
     @Override
